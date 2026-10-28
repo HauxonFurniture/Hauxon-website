@@ -1,0 +1,252 @@
+---
+const statistics = [
+	{ value: '10+', label: 'Years Experience' },
+	{ value: '15,000', unit: 'sqm', label: 'Factory Area' },
+	{ value: '300+', label: 'Mold Library' },
+];
+---
+
+<main>
+	<section class="hero" id="home" aria-labelledby="hero-title">
+		<div class="hero-background" aria-hidden="true"></div>
+		<div class="hero-shade"></div>
+
+		<div class="hero-content">
+			<p class="eyebrow"><span></span>Professional Seating Manufacturer</p>
+			<h1 id="hero-title">OEM &amp; ODM Seating<br />Manufacturer in China</h1>
+			<p class="intro">High-quality office chairs for global brands, wholesalers and project partners.</p>
+
+			<div class="statistics" aria-label="Company statistics">
+				{statistics.map((statistic) => (
+					<div class="statistic">
+						<p class="stat-value">{statistic.value}{statistic.unit && <span class="stat-unit"> {statistic.unit}</span>}</p>
+						<p class="stat-label">{statistic.label}</p>
+					</div>
+				))}
+			</div>
+
+			<a class="hauxon-button capabilities-button" href="#capabilities">Our Capabilities</a>
+		</div>
+		<div class="image-index" aria-hidden="true"><span>01</span> / 04</div>
+	</section>
+</main>
+
+<style>
+	.hero {
+		position: relative;
+		isolation: isolate;
+		min-height: min(760px, calc(100svh - 82px));
+		min-height: max(640px, min(760px, calc(100svh - 82px)));
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+		background: #303632;
+		color: #fff;
+	}
+
+	.hero-background,
+	.hero-shade {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+	}
+
+	.hero-background {
+		background: url('/images/factory-hero.jpg') center / cover no-repeat;
+	}
+
+	.hero-shade {
+		background: linear-gradient(
+			90deg,
+			rgb(0 32 65 / 65%) 0%,
+			rgb(0 32 65 / 65%) 25%,
+			rgb(0 32 65 / 45%) 40%,
+			rgb(0 32 65 / 15%) 55%,
+			transparent 70%,
+			transparent 100%
+		);
+	}
+
+	.hero-content {
+		width: min(100% - 64px, 1280px);
+		margin: 0 auto;
+		padding-block: 88px;
+	}
+
+	.eyebrow {
+		margin: 0 0 26px;
+		display: flex;
+		align-items: center;
+		gap: 11px;
+		color: #d7e4f0;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 1.4px;
+		text-transform: uppercase;
+	}
+
+	.eyebrow span {
+		width: 26px;
+		height: 2px;
+		background: #fff;
+	}
+
+	h1 {
+		max-width: 850px;
+		margin: 0;
+		font-size: clamp(46px, 5.7vw, 78px);
+		font-weight: 600;
+		line-height: 1.04;
+	}
+
+	.intro {
+		max-width: 530px;
+		margin: 22px 0 0;
+		color: rgb(255 255 255 / 78%);
+		font-size: 17px;
+		line-height: 1.65;
+	}
+
+	.statistics {
+		max-width: 630px;
+		margin-top: 42px;
+		padding-top: 23px;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		border-top: 1px solid rgb(255 255 255 / 26%);
+	}
+
+	.statistic {
+		padding-right: 20px;
+	}
+
+	.statistic + .statistic {
+		padding-left: 24px;
+		border-left: 1px solid rgb(255 255 255 / 24%);
+	}
+
+	.stat-value,
+	.stat-label {
+		margin: 0;
+	}
+
+	.stat-value {
+		font-size: 30px;
+		font-weight: 600;
+		line-height: 1.2;
+	}
+
+	.stat-unit {
+		font-size: 15px;
+		font-weight: 500;
+	}
+
+	.stat-label {
+		margin-top: 7px;
+		color: rgb(255 255 255 / 68%);
+		font-size: 12px;
+	}
+
+	.capabilities-button {
+		width: fit-content;
+		margin-top: 32px;
+	}
+
+	.image-index {
+		position: absolute;
+		right: max(32px, calc((100vw - 1440px) / 2));
+		bottom: 31px;
+		color: rgb(255 255 255 / 56%);
+		font-size: 11px;
+		letter-spacing: 1px;
+	}
+
+	.image-index span {
+		color: #fff;
+	}
+
+	@media (max-width: 820px) {
+		.hero {
+			min-height: max(620px, calc(100svh - 72px));
+		}
+
+		.hero-content {
+			width: calc(100% - 48px);
+			padding-block: 78px;
+		}
+
+	}
+
+	@media (max-width: 560px) {
+		.hero-shade {
+			background: linear-gradient(
+				90deg,
+				rgb(0 32 65 / 72%) 0%,
+				rgb(0 32 65 / 65%) 58%,
+				rgb(0 32 65 / 38%) 82%,
+				transparent 100%
+			);
+		}
+
+		.hero {
+			min-height: max(680px, calc(100svh - 66px));
+			align-items: flex-start;
+		}
+
+		.hero-content {
+			width: calc(100% - 40px);
+			padding-block: 100px 78px;
+		}
+
+		.eyebrow {
+			margin-bottom: 20px;
+			font-size: 9px;
+			letter-spacing: 1.1px;
+		}
+
+		h1 {
+			font-size: clamp(39px, 11vw, 56px);
+		}
+
+		.intro {
+			max-width: 390px;
+			font-size: 15px;
+		}
+
+		.statistics {
+			margin-top: 32px;
+			padding-top: 18px;
+		}
+
+		.statistic {
+			padding-right: 9px;
+		}
+
+		.statistic + .statistic {
+			padding-left: 11px;
+		}
+
+		.stat-value {
+			font-size: 23px;
+		}
+
+		.stat-unit {
+			font-size: 12px;
+		}
+
+		.stat-label {
+			font-size: 10px;
+			line-height: 1.4;
+		}
+
+		.capabilities-button {
+			margin-top: 27px;
+		}
+
+		.image-index {
+			right: 20px;
+			bottom: 20px;
+		}
+
+	}
+</style>

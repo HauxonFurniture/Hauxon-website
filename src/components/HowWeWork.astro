@@ -1,0 +1,1529 @@
+---
+const processSteps = [
+	{
+		label: 'Requirement',
+		title: 'Requirement Discussion',
+		description: 'Share your project requirements and product specifications with our team. We respond to inquiries within 24 hours.',
+		image: '/images/how-we-work/oem-requirement.png',
+		alt: 'Team reviewing product requirements and specifications',
+		features: [
+			['Product Requirements', 'Design, dimensions & materials.'],
+			['Technical Specifications', 'Standards & certifications.'],
+			['Target Market', 'Customer needs & preferences.'],
+		],
+	},
+	{
+		label: 'Quotation',
+		title: 'Quotation',
+		description: 'Receive a detailed quotation based on your product requirements, customization options, and order quantity.',
+		image: '/images/how-we-work/oem-quotation.png',
+		alt: 'Quotation preparation for a custom seating product',
+		features: [
+			['Product Requirements', 'Quotation based on your selected specifications.'],
+			['Customization Options', 'Review the requested materials and details.'],
+			['Order Quantity', 'Pricing prepared for your requested quantity.'],
+		],
+	},
+	{
+		label: 'Sampling',
+		title: 'Sampling',
+		description: 'We prepare product samples for your evaluation and confirmation before mass production.',
+		image: '/images/how-we-work/oem-sampling.png',
+		alt: 'Product sample prepared for customer evaluation',
+		features: [
+			['Product Evaluation', 'Review the sample against your requirements.'],
+			['Design Confirmation', 'Confirm product details before production.'],
+			['Sample Feedback', 'Share feedback for sample adjustments.'],
+		],
+	},
+	{
+		label: 'Production',
+		title: 'Production',
+		description: 'Our manufacturing team carries out production according to the confirmed specifications and quality requirements.',
+		image: '/images/how-we-work/oem-production.png',
+		alt: 'Seating products being assembled during manufacturing',
+		features: [
+			['Confirmed Specifications', 'Production follows the agreed product details.'],
+			['Manufacturing', 'The team carries out the production process.'],
+			['Quality Requirements', 'Work is completed to agreed requirements.'],
+		],
+	},
+	{
+		label: 'Inspection',
+		title: 'Inspection',
+		description: 'Finished products undergo quality inspections to ensure they meet the agreed standards before shipment.',
+		image: '/images/how-we-work/oem-inspection.png',
+		alt: 'Finished seating product undergoing quality inspection',
+		features: [
+			['Product Inspection', 'Finished products are checked before shipment.'],
+			['Agreed Standards', 'Inspections follow the agreed requirements.'],
+			['Shipment Preparation', 'Products are checked before they are shipped.'],
+		],
+	},
+];
+
+const customOptions = [
+	{
+		title: 'Logo Customization',
+		description: 'Add your brand identity with customized logo applications, including printing, embroidery and logo plates.',
+		image: '/images/how-we-work/custom-logo.png',
+		alt: 'Examples of logo customization on seating products',
+		icon: 'logo',
+		features: [
+			['Printing Options', 'Apply your logo with printing.'],
+			['Embroidery Options', 'Add an embroidered brand detail.'],
+			['Logo Plates', 'Choose a logo plate application.'],
+		],
+	},
+	{
+		title: 'Armrest Options',
+		description: 'Choose from different armrest designs, materials, colors and adjustment functions to suit your market.',
+		image: '/images/how-we-work/custom-armrest.png',
+		alt: 'Different armrest customization options',
+		icon: 'armrest',
+		features: [
+			['Multiple Designs', 'Various styles to match different needs.'],
+			['Custom Colors', 'A range of colors to choose from.'],
+			['Adjustable Functions', '2D, 3D and 5D adjustment options.'],
+		],
+	},
+	{
+		title: 'Base Options',
+		description: 'Select from different chair base designs, materials and finishes to match your product requirements.',
+		image: '/images/how-we-work/custom-base.png',
+		alt: 'Chair base designs and finish options',
+		icon: 'base',
+		features: [
+			['Base Designs', 'Select a base design for your product.'],
+			['Material Options', 'Choose from different base materials.'],
+			['Surface Finishes', 'Select a finish to suit your requirements.'],
+		],
+	},
+	{
+		title: 'Upholstery Options',
+		description: 'Customize your seating products with a range of upholstery materials, including mesh, fabric and PU leather.',
+		image: '/images/how-we-work/custom-upholstery.png',
+		alt: 'Upholstery material options for seating products',
+		icon: 'upholstery',
+		features: [
+			['Material Selection', 'Choose mesh, fabric or PU leather.'],
+			['Color Options', 'Select a color for your upholstery.'],
+			['Custom Upholstery', 'Match upholstery to your product needs.'],
+		],
+	},
+];
+---
+
+<section class="how-we-work" aria-labelledby="oem-process-heading">
+	<section class="oem-section" aria-labelledby="oem-process-heading">
+		<div class="section-inner oem-inner">
+			<header class="block-header">
+				<h3 id="oem-process-heading">OEM Process</h3>
+				<p>From initial requirements to final inspection, we provide a streamlined manufacturing process tailored to your business.</p>
+			</header>
+
+			<nav class="process-steps" aria-label="OEM process steps">
+				{processSteps.map((step, index) => (
+					<button
+						class:list={['process-step', { 'is-active': index === 0 }]}
+						type="button"
+						data-process-step={index}
+						data-process-title={step.title}
+						data-process-description={step.description}
+						data-process-image={step.image}
+						data-process-alt={step.alt}
+						data-process-feature-title-0={step.features[0][0]}
+						data-process-feature-title-1={step.features[1][0]}
+						data-process-feature-title-2={step.features[2][0]}
+						data-process-feature-description-0={step.features[0][1]}
+						data-process-feature-description-1={step.features[1][1]}
+						data-process-feature-description-2={step.features[2][1]}
+						aria-pressed={index === 0 ? 'true' : 'false'}
+					>
+						<span class="step-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+						<span class="step-name">{step.label}</span>
+					</button>
+				))}
+			</nav>
+
+			<div class="process-detail" id="process-panel" aria-live="polite">
+				<div class="process-image-frame">
+					<img id="process-image" src={processSteps[0].image} alt={processSteps[0].alt} loading="lazy" />
+				</div>
+
+				<div class="process-copy">
+					<p class="step-kicker">STEP 01 / 05</p>
+					<h4 id="process-title">{processSteps[0].title}</h4>
+					<p id="process-description">{processSteps[0].description}</p>
+					<ul class="feature-list feature-list-horizontal" aria-label="Process details">
+						{processSteps[0].features.map((feature, index) => (
+							<li class="feature-item" data-process-feature={index}>
+								<span class="feature-icon" aria-hidden="true">
+									{index === 0 && <svg viewBox="0 0 24 24"><path d="M5 6.5h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-7l-4.5 3v-3H5a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z" /><path d="M8 12h.01M12 12h.01M16 12h.01" /></svg>}
+									{index === 1 && <svg viewBox="0 0 24 24"><path d="M6 3.5h8l4 4V20a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4.5a1 1 0 0 1 1-1Z" /><path d="M14 3.5v5h4M8 12h8M8 16h8" /></svg>}
+									{index === 2 && <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" /><path d="M3.5 19v-1a5.5 5.5 0 0 1 11 0v1z" /><path d="M16 5.5a3 3 0 0 1 0 5.8M17 13a4.5 4.5 0 0 1 3.5 4.4V19h-4" /></svg>}
+								</span>
+								<span class="feature-text">
+									<strong data-process-feature-title={index}>{feature[0]}</strong>
+									<span data-process-feature-description={index}>{feature[1]}</span>
+								</span>
+							</li>
+						))}
+					</ul>
+					<div class="panel-controls">
+						<button class="step-arrow" type="button" data-process-prev aria-label="Previous OEM process step">
+							<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7" /></svg>
+						</button>
+						<button class="step-arrow" type="button" data-process-next aria-label="Next OEM process step">
+							<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5 7 7-7 7" /></svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="custom-section" aria-labelledby="custom-options-heading">
+		<div class="section-inner">
+			<header class="block-header custom-section-heading">
+				<h3 id="custom-options-heading">Custom Options</h3>
+				<p>Flexible customization solutions to bring your product ideas and brand identity to life.</p>
+			</header>
+
+			<div class="custom-layout">
+				<nav class="custom-tabs" role="tablist" aria-label="Custom seating options">
+					{customOptions.map((option, index) => (
+						<button
+							id={`custom-tab-${index}`}
+							class:list={['custom-tab', { 'is-active': index === 0 }]}
+							type="button"
+							role="tab"
+							aria-selected={index === 0 ? 'true' : 'false'}
+							aria-controls="custom-panel"
+							tabindex={index === 0 ? 0 : -1}
+							data-custom-option={index}
+							data-custom-title={option.title}
+							data-custom-description={option.description}
+							data-custom-image={option.image}
+							data-custom-alt={option.alt}
+							data-custom-feature-title-0={option.features[0][0]}
+							data-custom-feature-title-1={option.features[1][0]}
+							data-custom-feature-title-2={option.features[2][0]}
+							data-custom-feature-description-0={option.features[0][1]}
+							data-custom-feature-description-1={option.features[1][1]}
+							data-custom-feature-description-2={option.features[2][1]}
+							data-custom-icon={option.icon}
+						>
+							<span class="category-icon" aria-hidden="true">
+								{option.icon === 'logo' && <svg viewBox="0 0 24 24"><path d="M5 5h14v14H5zM9 15l2-6 2 4 1-2 2 4" /><circle cx="9" cy="8" r="1" /></svg>}
+								{option.icon === 'armrest' && <svg viewBox="0 0 24 24"><path d="M6 17v-6a2 2 0 0 1 2-2h1v5h7v-5h1a2 2 0 0 1 2 2v6M8 14v4m8-4v4M9 14h6" /></svg>}
+								{option.icon === 'base' && <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="2" /><path d="M12 10v5m0-1-6 4m6-4 6 4m-6-4v6" /></svg>}
+								{option.icon === 'upholstery' && <svg viewBox="0 0 24 24"><path d="M6 5h12v14H6zM9 5v14m6-14v14M6 10h12m-12 5h12" /></svg>}
+							</span>
+							<span>{option.title}</span>
+							<svg class="category-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" /></svg>
+						</button>
+					))}
+				</nav>
+
+				<div class="custom-visual">
+					<div class="custom-image-frame">
+						<img id="custom-image" src={customOptions[0].image} alt={customOptions[0].alt} loading="lazy" />
+					</div>
+				</div>
+
+				<div class="custom-copy" id="custom-panel" role="tabpanel" aria-labelledby="custom-tab-0" aria-live="polite">
+					<p class="step-kicker">CUSTOMIZATION</p>
+					<h4 id="custom-title">{customOptions[0].title}</h4>
+					<p id="custom-description">{customOptions[0].description}</p>
+					<ul class="feature-list feature-list-vertical" aria-label="Customization details">
+						{customOptions[0].features.map((feature, index) => (
+							<li class="feature-item" data-custom-feature={index}>
+								<span class="feature-icon" aria-hidden="true">
+									<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" /><path d="M12 8v8M8 12h8" /></svg>
+								</span>
+								<span class="feature-text">
+									<strong data-custom-feature-title={index}>{feature[0]}</strong>
+									<span data-custom-feature-description={index}>{feature[1]}</span>
+								</span>
+							</li>
+						))}
+					</ul>
+					<div class="panel-controls">
+						<button class="step-arrow" type="button" data-custom-prev aria-label="Previous custom option">
+							<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 5-7 7 7 7" /></svg>
+						</button>
+						<button class="step-arrow" type="button" data-custom-next aria-label="Next custom option">
+							<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5 7 7-7 7" /></svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</section>
+
+<style>
+	.how-we-work {
+		color: #111827;
+		font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+	}
+
+	.section-inner {
+		width: min(calc(100% - 80px), 1280px);
+		margin-inline: auto;
+	}
+
+	.oem-section,
+	.custom-section {
+		box-sizing: border-box;
+		padding: 80px 0;
+	}
+
+	.oem-section {
+		background: #f5f8fc;
+	}
+
+	.custom-section {
+		background: #fff;
+	}
+
+	.section-heading {
+		max-width: 760px;
+		margin: 0 auto 54px;
+		text-align: center;
+	}
+
+	.section-heading h2 {
+		margin: 0;
+		color: #111827;
+		font-size: 36px;
+		font-weight: 700;
+		line-height: 1.2;
+	}
+
+	.section-heading p,
+	.block-header p {
+		margin: 14px 0 0;
+		color: #526071;
+		font-size: 16px;
+		line-height: 1.7;
+	}
+
+	.block-header {
+		margin-bottom: 30px;
+	}
+
+	.block-header h3 {
+		margin: 0;
+		color: #111827;
+		font-size: 30px;
+		font-weight: 700;
+		line-height: 1.25;
+	}
+
+	.block-header p {
+		max-width: 700px;
+		margin-top: 10px;
+	}
+
+	.process-steps {
+		display: grid;
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+		margin-bottom: 36px;
+		border-block: 1px solid #e5eaf0;
+	}
+
+	.process-step {
+		position: relative;
+		min-width: 0;
+		padding: 18px 20px 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+		border: 0;
+		background: transparent;
+		color: #7b8491;
+		font: inherit;
+		text-align: left;
+		cursor: pointer;
+		transition: color 200ms ease;
+	}
+
+	.process-step:hover,
+	.process-step.is-active {
+		color: #073466;
+	}
+
+	.process-step.is-active::after {
+		position: absolute;
+		right: 20px;
+		bottom: -1px;
+		left: 20px;
+		height: 2px;
+		background: #073466;
+		content: '';
+	}
+
+	.step-number {
+		font-size: 15px;
+		font-weight: 600;
+		line-height: 1;
+	}
+
+	.step-name {
+		font-size: 15px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	.process-detail {
+		display: grid;
+		grid-template-columns: minmax(0, 58fr) minmax(0, 42fr);
+		align-items: center;
+		gap: 48px;
+	}
+
+	.process-image-frame,
+	.custom-image-frame {
+		width: 100%;
+		min-width: 0;
+		overflow: hidden;
+		border-radius: 12px;
+		background: #fff;
+	}
+
+	.process-image-frame {
+		aspect-ratio: 16 / 9;
+	}
+
+	.process-image-frame img,
+	.custom-image-frame img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.process-copy,
+	.custom-copy {
+		min-width: 0;
+	}
+
+	.step-kicker {
+		margin: 0 0 12px;
+		color: #073466;
+		font-size: 13px;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		line-height: 1.4;
+	}
+
+	.process-copy h4,
+	.custom-copy h4 {
+		margin: 0;
+		color: #111827;
+		font-size: 26px;
+		font-weight: 700;
+		line-height: 1.25;
+	}
+
+	.process-copy > p:not(.step-kicker),
+	.custom-copy > p:not(.step-kicker) {
+		margin: 12px 0 0;
+		color: #526071;
+		font-size: 16px;
+		line-height: 1.7;
+	}
+
+	.feature-list {
+		margin: 24px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.feature-list-horizontal {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 14px;
+	}
+
+	.feature-item {
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+		min-width: 0;
+	}
+
+	.feature-icon {
+		width: 34px;
+		height: 34px;
+		flex: 0 0 34px;
+		display: grid;
+		place-items: center;
+		border-radius: 50%;
+		background: #eaf2fa;
+		color: #073466;
+	}
+
+	.feature-icon svg,
+	.category-icon svg,
+	.category-arrow,
+	.step-arrow svg {
+		width: 18px;
+		height: 18px;
+		fill: none;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 1.6;
+	}
+
+	.feature-text {
+		min-width: 0;
+		display: grid;
+		gap: 4px;
+	}
+
+	.feature-text strong {
+		color: #111827;
+		font-size: 13px;
+		font-weight: 700;
+		line-height: 1.35;
+	}
+
+	.feature-text > span {
+		color: #526071;
+		font-size: 12px;
+		line-height: 1.5;
+	}
+
+	.panel-controls {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-top: 24px;
+	}
+
+	.step-arrow {
+		width: 40px;
+		height: 40px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		border: 1px solid #dce3ea;
+		border-radius: 50%;
+		background: transparent;
+		color: #073466;
+		cursor: pointer;
+		transition: background-color 200ms ease, border-color 200ms ease;
+	}
+
+	.step-arrow:hover {
+		border-color: #c6d6e8;
+		background: #eaf2fa;
+	}
+
+	.custom-section-heading {
+		margin-bottom: 34px;
+	}
+
+	.custom-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 24fr) minmax(0, 44fr) minmax(0, 32fr);
+		align-items: center;
+		gap: 32px;
+	}
+
+	.custom-tabs {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		min-width: 0;
+	}
+
+	.custom-tab {
+		position: relative;
+		box-sizing: border-box;
+		width: 100%;
+		min-height: 72px;
+		padding: 14px 16px 14px 20px;
+		display: grid;
+		grid-template-columns: 24px minmax(0, 1fr) 16px;
+		align-items: center;
+		gap: 12px;
+		border: 0;
+		border-radius: 8px;
+		background: #fff;
+		color: #526071;
+		font: inherit;
+		font-size: 14px;
+		font-weight: 500;
+		text-align: left;
+		cursor: pointer;
+		transition: background-color 200ms ease, color 200ms ease;
+	}
+
+	.custom-tab:hover {
+		background: #f5f8fc;
+		color: #073466;
+	}
+
+	.custom-tab.is-active {
+		background: #eaf2fa;
+		color: #073466;
+		font-weight: 600;
+	}
+
+	.custom-tab.is-active::before {
+		position: absolute;
+		top: 12px;
+		bottom: 12px;
+		left: 0;
+		width: 3px;
+		border-radius: 0 2px 2px 0;
+		background: #073466;
+		content: '';
+	}
+
+	.category-icon {
+		display: grid;
+		place-items: center;
+		color: currentColor;
+	}
+
+	.category-arrow {
+		width: 16px;
+		height: 16px;
+	}
+
+	.custom-visual {
+		min-width: 0;
+	}
+
+	.custom-image-frame {
+		aspect-ratio: 4 / 3;
+		background: #f5f8fc;
+	}
+
+	.custom-image-frame img {
+		object-fit: contain;
+	}
+
+	.feature-list-vertical {
+		display: grid;
+		gap: 18px;
+		margin-top: 24px;
+	}
+
+	.custom-copy .feature-item {
+		align-items: center;
+		gap: 12px;
+	}
+
+	.custom-copy .feature-icon {
+		width: 36px;
+		height: 36px;
+		flex-basis: 36px;
+	}
+
+	.custom-copy .feature-text strong {
+		font-size: 14px;
+	}
+
+	.custom-copy .feature-text > span {
+		font-size: 13px;
+	}
+
+	.custom-copy .panel-controls {
+		margin-top: 22px;
+	}
+
+	.process-step:focus-visible,
+	.custom-tab:focus-visible,
+	.step-arrow:focus-visible {
+		outline: 2px solid #073466;
+		outline-offset: 3px;
+		z-index: 1;
+	}
+
+	@media (max-width: 1100px) {
+		.section-inner {
+			width: min(calc(100% - 48px), 1280px);
+		}
+
+		.process-detail {
+			gap: 30px;
+		}
+
+		.custom-layout {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+			gap: 28px;
+		}
+
+		.custom-tabs {
+			grid-column: 1 / -1;
+			flex-direction: row;
+			overflow-x: auto;
+			padding: 3px 2px 8px;
+		}
+
+		.custom-tab {
+			width: auto;
+			min-width: max-content;
+			min-height: 56px;
+			padding: 12px 16px;
+			grid-template-columns: 22px auto;
+		}
+
+		.custom-tab .category-arrow {
+			display: none;
+		}
+
+		.custom-tab.is-active::before {
+			top: auto;
+			right: 12px;
+			bottom: 0;
+			left: 12px;
+			width: auto;
+			height: 3px;
+			border-radius: 2px 2px 0 0;
+		}
+
+		.custom-copy {
+			grid-column: 2;
+			grid-row: 2;
+		}
+
+		.custom-visual {
+			grid-column: 1;
+			grid-row: 2;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.section-inner {
+			width: calc(100% - 40px);
+		}
+
+		.oem-section,
+		.custom-section {
+			padding: 56px 0;
+		}
+
+		.section-heading {
+			margin-bottom: 40px;
+		}
+
+		.section-heading h2 {
+			font-size: 32px;
+		}
+
+		.section-heading p,
+		.block-header p {
+			font-size: 15px;
+		}
+
+		.block-header {
+			margin-bottom: 22px;
+		}
+
+		.block-header h3 {
+			font-size: 28px;
+		}
+
+		.process-steps {
+			grid-template-columns: repeat(5, minmax(120px, 1fr));
+			overflow-x: auto;
+			margin-right: -20px;
+			margin-bottom: 24px;
+			padding-right: 20px;
+			scrollbar-width: thin;
+		}
+
+		.process-step {
+			padding: 16px 12px 18px;
+		}
+
+		.process-step.is-active::after {
+			right: 12px;
+			left: 12px;
+		}
+
+		.process-detail {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 24px;
+		}
+
+		.process-image-frame {
+			aspect-ratio: 16 / 10;
+		}
+
+		.process-copy h4,
+		.custom-copy h4 {
+			font-size: 24px;
+		}
+
+		.feature-list-horizontal {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 16px;
+			margin-top: 20px;
+		}
+
+		.feature-text strong {
+			font-size: 14px;
+		}
+
+		.feature-text > span {
+			font-size: 13px;
+		}
+
+		.custom-section-heading {
+			margin-bottom: 22px;
+		}
+
+		.custom-layout {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 20px;
+		}
+
+		.custom-tabs {
+			grid-column: 1;
+			grid-row: 1;
+			margin-right: -20px;
+			padding: 2px 20px 8px 2px;
+			scrollbar-width: thin;
+		}
+
+		.custom-tab {
+			min-height: 52px;
+			padding: 10px 14px;
+			font-size: 13px;
+		}
+
+		.custom-visual {
+			grid-column: 1;
+			grid-row: 2;
+		}
+
+		.custom-image-frame {
+			aspect-ratio: 4 / 3;
+		}
+
+		.custom-copy {
+			grid-column: 1;
+			grid-row: 3;
+		}
+
+		.panel-controls {
+			margin-top: 20px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.process-step,
+		.custom-tab,
+		.step-arrow {
+			transition: none;
+		}
+	}
+
+	.oem-section {
+		padding: 80px 0;
+		background: #f5f8fc;
+	}
+
+	.oem-inner {
+		box-sizing: border-box;
+		width: min(calc(100% - 48px), 1360px);
+		margin-inline: auto;
+	}
+
+	.oem-section .block-header {
+		margin-bottom: 40px;
+	}
+
+	.oem-section .block-header h3 {
+		color: #111827;
+		font-size: 36px;
+		font-weight: 700;
+		line-height: 1.2;
+		letter-spacing: -0.03em;
+	}
+
+	.oem-section .block-header p {
+		max-width: none;
+		margin-top: 8px;
+		color: #4b5563;
+		font-size: 16px;
+		line-height: 1.6;
+	}
+
+	.oem-section .process-steps {
+		margin-bottom: 40px;
+		border: 0;
+		border-bottom: 1px solid #e2e8f0;
+	}
+
+	.oem-section .process-step {
+		min-height: 76px;
+		padding: 14px 20px 16px;
+		gap: 8px;
+		color: #6b7280;
+		transition: color 180ms ease;
+	}
+
+	.oem-section .process-step:hover,
+	.oem-section .process-step.is-active {
+		color: #0b315f;
+	}
+
+	.oem-section .process-step::before,
+	.oem-section .process-step:not(:last-child)::after {
+		display: none;
+	}
+
+	.oem-section .process-step.is-active::after {
+		right: 16px;
+		bottom: -1px;
+		left: 16px;
+		height: 2px;
+		background: #0b315f;
+	}
+
+	.oem-section .step-number {
+		font-size: 24px;
+		font-weight: 700;
+		letter-spacing: -0.03em;
+	}
+
+	.oem-section .step-name {
+		font-size: 16px;
+		font-weight: 600;
+	}
+
+	.oem-section .process-detail {
+		grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+		align-items: center;
+		gap: 64px;
+	}
+
+	.oem-section .process-image-frame {
+		aspect-ratio: 16 / 9;
+		border-radius: 12px;
+	}
+
+	.oem-section .process-copy h4 {
+		color: #111827;
+		font-size: 32px;
+		font-weight: 700;
+		line-height: 1.2;
+		letter-spacing: -0.025em;
+	}
+
+	.oem-section .step-kicker {
+		margin-bottom: 8px;
+		color: #0b315f;
+		font-size: 13px;
+		font-weight: 700;
+		letter-spacing: 0.07em;
+	}
+
+	.oem-section .process-copy > p:not(.step-kicker) {
+		max-width: 50ch;
+		margin-top: 12px;
+		color: #4b5563;
+		font-size: 16px;
+		line-height: 1.65;
+	}
+
+	.oem-section .feature-list-horizontal {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 16px;
+		margin-top: 24px;
+	}
+
+	.oem-section .feature-item {
+		align-items: flex-start;
+		gap: 14px;
+	}
+
+	.oem-section .feature-icon {
+		width: 40px;
+		height: 40px;
+		flex-basis: 40px;
+		background: #eaf1f8;
+	}
+
+	.oem-section .feature-icon svg {
+		width: 20px;
+		height: 20px;
+		stroke-width: 1.7;
+	}
+
+	.oem-section .feature-text {
+		gap: 3px;
+		padding-top: 1px;
+	}
+
+	.oem-section .feature-text strong {
+		font-size: 15px;
+		line-height: 1.4;
+	}
+
+	.oem-section .feature-text > span {
+		font-size: 14px;
+		line-height: 1.45;
+	}
+
+	.oem-section .panel-controls {
+		gap: 12px;
+		margin-top: 24px;
+	}
+
+	.oem-section .step-arrow {
+		width: 44px;
+		height: 44px;
+		border-color: #e2e8f0;
+		background: #fff;
+		color: #0b315f;
+	}
+
+	.oem-section .step-arrow:hover {
+		border-color: #cbd5e1;
+		background: #eaf1f8;
+	}
+
+	.oem-section .step-arrow svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	.oem-section .process-step:focus-visible,
+	.oem-section .step-arrow:focus-visible {
+		outline-color: #0b315f;
+	}
+
+	@media (max-width: 1100px) {
+		.oem-section .process-detail {
+			grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+			gap: 36px;
+		}
+
+		.oem-section .process-copy h4 {
+			font-size: 28px;
+		}
+
+		.oem-section .feature-list-horizontal {
+			gap: 14px;
+			margin-top: 20px;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.oem-section {
+			padding: 56px 0;
+		}
+
+		.oem-inner {
+			width: calc(100% - 40px);
+		}
+
+		.oem-section .block-header {
+			margin-bottom: 28px;
+		}
+
+		.oem-section .block-header h3 {
+			font-size: 30px;
+		}
+
+		.oem-section .block-header p {
+			font-size: 15px;
+		}
+
+		.oem-section .process-steps {
+			grid-template-columns: repeat(5, minmax(124px, 1fr));
+			overflow-x: auto;
+			margin-right: -20px;
+			margin-bottom: 28px;
+			padding-right: 20px;
+			scrollbar-width: thin;
+		}
+
+		.oem-section .process-step {
+			min-height: 68px;
+			padding: 12px 12px 14px;
+			gap: 6px;
+		}
+
+		.oem-section .process-step.is-active::after {
+			right: 12px;
+			left: 12px;
+		}
+
+		.oem-section .step-number {
+			font-size: 21px;
+		}
+
+		.oem-section .step-name {
+			font-size: 14px;
+		}
+
+		.oem-section .process-detail {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 24px;
+		}
+
+		.oem-section .process-image-frame {
+			aspect-ratio: 16 / 9;
+		}
+
+		.oem-section .process-copy h4 {
+			font-size: 26px;
+		}
+
+		.oem-section .process-copy > p:not(.step-kicker) {
+			font-size: 15px;
+		}
+
+		.oem-section .feature-list-horizontal {
+			gap: 14px;
+			margin-top: 20px;
+		}
+
+		.oem-section .panel-controls {
+			margin-top: 20px;
+		}
+
+		.oem-section .step-arrow {
+			width: 42px;
+			height: 42px;
+		}
+	}
+
+	.custom-section {
+		padding: 80px 0;
+		background: #fff;
+	}
+
+	.custom-section .section-inner {
+		box-sizing: border-box;
+		width: min(calc(100% - 48px), 1360px);
+		margin-inline: auto;
+	}
+
+	.custom-section .custom-section-heading {
+		margin-bottom: 40px;
+	}
+
+	.custom-section .custom-section-heading h3 {
+		color: #111827;
+		font-size: 36px;
+		font-weight: 700;
+		line-height: 1.2;
+		letter-spacing: -0.03em;
+	}
+
+	.custom-section .custom-section-heading p {
+		max-width: none;
+		margin-top: 8px;
+		color: #4b5563;
+		font-size: 16px;
+		line-height: 1.6;
+	}
+
+	.custom-section .custom-layout {
+		grid-template-columns: minmax(0, 20fr) minmax(0, 45fr) minmax(0, 35fr);
+		align-items: center;
+		gap: 32px;
+	}
+
+	.custom-section .custom-tabs {
+		gap: 8px;
+	}
+
+	.custom-section .custom-tab {
+		min-height: 64px;
+		padding: 12px 20px;
+		grid-template-columns: 24px minmax(0, 1fr) 16px;
+		gap: 12px;
+		border-radius: 10px;
+		color: #64748b;
+		font-size: 14px;
+		font-weight: 500;
+		transition: background-color 180ms ease, color 180ms ease;
+	}
+
+	.custom-section .custom-tab:hover {
+		background: #f8fafc;
+		color: #0b315f;
+	}
+
+	.custom-section .custom-tab.is-active {
+		background: #eaf1f8;
+		color: #0b315f;
+		font-weight: 600;
+	}
+
+	.custom-section .custom-tab.is-active::before {
+		top: 10px;
+		bottom: 10px;
+		width: 3px;
+		border-radius: 0 2px 2px 0;
+		background: #0b315f;
+	}
+
+	.custom-section .category-icon svg {
+		width: 22px;
+		height: 22px;
+		stroke-width: 1.6;
+	}
+
+	.custom-section .category-arrow {
+		width: 16px;
+		height: 16px;
+	}
+
+	.custom-section .custom-image-frame {
+		aspect-ratio: 4 / 3;
+		border-radius: 12px;
+		background: #f8fafc;
+	}
+
+	.custom-section .custom-image-frame img {
+		object-fit: contain;
+	}
+
+	.custom-section .custom-copy .step-kicker {
+		margin-bottom: 8px;
+		color: #0b315f;
+		font-size: 13px;
+		font-weight: 700;
+		letter-spacing: 0.07em;
+	}
+
+	.custom-section .custom-copy h4 {
+		color: #111827;
+		font-size: 32px;
+		font-weight: 700;
+		line-height: 1.2;
+		letter-spacing: -0.025em;
+	}
+
+	.custom-section .custom-copy > p:not(.step-kicker) {
+		max-width: 44ch;
+		margin-top: 12px;
+		color: #4b5563;
+		font-size: 16px;
+		line-height: 1.65;
+	}
+
+	.custom-section .feature-list-vertical {
+		gap: 16px;
+		margin-top: 22px;
+	}
+
+	.custom-section .custom-copy .feature-item {
+		align-items: center;
+		gap: 14px;
+	}
+
+	.custom-section .custom-copy .feature-icon {
+		width: 44px;
+		height: 44px;
+		flex-basis: 44px;
+		background: #eaf1f8;
+		color: #0b315f;
+	}
+
+	.custom-section .custom-copy .feature-icon svg {
+		width: 21px;
+		height: 21px;
+		stroke-width: 1.7;
+	}
+
+	.custom-section .custom-copy .feature-text {
+		gap: 3px;
+	}
+
+	.custom-section .custom-copy .feature-text strong {
+		color: #111827;
+		font-size: 15px;
+		line-height: 1.4;
+	}
+
+	.custom-section .custom-copy .feature-text > span {
+		color: #4b5563;
+		font-size: 14px;
+		line-height: 1.45;
+	}
+
+	.custom-section .custom-copy .panel-controls {
+		gap: 12px;
+		margin-top: 24px;
+	}
+
+	.custom-section .step-arrow {
+		width: 44px;
+		height: 44px;
+		border-color: #e2e8f0;
+		background: #fff;
+		color: #0b315f;
+	}
+
+	.custom-section .step-arrow:hover {
+		border-color: #cbd5e1;
+		background: #eaf1f8;
+	}
+
+	.custom-section .step-arrow svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	.custom-section .custom-tab:focus-visible,
+	.custom-section .step-arrow:focus-visible {
+		outline-color: #0b315f;
+	}
+
+	@media (max-width: 1100px) {
+		.custom-section .section-inner {
+			width: min(calc(100% - 48px), 1360px);
+		}
+
+		.custom-section .custom-layout {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+			gap: 28px;
+		}
+
+		.custom-section .custom-tabs {
+			grid-column: 1 / -1;
+			flex-direction: row;
+			overflow-x: auto;
+			padding: 3px 2px 8px;
+		}
+
+		.custom-section .custom-tab {
+			width: auto;
+			min-width: max-content;
+			min-height: 56px;
+			padding: 12px 16px;
+			grid-template-columns: 22px auto;
+		}
+
+		.custom-section .custom-tab .category-arrow {
+			display: none;
+		}
+
+		.custom-section .custom-tab.is-active::before {
+			top: auto;
+			right: 12px;
+			bottom: 0;
+			left: 12px;
+			width: auto;
+			height: 3px;
+			border-radius: 2px 2px 0 0;
+		}
+
+		.custom-section .custom-copy {
+			grid-column: 2;
+			grid-row: 2;
+		}
+
+		.custom-section .custom-visual {
+			grid-column: 1;
+			grid-row: 2;
+		}
+	}
+
+	@media (max-width: 767px) {
+		.custom-section {
+			padding: 56px 0;
+		}
+
+		.custom-section .section-inner {
+			width: calc(100% - 40px);
+		}
+
+		.custom-section .custom-section-heading {
+			margin-bottom: 28px;
+		}
+
+		.custom-section .custom-section-heading h3 {
+			font-size: 30px;
+		}
+
+		.custom-section .custom-section-heading p {
+			font-size: 15px;
+		}
+
+		.custom-section .custom-layout {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 20px;
+		}
+
+		.custom-section .custom-tabs {
+			grid-column: 1;
+			grid-row: 1;
+			margin-right: -20px;
+			padding: 2px 20px 8px 2px;
+		}
+
+		.custom-section .custom-tab {
+			min-height: 52px;
+			padding: 10px 14px;
+			font-size: 13px;
+		}
+
+		.custom-section .custom-visual {
+			grid-column: 1;
+			grid-row: 2;
+		}
+
+		.custom-section .custom-image-frame {
+			aspect-ratio: 4 / 3;
+		}
+
+		.custom-section .custom-copy {
+			grid-column: 1;
+			grid-row: 3;
+		}
+
+		.custom-section .custom-copy h4 {
+			font-size: 26px;
+		}
+
+		.custom-section .custom-copy > p:not(.step-kicker) {
+			font-size: 15px;
+		}
+
+		.custom-section .custom-copy .panel-controls {
+			margin-top: 20px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.custom-section .custom-tab,
+		.custom-section .step-arrow {
+			transition: none;
+		}
+	}
+
+</style>
+
+<script>
+	function initializeHowWeWork() {
+		const root = document.querySelector('.how-we-work');
+		if (!root || root.dataset.interactionsReady === 'true') return;
+		root.dataset.interactionsReady = 'true';
+
+		const processButtons = Array.from(root.querySelectorAll('[data-process-step]'));
+		const customTabs = Array.from(root.querySelectorAll('[data-custom-option]'));
+
+		function selectProcessStep(index) {
+			const activeIndex = (index + processButtons.length) % processButtons.length;
+			const selectedButton = processButtons[activeIndex];
+			processButtons.forEach((button, buttonIndex) => {
+				const isActive = buttonIndex === activeIndex;
+				button.classList.toggle('is-active', isActive);
+				button.setAttribute('aria-pressed', String(isActive));
+			});
+
+			const updatePanel = () => {
+				root.querySelector('#process-title').textContent = selectedButton.dataset.processTitle;
+				root.querySelector('#process-description').textContent = selectedButton.dataset.processDescription;
+				root.querySelector('#process-panel .step-kicker').textContent = `STEP ${String(activeIndex + 1).padStart(2, '0')} / ${String(processButtons.length).padStart(2, '0')}`;
+				const image = root.querySelector('#process-image');
+				image.src = selectedButton.dataset.processImage;
+				image.alt = selectedButton.dataset.processAlt;
+				for (let featureIndex = 0; featureIndex < 3; featureIndex += 1) {
+					root.querySelector(`[data-process-feature-title="${featureIndex}"]`).textContent = selectedButton.getAttribute(`data-process-feature-title-${featureIndex}`);
+					root.querySelector(`[data-process-feature-description="${featureIndex}"]`).textContent = selectedButton.getAttribute(`data-process-feature-description-${featureIndex}`);
+				}
+			};
+
+			updatePanel();
+		}
+
+		function selectCustomOption(index) {
+			const activeIndex = (index + customTabs.length) % customTabs.length;
+			const selectedTab = customTabs[activeIndex];
+			customTabs.forEach((tab, tabIndex) => {
+				const isActive = tabIndex === activeIndex;
+				tab.classList.toggle('is-active', isActive);
+				tab.setAttribute('aria-selected', String(isActive));
+				tab.setAttribute('tabindex', isActive ? '0' : '-1');
+			});
+
+			const updatePanel = () => {
+				const panel = root.querySelector('#custom-panel');
+				panel.setAttribute('aria-labelledby', selectedTab.id);
+				root.querySelector('#custom-title').textContent = selectedTab.dataset.customTitle;
+				root.querySelector('#custom-description').textContent = selectedTab.dataset.customDescription;
+				const image = root.querySelector('#custom-image');
+				image.src = selectedTab.dataset.customImage;
+				image.alt = selectedTab.dataset.customAlt;
+				for (let featureIndex = 0; featureIndex < 3; featureIndex += 1) {
+					root.querySelector(`[data-custom-feature-title="${featureIndex}"]`).textContent = selectedTab.getAttribute(`data-custom-feature-title-${featureIndex}`);
+					root.querySelector(`[data-custom-feature-description="${featureIndex}"]`).textContent = selectedTab.getAttribute(`data-custom-feature-description-${featureIndex}`);
+				}
+			};
+
+			updatePanel();
+		}
+
+		root.addEventListener('click', (event) => {
+			if (!(event.target instanceof Element)) return;
+			const button = event.target.closest('button');
+			if (!button || !root.contains(button)) return;
+
+			if (button.matches('[data-process-step]')) {
+				selectProcessStep(Number(button.dataset.processStep));
+			} else if (button.matches('[data-process-prev], [data-process-next]')) {
+				const activeIndex = processButtons.findIndex((item) => item.getAttribute('aria-pressed') === 'true');
+				selectProcessStep(activeIndex + (button.matches('[data-process-next]') ? 1 : -1));
+			} else if (button.matches('[data-custom-option]')) {
+				selectCustomOption(Number(button.dataset.customOption));
+			} else if (button.matches('[data-custom-prev], [data-custom-next]')) {
+				const activeIndex = customTabs.findIndex((item) => item.getAttribute('aria-selected') === 'true');
+				selectCustomOption(activeIndex + (button.matches('[data-custom-next]') ? 1 : -1));
+			}
+		});
+
+		root.querySelector('[aria-label="OEM process steps"]')?.addEventListener('keydown', (event) => {
+			if (!(event instanceof KeyboardEvent) || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+			const activeIndex = processButtons.findIndex((button) => button.getAttribute('aria-pressed') === 'true');
+			let nextIndex = activeIndex;
+			if (event.key === 'ArrowRight') nextIndex = (activeIndex + 1) % processButtons.length;
+			if (event.key === 'ArrowLeft') nextIndex = (activeIndex - 1 + processButtons.length) % processButtons.length;
+			if (event.key === 'Home') nextIndex = 0;
+			if (event.key === 'End') nextIndex = processButtons.length - 1;
+			if (nextIndex !== activeIndex) {
+				event.preventDefault();
+				processButtons[nextIndex].focus();
+				selectProcessStep(nextIndex);
+			}
+		});
+
+		root.querySelector('[role="tablist"]')?.addEventListener('keydown', (event) => {
+			if (!(event instanceof KeyboardEvent) || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+			event.preventDefault();
+			const activeIndex = customTabs.findIndex((tab) => tab.getAttribute('aria-selected') === 'true');
+			let nextIndex = activeIndex;
+			if (event.key === 'ArrowRight') nextIndex = (activeIndex + 1) % customTabs.length;
+			if (event.key === 'ArrowLeft') nextIndex = (activeIndex - 1 + customTabs.length) % customTabs.length;
+			if (event.key === 'Home') nextIndex = 0;
+			if (event.key === 'End') nextIndex = customTabs.length - 1;
+			customTabs[nextIndex].focus();
+			selectCustomOption(nextIndex);
+		});
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initializeHowWeWork, { once: true });
+	} else {
+		initializeHowWeWork();
+	}
+</script>

@@ -1,0 +1,188 @@
+---
+const strengths = [
+	{
+		value: '10+ Years',
+		title: 'Manufacturing Experience',
+		description: 'With over 10 years of manufacturing experience, we understand global market requirements and deliver reliable OEM & ODM seating solutions.',
+	},
+	{
+		value: '300+',
+		title: 'Mold Library',
+		description: 'With 300+ existing molds, we support faster product development and offer a wide range of seating solutions for different markets.',
+	},
+	{
+		value: '15,000 sqm',
+		title: 'Factory Area',
+		description: 'Our 15,000m² manufacturing facility supports stable production capacity and consistent product quality.',
+	},
+	{
+		value: '10+',
+		title: 'Export Countries',
+		description: 'Our seating products are supplied to customers in 10+ countries, serving distributors, brands and commercial projects worldwide.',
+	},
+	{
+		value: 'Small MOQ',
+		title: 'Flexible Production',
+		description: 'We support small MOQ and flexible production, making it easier for brands and importers to launch new products.',
+	},
+	{
+		value: 'Certified Quality',
+		title: 'Quality Assurance',
+		description: 'Our products comply with international quality standards and are backed by multiple industry certifications.',
+	},
+	{
+		value: 'OEM & ODM',
+		title: 'Custom Solutions',
+		description: 'From product customization to branding and packaging, we provide complete OEM & ODM services tailored to your business.',
+	},
+	{
+		value: 'Fast Response',
+		title: 'Professional Support',
+		description: 'Our experienced team provides prompt communication and professional support throughout your project.',
+	},
+];
+---
+
+<section class="company-strengths" aria-label="Company strengths">
+	<div class="strengths-grid">
+		{strengths.map((strength) => (
+			<article class="strength-item">
+				<h2>{strength.value}</h2>
+				<h3>{strength.title}</h3>
+				<p>{strength.description}</p>
+			</article>
+		))}
+	</div>
+</section>
+
+<style>
+	.company-strengths {
+		box-sizing: border-box;
+		padding: 80px 0;
+		background: #f7f7f7;
+		color: #09245b;
+		font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+	}
+
+	.strengths-grid {
+		width: calc(100% - 110px);
+		margin-inline: auto;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		column-gap: 50px;
+		row-gap: 40px;
+	}
+
+	.strength-item {
+		position: relative;
+		min-width: 0;
+	}
+
+	.strength-item:nth-child(4n + 2)::before,
+	.strength-item:nth-child(4n + 3)::before,
+	.strength-item:nth-child(4n)::before {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: -25px;
+		width: 1px;
+		background: #e5e5e5;
+		content: '';
+	}
+
+	.strength-item h2,
+	.strength-item h3,
+	.strength-item p {
+		margin: 0;
+	}
+
+	.strength-item h2 {
+		color: #09245b;
+		font-size: 28px;
+		font-weight: 700;
+		line-height: 1.2;
+	}
+
+	.strength-item h3 {
+		margin-top: 8px;
+		color: #09245b;
+		font-size: 22px;
+		font-weight: 600;
+		line-height: 1.25;
+	}
+
+	.strength-item p {
+		margin-top: 16px;
+		color: #09245b;
+		font-size: 13px;
+		font-weight: 400;
+		line-height: 1.7;
+	}
+
+	@media (min-width: 1200px) and (max-width: 1280px) {
+		.strength-item h3 {
+			font-size: 20px;
+		}
+	}
+
+	@media (max-width: 1199px) {
+		.strengths-grid {
+			width: min(100% - 48px, 900px);
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			column-gap: 56px;
+			row-gap: 40px;
+		}
+
+		.strength-item:nth-child(4n + 2)::before,
+		.strength-item:nth-child(4n + 3)::before,
+		.strength-item:nth-child(4n)::before {
+			display: none;
+		}
+
+		.strength-item:nth-child(even)::before {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: -28px;
+			width: 1px;
+			display: block;
+			background: #e5e5e5;
+			content: '';
+		}
+	}
+
+	@media (max-width: 767px) {
+		.company-strengths {
+			padding: 56px 0;
+		}
+
+		.strengths-grid {
+			width: calc(100% - 40px);
+			grid-template-columns: minmax(0, 1fr);
+			row-gap: 28px;
+		}
+
+		.strength-item:nth-child(even)::before {
+			display: none;
+		}
+
+		.strength-item + .strength-item::before {
+			position: absolute;
+			top: -14px;
+			left: 0;
+			width: 100%;
+			height: 1px;
+			display: block;
+			background: #e5e5e5;
+			content: '';
+		}
+
+		.strength-item h2 {
+			font-size: 28px;
+		}
+
+		.strength-item h3 {
+			font-size: 22px;
+		}
+	}
+</style>
