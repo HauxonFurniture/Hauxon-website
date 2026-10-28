@@ -1,6 +1,17 @@
 ---
 import '../styles/buttons.css';
 import Footer from '../components/Footer.astro';
+import QuoteCart from '../components/QuoteCart.astro';
+
+type Props = {
+	title?: string;
+	description?: string;
+};
+
+const {
+	title = 'Hauxon | OEM & ODM Seating Manufacturer',
+	description = 'Hauxon manufactures quality office seating for global brands, wholesalers and project partners.',
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -10,12 +21,13 @@ import Footer from '../components/Footer.astro';
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/png" href="/images/hauxon-favicon.png?v=2" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content="Hauxon manufactures quality office seating for global brands, wholesalers and project partners." />
-		<title>Hauxon | OEM &amp; ODM Seating Manufacturer</title>
+		<meta name="description" content={description} />
+		<title>{title}</title>
 	</head>
 	<body>
 		<slot />
 		<Footer />
+		<QuoteCart />
 	</body>
 </html>
 

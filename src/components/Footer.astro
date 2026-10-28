@@ -1,18 +1,18 @@
 ---
 const quickLinks = [
-	{ label: 'Home', href: '#home' },
-	{ label: 'Products', href: '#solutions-title' },
+	{ label: 'Home', href: '/' },
+	{ label: 'Products', href: '/products' },
 	{ label: 'About Us', href: '#about' },
 	{ label: 'Contact Us', href: '#contact' },
 	{ label: 'FAQ', href: '/faq/' },
 ];
 
 const categories = [
-	{ label: 'Office Chair', href: '/products/office-chairs' },
-	{ label: 'Leisure Chair', href: '/products/leisure-chairs' },
-	{ label: 'Bar Stool', href: '/products/bar-stools' },
-	{ label: 'Specialty Chair', href: '/products/specialty-chairs' },
-	{ label: 'Accessory', href: '/products/accessories' },
+	{ label: 'Office Chair', href: '/products#office-chair' },
+	{ label: 'Leisure Chair', href: '/products#leisure-chair' },
+	{ label: 'Bar Stool', href: '/products#bar-stool' },
+	{ label: 'Specialty Chair', href: '/products#specialty-chair' },
+	{ label: 'Accessory', href: '/products#accessory' },
 ];
 ---
 
@@ -73,18 +73,20 @@ const categories = [
 			<section class="footer-column footer-newsletter" aria-labelledby="footer-newsletter-heading">
 				<h2 id="footer-newsletter-heading">Let’s Keep in Touch</h2>
 				<p class="newsletter-description">
-					Stay updated with our latest products, manufacturing capabilities, and company news.
+					Leave your email and our team will be in touch. This is not a marketing subscription.
 				</p>
-				<form class="newsletter-form" aria-label="Email subscription unavailable">
+				<form class="newsletter-form" data-footer-inquiry-form aria-label="Contact request">
 					<label class="visually-hidden" for="footer-email">E-mail</label>
-					<input id="footer-email" type="email" placeholder="E-mail" disabled aria-describedby="subscription-note" />
-					<button type="button" aria-label="Email subscription unavailable" disabled>
+					<input id="footer-email" name="email" type="email" placeholder="E-mail" maxlength="254" autocomplete="email" required aria-describedby="subscription-note" />
+					<button type="submit" aria-label="Send contact request">
 						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
 					</button>
+					<label class="footer-honeypot" aria-hidden="true">
+						Leave this field empty
+						<input name="website" type="text" tabindex="-1" autocomplete="off" />
+					</label>
 				</form>
-				<p class="subscription-note" id="subscription-note">
-					Email updates are not available yet.
-				</p>
+				<p class="subscription-note" id="subscription-note" data-footer-inquiry-status role="status" aria-live="polite"></p>
 			</section>
 		</div>
 
@@ -241,11 +243,6 @@ const categories = [
 		font-size: 14px;
 	}
 
-	.newsletter-form input:disabled {
-		opacity: 1;
-		cursor: not-allowed;
-	}
-
 	.newsletter-form input::placeholder {
 		color: #64748b;
 		opacity: 1;
@@ -285,6 +282,27 @@ const categories = [
 	.newsletter-form button:disabled {
 		opacity: 0.72;
 		cursor: not-allowed;
+	}
+
+	.newsletter-form button:not(:disabled) {
+		cursor: pointer;
+	}
+
+	.newsletter-form button:not(:disabled):hover {
+		background: #164774;
+	}
+
+	.footer-honeypot {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+	}
+
+	.subscription-note.is-success {
+		color: #246b45;
 	}
 
 	.subscription-note {
@@ -371,3 +389,54 @@ const categories = [
 		}
 	}
 </style>
+
+<script>
+	function initializeFooterInquiry() {
+		const form = document.querySelector<HTMLFormElement>('[data-footer-inquiry-form]');
+		const status = document.querySelector<HTMLElement>('[data-footer-inquiry-status]');
+		const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+		if (!form || !status || !button || form.dataset.ready === 'true') return;
+		form.dataset.ready = 'true';
+		let submitting = false;
+
+		form.addEventListener('submit', async (event) => {
+			event.preventDefault();
+			if (submitting || !form.reportValidity()) return;
+			submitting = true;
+			button.disabled = true;
+			button.setAttribute('aria-busy', 'true');
+			status.classList.remove('is-success');
+			status.textContent = 'Sending…';
+
+			try {
+				const formData = new FormData(form);
+				const response = await fetch('/api/footer-contact', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+					body: JSON.stringify({
+						email: String(formData.get('email') ?? '').trim(),
+						website: String(formData.get('website') ?? '').trim(),
+					}),
+				});
+				const result: { success?: boolean } = await response.json();
+				if (!response.ok || result.success !== true) throw new Error('Footer contact request failed.');
+				form.reset();
+				status.textContent = 'Thank you. Our team will be in touch.';
+				status.classList.add('is-success');
+			} catch (error) {
+				console.error('Unable to submit the footer contact request.', error);
+				status.textContent = 'We couldn’t send your email. Please try again.';
+			} finally {
+				button.disabled = false;
+				button.removeAttribute('aria-busy');
+				submitting = false;
+			}
+		});
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initializeFooterInquiry, { once: true });
+	} else {
+		initializeFooterInquiry();
+	}
+</script>

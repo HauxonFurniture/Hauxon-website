@@ -1,0 +1,677 @@
+---
+import { productCategories } from '../data/products';
+
+const initialCategory = productCategories[0];
+const initialSubcategory = initialCategory.subcategories[0];
+---
+
+<main class="products-page">
+	<section class="products-intro" aria-labelledby="products-heading">
+		<div class="page-container intro-inner">
+			<p class="intro-eyebrow">Our Collection</p>
+			<h1 id="products-heading">Seating Solutions</h1>
+			<p class="intro-description">
+				Explore our collection of office chairs, leisure seating, bar stools, specialty chairs, and chair components, designed for flexible OEM and ODM manufacturing.
+			</p>
+		</div>
+	</section>
+
+	<div class="page-container catalog-container">
+		<nav class="primary-navigation" aria-label="Product categories" role="tablist">
+			{productCategories.map((category, index) => (
+				<button
+					class:list={['primary-tab', { 'is-active': index === 0 }]}
+					id={`primary-tab-${category.id}`}
+					type="button"
+					role="tab"
+					aria-selected={index === 0 ? 'true' : 'false'}
+					aria-controls="category-panel"
+					tabindex={index === 0 ? 0 : -1}
+					data-primary-category={category.id}
+				>
+					{category.name}
+				</button>
+			))}
+		</nav>
+
+		<div
+			class="catalog-content"
+			id="category-panel"
+			role="tabpanel"
+			aria-labelledby={`primary-tab-${initialCategory.id}`}
+		>
+			<div class="secondary-navigation-wrap">
+				{productCategories.map((category, categoryIndex) => (
+					<nav
+						class="secondary-navigation"
+						aria-label={`${category.name} subcategories`}
+						role="tablist"
+						aria-orientation="vertical"
+						data-secondary-list={category.id}
+						hidden={categoryIndex !== 0}
+					>
+						{category.subcategories.map((subcategory, subcategoryIndex) => (
+							<button
+								class:list={['secondary-tab', { 'is-active': categoryIndex === 0 && subcategoryIndex === 0 }]}
+								id={`secondary-tab-${subcategory.id}`}
+								type="button"
+								role="tab"
+								aria-selected={categoryIndex === 0 && subcategoryIndex === 0 ? 'true' : 'false'}
+								aria-controls={`products-panel-${subcategory.id}`}
+								tabindex={categoryIndex === 0 && subcategoryIndex === 0 ? 0 : -1}
+								data-secondary-category={subcategory.id}
+								data-parent-category={category.id}
+							>
+								{subcategory.name}
+							</button>
+						))}
+					</nav>
+				))}
+			</div>
+
+			<div class="product-panels" aria-live="polite">
+				{productCategories.flatMap((category) =>
+					category.subcategories.map((subcategory) => {
+						const selected = subcategory.id === initialSubcategory.id;
+						return (
+							<section
+								class="product-panel"
+								id={`products-panel-${subcategory.id}`}
+								role="tabpanel"
+								aria-labelledby={`secondary-tab-${subcategory.id}`}
+								data-product-panel={subcategory.id}
+								hidden={!selected}
+							>
+								<h2 class="visually-hidden">{subcategory.name}</h2>
+								<div class="product-grid">
+									{subcategory.products.map((product) => (
+										<article class="product-card" data-product-model={product.model} data-product-subcategory={subcategory.name}>
+											<div class="product-image">
+												{product.image ? (
+													<img src={product.image} alt={`${product.model} ${subcategory.name}`} loading="lazy" />
+												) : (
+													<div class="product-image-placeholder" aria-hidden="true"></div>
+												)}
+											</div>
+											<div class="product-information">
+												<div>
+													<h3>{product.model}</h3>
+													<p>{subcategory.name}</p>
+												</div>
+												<span class="product-arrow" aria-hidden="true">
+													<svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" /></svg>
+												</span>
+											</div>
+											<button class="quote-add-button" type="button" data-quote-add={product.model} aria-pressed="false">
+												<svg class="quote-add-icon" viewBox="0 0 20 20" aria-hidden="true">
+													<path class="quote-plus-mark" d="M10 4v12M4 10h12" />
+													<path class="quote-check-mark" d="m4.5 10.5 3.5 3.5 7.5-8" />
+												</svg>
+												<span data-quote-add-label>Add to Quote</span>
+											</button>
+										</article>
+									))}
+								</div>
+							</section>
+						);
+					}),
+				)}
+			</div>
+		</div>
+	</div>
+</main>
+
+<style>
+	.products-page {
+		min-height: 60vh;
+		background: #fff;
+		color: #111827;
+		font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+	}
+
+	.page-container {
+		width: min(calc(100% - 64px), 1440px);
+		margin-inline: auto;
+	}
+
+	.products-intro {
+		padding: clamp(52px, 6vw, 82px) 0;
+		background: #f4f7fb;
+	}
+
+	.intro-inner {
+		max-width: 1440px;
+	}
+
+	.intro-eyebrow {
+		margin: 0 0 12px;
+		color: #0b2d5c;
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 1.4px;
+		line-height: 1.4;
+		text-transform: uppercase;
+	}
+
+	.products-intro h1 {
+		margin: 0;
+		color: #111827;
+		font-size: clamp(36px, 4vw, 52px);
+		font-weight: 600;
+		letter-spacing: -0.035em;
+		line-height: 1.12;
+	}
+
+	.intro-description {
+		max-width: 760px;
+		margin: 18px 0 0;
+		color: #64748b;
+		font-size: 17px;
+		line-height: 1.7;
+	}
+
+	.catalog-container {
+		padding-top: 40px;
+		padding-bottom: 88px;
+	}
+
+	.primary-navigation {
+		display: flex;
+		gap: clamp(24px, 4.2vw, 64px);
+		overflow-x: auto;
+		border-bottom: 1px solid #e5e7eb;
+		scrollbar-width: thin;
+	}
+
+	.primary-tab {
+		position: relative;
+		flex: 0 0 auto;
+		min-height: 58px;
+		padding: 0 0 2px;
+		border: 0;
+		background: transparent;
+		color: #64748b;
+		font: inherit;
+		font-size: 15px;
+		font-weight: 500;
+		white-space: nowrap;
+		cursor: pointer;
+		transition: color 180ms ease;
+	}
+
+	.primary-tab::after {
+		position: absolute;
+		right: 0;
+		bottom: -1px;
+		left: 0;
+		height: 2px;
+		background: #0b2d5c;
+		content: '';
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 180ms ease;
+	}
+
+	.primary-tab:hover,
+	.primary-tab.is-active {
+		color: #0b2d5c;
+	}
+
+	.primary-tab.is-active {
+		font-weight: 600;
+	}
+
+	.primary-tab.is-active::after {
+		transform: scaleX(1);
+	}
+
+	.catalog-content {
+		padding-top: 36px;
+		display: grid;
+		grid-template-columns: minmax(190px, 22fr) minmax(0, 78fr);
+		gap: 42px;
+	}
+
+	.secondary-navigation-wrap {
+		min-width: 0;
+	}
+
+	.secondary-navigation {
+		position: sticky;
+		top: 88px;
+		display: grid;
+		align-content: start;
+		gap: 6px;
+	}
+
+	.secondary-navigation[hidden],
+	.product-panel[hidden] {
+		display: none;
+	}
+
+	.secondary-tab {
+		position: relative;
+		min-height: 46px;
+		padding: 0 14px 0 18px;
+		border: 0;
+		background: transparent;
+		color: #64748b;
+		font: inherit;
+		font-size: 15px;
+		font-weight: 400;
+		line-height: 1.4;
+		text-align: left;
+		cursor: pointer;
+		transition: color 180ms ease, background-color 180ms ease;
+	}
+
+	.secondary-tab::before {
+		position: absolute;
+		top: 10px;
+		bottom: 10px;
+		left: 0;
+		width: 2px;
+		border-radius: 2px;
+		background: #0b2d5c;
+		content: '';
+		opacity: 0;
+	}
+
+	.secondary-tab:hover,
+	.secondary-tab.is-active {
+		color: #0b2d5c;
+	}
+
+	.secondary-tab.is-active {
+		background: #f4f7fb;
+		font-weight: 600;
+	}
+
+	.secondary-tab.is-active::before {
+		opacity: 1;
+	}
+
+	.product-panels,
+	.product-panel {
+		min-width: 0;
+	}
+
+	.product-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 36px 24px;
+	}
+
+	.product-card {
+		min-width: 0;
+	}
+
+	.product-image {
+		overflow: hidden;
+		aspect-ratio: 4 / 3;
+		border-radius: 9px;
+		background: #f2f3f5;
+	}
+
+	.product-image img,
+	.product-image-placeholder {
+		width: 100%;
+		height: 100%;
+		display: block;
+		background: #f2f3f5;
+		transition: transform 240ms ease;
+	}
+
+	.product-image img {
+		object-fit: contain;
+	}
+
+	.product-card:hover .product-image img,
+	.product-card:hover .product-image-placeholder {
+		transform: scale(1.015);
+	}
+
+	.product-information {
+		padding-top: 15px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+	}
+
+	.product-information h3 {
+		margin: 0;
+		color: #111827;
+		font-size: 17px;
+		font-weight: 600;
+		letter-spacing: 0.01em;
+		line-height: 1.35;
+	}
+
+	.product-information p {
+		margin: 5px 0 0;
+		color: #64748b;
+		font-size: 13px;
+		line-height: 1.45;
+	}
+
+	.quote-add-button {
+		width: 100%;
+		min-height: 38px;
+		margin-top: 12px;
+		padding: 0 12px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 7px;
+		border: 1px solid #cbd5e1;
+		border-radius: 5px;
+		background: #fff;
+		color: #0b2d5c;
+		font: inherit;
+		font-size: 13px;
+		font-weight: 500;
+		cursor: pointer;
+		transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+	}
+
+	.quote-add-button:hover {
+		border-color: #0b2d5c;
+		background: #f4f7fb;
+	}
+
+	.quote-add-button.is-added {
+		border-color: #d3deeb;
+		background: #f1f5f9;
+		color: #0b2d5c;
+	}
+
+	.quote-add-button.just-added {
+		background: #e7eef7;
+	}
+
+	.quote-add-button:focus-visible {
+		outline: 2px solid #0b2d5c;
+		outline-offset: 2px;
+	}
+
+	.quote-add-icon {
+		width: 16px;
+		height: 16px;
+		flex: 0 0 auto;
+		fill: none;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 1.7;
+	}
+
+	.quote-check-mark,
+	.quote-add-button.is-added .quote-plus-mark {
+		display: none;
+	}
+
+	.quote-add-button.is-added .quote-check-mark {
+		display: block;
+	}
+
+	.product-arrow {
+		width: 30px;
+		height: 30px;
+		flex: 0 0 auto;
+		display: grid;
+		place-items: center;
+		border: 1px solid #e5e7eb;
+		border-radius: 50%;
+		color: #0b2d5c;
+	}
+
+	.product-arrow svg {
+		width: 15px;
+		height: 15px;
+		fill: none;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 1.6;
+	}
+
+	.primary-tab:focus-visible,
+	.secondary-tab:focus-visible {
+		outline: 2px solid #0b2d5c;
+		outline-offset: 3px;
+	}
+
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	@media (max-width: 1000px) {
+		.catalog-container {
+			padding-top: 30px;
+			padding-bottom: 68px;
+		}
+
+		.catalog-content {
+			grid-template-columns: minmax(160px, 24fr) minmax(0, 76fr);
+			gap: 28px;
+		}
+
+		.product-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 30px 20px;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.page-container {
+			width: min(calc(100% - 40px), 520px);
+		}
+
+		.products-intro {
+			padding: 44px 0 48px;
+		}
+
+		.products-intro h1 {
+			font-size: 36px;
+		}
+
+		.intro-description {
+			margin-top: 14px;
+			font-size: 15px;
+			line-height: 1.65;
+		}
+
+		.catalog-container {
+			padding-top: 22px;
+			padding-bottom: 56px;
+		}
+
+		.primary-navigation {
+			gap: 26px;
+			margin-right: -20px;
+			padding-right: 20px;
+		}
+
+		.primary-tab {
+			min-height: 52px;
+			font-size: 14px;
+		}
+
+		.catalog-content {
+			padding-top: 22px;
+			grid-template-columns: minmax(0, 1fr);
+			gap: 22px;
+		}
+
+		.secondary-navigation {
+			position: static;
+			display: flex;
+			gap: 8px;
+			overflow-x: auto;
+			margin-right: -20px;
+			padding: 0 20px 8px 0;
+			border-bottom: 1px solid #e5e7eb;
+			scrollbar-width: thin;
+		}
+
+		.secondary-tab {
+			min-height: 40px;
+			padding: 0 12px;
+			border-radius: 4px;
+			font-size: 13px;
+			white-space: nowrap;
+		}
+
+		.secondary-tab::before {
+			display: none;
+		}
+
+		.secondary-tab.is-active {
+			background: #f4f7fb;
+		}
+
+		.product-grid {
+			gap: 24px 14px;
+		}
+
+		.product-information {
+			padding-top: 11px;
+			gap: 6px;
+		}
+
+		.product-information h3 {
+			font-size: 15px;
+		}
+
+		.product-information p {
+			font-size: 12px;
+		}
+
+		.product-arrow {
+			width: 26px;
+			height: 26px;
+		}
+
+		.quote-add-button {
+			min-height: 40px;
+			font-size: 12px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.primary-tab,
+		.primary-tab::after,
+		.secondary-tab,
+		.product-image img,
+		.product-image-placeholder {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	function initializeCatalog() {
+		const primaryTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-primary-category]'));
+		const secondaryLists = Array.from(document.querySelectorAll<HTMLElement>('[data-secondary-list]'));
+		const secondaryTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-secondary-category]'));
+		const productPanels = Array.from(document.querySelectorAll<HTMLElement>('[data-product-panel]'));
+		const categoryPanel = document.querySelector<HTMLElement>('#category-panel');
+		if (!primaryTabs.length || !secondaryTabs.length || !categoryPanel || categoryPanel.dataset.ready === 'true') return;
+
+		categoryPanel.dataset.ready = 'true';
+		let activePrimary = primaryTabs[0].dataset.primaryCategory ?? '';
+
+		function selectSecondary(subcategoryId: string) {
+			secondaryTabs.forEach((tab) => {
+				const active = tab.dataset.secondaryCategory === subcategoryId;
+				tab.classList.toggle('is-active', active);
+				tab.setAttribute('aria-selected', String(active));
+				tab.tabIndex = active ? 0 : -1;
+			});
+			productPanels.forEach((panel) => {
+				panel.hidden = panel.dataset.productPanel !== subcategoryId;
+			});
+		}
+
+		function selectPrimary(categoryId: string, updateAddress = false) {
+			const activePrimaryTab = primaryTabs.find((tab) => tab.dataset.primaryCategory === categoryId);
+			const secondaryList = secondaryLists.find((list) => list.dataset.secondaryList === categoryId);
+			const firstSubcategoryTab = secondaryList?.querySelector<HTMLButtonElement>('[data-secondary-category]');
+			if (!activePrimaryTab || !firstSubcategoryTab) return;
+			activePrimary = categoryId;
+
+			primaryTabs.forEach((tab) => {
+				const active = tab.dataset.primaryCategory === categoryId;
+				tab.classList.toggle('is-active', active);
+				tab.setAttribute('aria-selected', String(active));
+				tab.tabIndex = active ? 0 : -1;
+			});
+			categoryPanel.setAttribute('aria-labelledby', `primary-tab-${categoryId}`);
+			secondaryLists.forEach((list) => {
+				list.hidden = list.dataset.secondaryList !== categoryId;
+			});
+			selectSecondary(firstSubcategoryTab.dataset.secondaryCategory ?? '');
+
+			if (updateAddress) history.replaceState(null, '', `#${categoryId}`);
+		}
+
+		primaryTabs.forEach((tab) => {
+			tab.addEventListener('click', () => selectPrimary(tab.dataset.primaryCategory ?? '', true));
+		});
+		secondaryTabs.forEach((tab) => {
+			tab.addEventListener('click', () => {
+				if (tab.dataset.parentCategory === activePrimary && tab.dataset.secondaryCategory) {
+					selectSecondary(tab.dataset.secondaryCategory);
+				}
+			});
+		});
+
+		function enableTabKeyboardNavigation(tabs: HTMLButtonElement[], vertical = false) {
+			tabs.forEach((tablistTab, index) => {
+				const tablist = tablistTab.closest('[role="tablist"]');
+				tablistTab.addEventListener('keydown', (event) => {
+					if (!(event instanceof KeyboardEvent)) return;
+					let nextIndex = index;
+					if (event.key === (vertical ? 'ArrowDown' : 'ArrowRight') || event.key === (vertical ? 'ArrowUp' : 'ArrowLeft')) {
+						const direction = event.key === (vertical ? 'ArrowDown' : 'ArrowRight') ? 1 : -1;
+						const currentGroup = tabs.filter((candidate) => candidate.closest('[role="tablist"]') === tablist);
+						const currentIndex = currentGroup.indexOf(tablistTab);
+						nextIndex = (currentIndex + direction + currentGroup.length) % currentGroup.length;
+						event.preventDefault();
+						currentGroup[nextIndex].focus();
+						currentGroup[nextIndex].click();
+					} else if (event.key === 'Home' || event.key === 'End') {
+						const currentGroup = tabs.filter((candidate) => candidate.closest('[role="tablist"]') === tablist);
+						nextIndex = event.key === 'Home' ? 0 : currentGroup.length - 1;
+						event.preventDefault();
+						currentGroup[nextIndex].focus();
+						currentGroup[nextIndex].click();
+					}
+				});
+			});
+		}
+
+		enableTabKeyboardNavigation(primaryTabs);
+		enableTabKeyboardNavigation(secondaryTabs, true);
+
+		const requestedCategory = window.location.hash.slice(1);
+		if (primaryTabs.some((tab) => tab.dataset.primaryCategory === requestedCategory)) {
+			selectPrimary(requestedCategory);
+		}
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initializeCatalog, { once: true });
+	} else {
+		initializeCatalog();
+	}
+</script>

@@ -1,7 +1,27 @@
 {
   "name": "hauxon-website",
   "compatibility_date": "2026-10-22",
+  "main": "src/worker.ts",
+  "vars": {
+    "INQUIRY_TO_EMAIL": "Jojo@hxchairs.com",
+    "INQUIRY_FROM_EMAIL": "Hauxon Website <inquiry@hauxon.cn>"
+  },
+  "secrets": {
+    "required": ["RESEND_API_KEY"]
+  },
+  "ratelimits": [
+    {
+      "name": "INQUIRY_LIMITER",
+      "namespace_id": "1001",
+      "simple": {
+        "limit": 5,
+        "period": 60
+      }
+    }
+  ],
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
   }
 }

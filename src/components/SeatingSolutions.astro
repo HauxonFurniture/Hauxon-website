@@ -1,43 +1,30 @@
 ---
-import { existsSync } from 'node:fs';
-import { resolve } from 'node:path';
-
 const categories = [
 	{
 		title: 'Office Chair',
 		description: 'Ergonomic and professional seating for modern workplaces.',
 		image: '/images/categories/hauxon-office-chair.jpg',
-		route: '/products/office-chairs',
+		route: '/products#office-chair',
 	},
 	{
 		title: 'Leisure Chair',
 		description: 'Comfortable and stylish seating for versatile spaces.',
 		image: '/images/categories/hauxon-leisure-chair.jpg',
-		route: '/products/leisure-chairs',
+		route: '/products#leisure-chair',
 	},
 	{
 		title: 'Bar Stool',
 		description: 'Functional seating solutions for counters and high tables.',
 		image: '/images/categories/hauxon-bar-stool.jpg',
-		route: '/products/bar-stools',
+		route: '/products#bar-stool',
 	},
 	{
 		title: 'Specialty Chair',
 		description: 'Purpose-built seating for specialized working environments.',
 		image: '/images/categories/hauxon-specialty-chair.jpg',
-		route: '/products/specialty-chairs',
+		route: '/products#specialty-chair',
 	},
 ];
-
-const categoriesWithAssets = categories.map((category) => {
-	const routeFile = resolve(process.cwd(), 'src/pages', `${category.route.slice(1)}.astro`);
-	const routeIndex = resolve(process.cwd(), 'src/pages', category.route.slice(1), 'index.astro');
-
-	return {
-		...category,
-		routeExists: existsSync(routeFile) || existsSync(routeIndex),
-	};
-});
 ---
 
 <section class="seating-solutions" aria-labelledby="solutions-title">
@@ -51,7 +38,7 @@ const categoriesWithAssets = categories.map((category) => {
 		</header>
 
 		<div class="solutions-grid">
-			{categoriesWithAssets.map((category) => (
+			{categories.map((category) => (
 				<article class="solution-item">
 					<div class="image-frame">
 						<img src={category.image} alt={category.title} loading="lazy" />
@@ -59,15 +46,9 @@ const categoriesWithAssets = categories.map((category) => {
 					<div class="solution-content">
 						<h3>{category.title}</h3>
 						<p>{category.description}</p>
-						{category.routeExists ? (
-							<a class="view-products" href={category.route}>
-								View Products <span aria-hidden="true">→</span>
-							</a>
-						) : (
-							<button class="view-products" type="button" disabled title="Product category page coming soon">
-								View Products <span aria-hidden="true">→</span>
-							</button>
-						)}
+						<a class="view-products" href={category.route}>
+							View Products <span aria-hidden="true">→</span>
+						</a>
 					</div>
 				</article>
 			))}

@@ -1,0 +1,367 @@
+<dialog
+	class="quote-cart-dialog"
+	id="quote-cart-dialog"
+	aria-labelledby="quote-cart-title"
+	aria-describedby="quote-cart-subtitle"
+>
+	<div class="quote-cart-panel">
+		<header class="quote-cart-header">
+			<div>
+				<h2 id="quote-cart-title">Your Quote Cart</h2>
+				<p id="quote-cart-subtitle">Review the products you are interested in.</p>
+			</div>
+			<button class="quote-cart-close" type="button" data-quote-close aria-label="Close quote cart">
+				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+			</button>
+		</header>
+
+		<div class="quote-cart-body">
+			<div class="quote-cart-empty" data-quote-empty hidden>
+				<p class="quote-cart-empty-title">Your quote cart is empty.</p>
+				<p>Browse our products and add the models you are interested in.</p>
+				<a class="quote-cart-browse" href="/products" data-quote-close>
+					Browse Products <span aria-hidden="true">→</span>
+				</a>
+			</div>
+			<ul class="quote-cart-list" data-quote-list aria-label="Selected products"></ul>
+		</div>
+
+		<p class="quote-cart-status" data-quote-status role="status" aria-live="polite"></p>
+
+		<footer class="quote-cart-footer" data-quote-footer hidden>
+			<p class="quote-cart-total" data-quote-total>0 Products Selected</p>
+			<a class="quote-cart-request" href="/quote">
+				Request a Quote <span aria-hidden="true">→</span>
+			</a>
+			<p class="quote-cart-coming-soon">Coming soon</p>
+			<button class="quote-cart-continue" type="button" data-quote-close>Continue Browsing</button>
+		</footer>
+	</div>
+</dialog>
+
+<style>
+	.quote-cart-dialog {
+		position: fixed;
+		inset: 0 0 0 auto;
+		width: min(440px, 100vw);
+		max-width: none;
+		height: 100vh;
+		height: 100dvh;
+		max-height: none;
+		margin: 0;
+		padding: 0;
+		overflow: visible;
+		border: 0;
+		background: transparent;
+		color: #111827;
+		font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+	}
+
+	.quote-cart-dialog::backdrop {
+		background: rgb(15 23 42 / 42%);
+	}
+
+	.quote-cart-panel {
+		box-sizing: border-box;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		background: #fff;
+		box-shadow: -12px 0 32px rgb(15 23 42 / 10%);
+		transform: translateX(100%);
+		transition: transform 220ms ease;
+	}
+
+	.quote-cart-dialog.is-open .quote-cart-panel {
+		transform: translateX(0);
+	}
+
+	.quote-cart-header {
+		min-height: 100px;
+		padding: 24px;
+		box-sizing: border-box;
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 18px;
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	.quote-cart-header h2 {
+		margin: 0;
+		color: #111827;
+		font-size: 22px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	.quote-cart-header p {
+		margin: 7px 0 0;
+		color: #64748b;
+		font-size: 14px;
+		line-height: 1.5;
+	}
+
+	.quote-cart-close {
+		width: 38px;
+		height: 38px;
+		flex: 0 0 auto;
+		padding: 0;
+		display: grid;
+		place-items: center;
+		border: 1px solid #e5e7eb;
+		border-radius: 50%;
+		background: #fff;
+		color: #0b2d5c;
+		cursor: pointer;
+		transition: background-color 160ms ease;
+	}
+
+	.quote-cart-close:hover {
+		background: #f4f7fb;
+	}
+
+	.quote-cart-close svg {
+		width: 18px;
+		height: 18px;
+		fill: none;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-width: 1.7;
+	}
+
+	.quote-cart-body {
+		min-height: 0;
+		flex: 1;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+	}
+
+	.quote-cart-list {
+		margin: 0;
+		padding: 0 24px;
+		list-style: none;
+	}
+
+	:global(.quote-cart-item) {
+		min-width: 0;
+		padding: 18px 0;
+		display: grid;
+		grid-template-columns: 76px minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 14px;
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	:global(.quote-cart-image) {
+		width: 76px;
+		aspect-ratio: 4 / 3;
+		overflow: hidden;
+		border-radius: 6px;
+		background: #f2f3f5;
+	}
+
+	:global(.quote-cart-image img) {
+		width: 100%;
+		height: 100%;
+		display: block;
+		object-fit: cover;
+	}
+
+	:global(.quote-cart-item-copy) {
+		min-width: 0;
+	}
+
+	:global(.quote-cart-item-copy h3) {
+		margin: 0;
+		color: #111827;
+		font-size: 15px;
+		font-weight: 600;
+		line-height: 1.4;
+	}
+
+	:global(.quote-cart-item-copy p) {
+		margin: 5px 0 0;
+		color: #64748b;
+		font-size: 13px;
+		line-height: 1.4;
+	}
+
+	:global(.quote-cart-remove) {
+		padding: 8px 0 8px 8px;
+		border: 0;
+		background: transparent;
+		color: #64748b;
+		font: inherit;
+		font-size: 12px;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		cursor: pointer;
+	}
+
+	:global(.quote-cart-remove:hover) {
+		color: #0b2d5c;
+	}
+
+	.quote-cart-empty {
+		padding: 56px 28px;
+		color: #64748b;
+		text-align: center;
+	}
+
+	.quote-cart-empty[hidden],
+	.quote-cart-footer[hidden] {
+		display: none;
+	}
+
+	.quote-cart-empty p {
+		margin: 0 auto 10px;
+		max-width: 300px;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	.quote-cart-empty .quote-cart-empty-title {
+		margin-bottom: 8px;
+		color: #111827;
+		font-size: 17px;
+		font-weight: 600;
+	}
+
+	.quote-cart-browse {
+		min-height: 44px;
+		margin-top: 16px;
+		padding: 0 20px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		border-radius: 5px;
+		background: #0b2d5c;
+		color: #fff;
+		font-size: 14px;
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.quote-cart-browse:hover {
+		background: #164774;
+	}
+
+	.quote-cart-status {
+		margin: 0;
+		padding: 0 24px;
+		color: #64748b;
+		font-size: 12px;
+		line-height: 1.5;
+	}
+
+	.quote-cart-status:empty {
+		display: none;
+	}
+
+	.quote-cart-footer {
+		padding: 20px 24px 24px;
+		border-top: 1px solid #e5e7eb;
+		background: #fff;
+	}
+
+	.quote-cart-total {
+		margin: 0 0 14px;
+		color: #111827;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.quote-cart-request {
+		width: 100%;
+		min-height: 48px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		box-sizing: border-box;
+		border: 0;
+		border-radius: 5px;
+		background: #0b2d5c;
+		color: #fff;
+		font: inherit;
+		font-size: 14px;
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.quote-cart-request:hover {
+		background: #164774;
+	}
+
+	.quote-cart-coming-soon {
+		margin: 7px 0 0;
+		color: #64748b;
+		font-size: 12px;
+		text-align: center;
+	}
+
+	.quote-cart-continue {
+		width: 100%;
+		min-height: 42px;
+		margin-top: 12px;
+		border: 1px solid #d9dee5;
+		border-radius: 5px;
+		background: #fff;
+		color: #0b2d5c;
+		font: inherit;
+		font-size: 13px;
+		font-weight: 500;
+		cursor: pointer;
+	}
+
+	.quote-cart-continue:hover {
+		background: #f4f7fb;
+	}
+
+	.quote-cart-close:focus-visible,
+	:global(.quote-cart-remove:focus-visible),
+	.quote-cart-browse:focus-visible,
+	.quote-cart-request:focus-visible,
+	.quote-cart-continue:focus-visible {
+		outline: 2px solid #0b2d5c;
+		outline-offset: 3px;
+	}
+
+	@media (max-width: 480px) {
+		.quote-cart-dialog {
+			width: 100vw;
+		}
+
+		.quote-cart-header {
+			padding: 20px;
+		}
+
+		.quote-cart-list {
+			padding-inline: 20px;
+		}
+
+		.quote-cart-footer {
+			padding: 18px 20px 20px;
+		}
+
+		.quote-cart-status {
+			padding-inline: 20px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.quote-cart-panel,
+		.quote-cart-close,
+		.quote-cart-browse,
+		.quote-cart-continue {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	import '../scripts/quote-cart';
+</script>

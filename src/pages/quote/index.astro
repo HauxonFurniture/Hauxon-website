@@ -1,0 +1,545 @@
+---
+import Header from '../../components/Header.astro';
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+	title="Request a Quote | Hauxon Furniture"
+	description="Request a quotation for office chairs and seating products from Hauxon. Select multiple models and send your inquiry to our manufacturing team."
+>
+	<Header />
+	<main class="quote-page">
+		<section class="quote-intro" aria-labelledby="quote-page-title">
+			<div class="quote-container">
+				<p class="quote-eyebrow">Inquiry</p>
+				<h1 id="quote-page-title">Request a Quote</h1>
+				<p>Tell us which products you are interested in, and our team will get back to you with pricing and further details.</p>
+			</div>
+		</section>
+
+		<div class="quote-container quote-layout">
+			<section class="selected-products" aria-labelledby="selected-products-title">
+				<div class="section-heading">
+					<div>
+						<h2 id="selected-products-title">Selected Products</h2>
+						<p class="selected-count" data-quote-page-count>0 products selected</p>
+					</div>
+					<a class="add-more-link" href="/products">+ Add More Products</a>
+				</div>
+
+				<div class="selected-products-list" data-quote-page-list aria-label="Selected quote products"></div>
+				<div class="quote-empty-state" data-quote-page-empty hidden>
+					<h3>No products selected yet.</h3>
+					<p>You can browse our collection or send us a general inquiry about OEM and ODM manufacturing.</p>
+					<a class="browse-products-link" href="/products">Browse Products <span aria-hidden="true">→</span></a>
+				</div>
+			</section>
+
+			<section class="inquiry-section" aria-labelledby="inquiry-heading">
+				<div class="inquiry-heading">
+					<h2 id="inquiry-heading">Your Details</h2>
+					<p>Share a few details so our team can follow up with you.</p>
+				</div>
+
+				<form class="inquiry-form" data-inquiry-form novalidate>
+					<div class="form-grid">
+						<label class="form-field">
+							<span>Name <span aria-hidden="true">*</span></span>
+							<input name="name" type="text" autocomplete="name" maxlength="100" required aria-describedby="name-error" />
+							<small class="field-error" id="name-error" data-field-error="name"></small>
+						</label>
+
+						<label class="form-field">
+							<span>Company <span aria-hidden="true">*</span></span>
+							<input name="company" type="text" autocomplete="organization" maxlength="150" required aria-describedby="company-error" />
+							<small class="field-error" id="company-error" data-field-error="company"></small>
+						</label>
+
+						<label class="form-field">
+							<span>Email <span aria-hidden="true">*</span></span>
+							<input name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="email-error" />
+							<small class="field-error" id="email-error" data-field-error="email"></small>
+						</label>
+
+						<label class="form-field">
+							<span>Country / Region <span aria-hidden="true">*</span></span>
+							<select name="country" autocomplete="country-name" required aria-describedby="country-error">
+								<option value="" selected disabled>Select a country or region</option>
+								<option>Australia</option>
+								<option>Brazil</option>
+								<option>Canada</option>
+								<option>China</option>
+								<option>France</option>
+								<option>Germany</option>
+								<option>India</option>
+								<option>Italy</option>
+								<option>Japan</option>
+								<option>Netherlands</option>
+								<option>Singapore</option>
+								<option>South Korea</option>
+								<option>Spain</option>
+								<option>United Arab Emirates</option>
+								<option>United Kingdom</option>
+								<option>United States</option>
+								<option>Other</option>
+							</select>
+							<small class="field-error" id="country-error" data-field-error="country"></small>
+						</label>
+
+						<label class="form-field">
+							<span>WhatsApp</span>
+							<input name="whatsapp" type="tel" autocomplete="tel" maxlength="30" aria-describedby="whatsapp-error" />
+							<small class="field-error" id="whatsapp-error" data-field-error="whatsapp"></small>
+						</label>
+
+						<label class="form-field form-field-wide">
+							<span>Message</span>
+							<textarea name="message" rows="5" maxlength="2000" aria-describedby="message-error"></textarea>
+							<small class="field-error" id="message-error" data-field-error="message"></small>
+						</label>
+					</div>
+
+					<label class="inquiry-honeypot" aria-hidden="true">
+						Leave this field empty
+						<input name="website" type="text" tabindex="-1" autocomplete="off" />
+					</label>
+					<button class="submit-inquiry" type="submit" disabled>Submit Inquiry <span aria-hidden="true">→</span></button>
+					<p class="submission-note" data-submission-note role="status" aria-live="polite">
+						Your inquiry details are only used to respond to you.
+					</p>
+				</form>
+			</section>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	.quote-page {
+		min-height: 60vh;
+		background: #fff;
+		color: #111827;
+		font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+	}
+
+	.quote-container {
+		width: min(calc(100% - 64px), 1440px);
+		margin-inline: auto;
+	}
+
+	.quote-intro {
+		padding: 48px 0 52px;
+		background: #f4f7fb;
+	}
+
+	.quote-eyebrow {
+		margin: 0 0 10px;
+		color: #0b2d5c;
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 1.3px;
+		text-transform: uppercase;
+	}
+
+	.quote-intro h1 {
+		margin: 0;
+		color: #111827;
+		font-size: clamp(34px, 4vw, 48px);
+		font-weight: 600;
+		letter-spacing: -0.035em;
+		line-height: 1.15;
+	}
+
+	.quote-intro > .quote-container > p:last-child {
+		max-width: 760px;
+		margin: 14px 0 0;
+		color: #64748b;
+		font-size: 16px;
+		line-height: 1.65;
+	}
+
+	.quote-layout {
+		padding-top: 48px;
+		padding-bottom: 88px;
+		display: grid;
+		grid-template-columns: minmax(0, 40fr) minmax(0, 60fr);
+		align-items: start;
+		gap: 56px;
+	}
+
+	.selected-products,
+	.inquiry-section {
+		min-width: 0;
+	}
+
+	.section-heading {
+		margin-bottom: 24px;
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	.section-heading h2,
+	.inquiry-heading h2 {
+		margin: 0;
+		color: #111827;
+		font-size: 22px;
+		font-weight: 600;
+		line-height: 1.35;
+	}
+
+	.selected-count,
+	.inquiry-heading p {
+		margin: 7px 0 0;
+		color: #64748b;
+		font-size: 13px;
+		line-height: 1.5;
+	}
+
+	.add-more-link {
+		flex: 0 0 auto;
+		padding-top: 5px;
+		color: #0b2d5c;
+		font-size: 13px;
+		font-weight: 500;
+		text-decoration: none;
+	}
+
+	.add-more-link:hover {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.inquiry-honeypot {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+	}
+
+	.selected-products-list {
+		border-top: 1px solid #e5e7eb;
+	}
+
+	:global(.selected-product) {
+		padding: 16px 0;
+		display: grid;
+		grid-template-columns: 88px minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 14px;
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	:global(.selected-product-image) {
+		width: 88px;
+		aspect-ratio: 4 / 3;
+		overflow: hidden;
+		border-radius: 6px;
+		background: #f2f3f5;
+	}
+
+	:global(.selected-product-image img) {
+		width: 100%;
+		height: 100%;
+		display: block;
+		object-fit: cover;
+	}
+
+	:global(.selected-product-info) {
+		min-width: 0;
+	}
+
+	:global(.selected-product-info h3) {
+		margin: 0;
+		color: #111827;
+		font-size: 15px;
+		font-weight: 600;
+		line-height: 1.4;
+	}
+
+	:global(.selected-product-info p) {
+		margin: 5px 0 0;
+		color: #64748b;
+		font-size: 13px;
+		line-height: 1.4;
+	}
+
+	:global(.remove-selected-product) {
+		padding: 8px 0 8px 6px;
+		border: 0;
+		background: transparent;
+		color: #64748b;
+		font: inherit;
+		font-size: 12px;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		cursor: pointer;
+	}
+
+	:global(.remove-selected-product:hover) {
+		color: #0b2d5c;
+	}
+
+	.quote-empty-state {
+		padding: 28px 24px;
+		border: 1px solid #e5e7eb;
+		border-top: 0;
+		border-radius: 0 0 7px 7px;
+		background: #fbfcfe;
+	}
+
+	.quote-empty-state[hidden] {
+		display: none;
+	}
+
+	.quote-empty-state h3 {
+		margin: 0;
+		color: #111827;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 1.4;
+	}
+
+	.quote-empty-state p {
+		margin: 9px 0 0;
+		color: #64748b;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	.browse-products-link {
+		min-height: 42px;
+		margin-top: 18px;
+		padding: 0 16px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		border-radius: 5px;
+		background: #0b2d5c;
+		color: #fff;
+		font-size: 13px;
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.browse-products-link:hover {
+		background: #164774;
+	}
+
+	.inquiry-section {
+		padding: 28px;
+		border: 1px solid #e5e7eb;
+		border-radius: 8px;
+		background: #fff;
+	}
+
+	.inquiry-heading {
+		margin-bottom: 24px;
+	}
+
+	.form-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 18px 16px;
+	}
+
+	.form-field {
+		min-width: 0;
+		display: grid;
+		align-content: start;
+		gap: 7px;
+		color: #334155;
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 1.4;
+	}
+
+	.form-field > span > span {
+		color: #0b2d5c;
+	}
+
+	.form-field-wide {
+		grid-column: 1 / -1;
+	}
+
+	.form-field input,
+	.form-field select,
+	.form-field textarea {
+		box-sizing: border-box;
+		width: 100%;
+		min-width: 0;
+		min-height: 46px;
+		padding: 0 12px;
+		border: 1px solid #d9dee5;
+		border-radius: 5px;
+		background: #fff;
+		color: #111827;
+		font: inherit;
+		font-size: 14px;
+		font-weight: 400;
+	}
+
+	.form-field select:invalid {
+		color: #64748b;
+	}
+
+	.form-field textarea {
+		min-height: 116px;
+		padding: 12px;
+		resize: vertical;
+		line-height: 1.5;
+	}
+
+	.form-field input:focus,
+	.form-field select:focus,
+	.form-field textarea:focus {
+		border-color: #0b2d5c;
+		outline: 2px solid rgb(11 45 92 / 12%);
+		outline-offset: 1px;
+	}
+
+	.form-field [aria-invalid='true'] {
+		border-color: #b42318;
+	}
+
+	.field-error {
+		min-height: 0;
+		color: #b42318;
+		font-size: 12px;
+		font-weight: 400;
+		line-height: 1.4;
+	}
+
+	.field-error:empty {
+		display: none;
+	}
+
+	.submit-inquiry {
+		min-width: 190px;
+		min-height: 48px;
+		margin-top: 22px;
+		padding: 0 18px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 9px;
+		border: 0;
+		border-radius: 5px;
+		background: #0b2d5c;
+		color: #fff;
+		font: inherit;
+		font-size: 14px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 180ms ease;
+	}
+
+	.submit-inquiry:hover {
+		background: #164774;
+	}
+
+	.submit-inquiry:focus-visible,
+	:global(.remove-selected-product:focus-visible),
+	.add-more-link:focus-visible,
+	.browse-products-link:focus-visible {
+		outline: 2px solid #0b2d5c;
+		outline-offset: 3px;
+	}
+
+	.submission-note {
+		margin: 12px 0 0;
+		color: #64748b;
+		font-size: 12px;
+		line-height: 1.5;
+	}
+
+	@media (max-width: 960px) {
+		.quote-layout {
+			grid-template-columns: minmax(0, 38fr) minmax(0, 62fr);
+			gap: 32px;
+		}
+
+		.inquiry-section {
+			padding: 22px;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.quote-container {
+			width: min(calc(100% - 40px), 560px);
+		}
+
+		.quote-intro {
+			padding: 40px 0 44px;
+		}
+
+		.quote-intro h1 {
+			font-size: 36px;
+		}
+
+		.quote-intro > .quote-container > p:last-child {
+			font-size: 15px;
+		}
+
+		.quote-layout {
+			padding-top: 32px;
+			padding-bottom: 60px;
+			grid-template-columns: minmax(0, 1fr);
+			gap: 34px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.quote-container {
+			width: calc(100% - 32px);
+		}
+
+		.section-heading h2,
+		.inquiry-heading h2 {
+			font-size: 20px;
+		}
+
+		.add-more-link {
+			font-size: 12px;
+		}
+
+		.selected-product {
+			grid-template-columns: 76px minmax(0, 1fr) auto;
+			gap: 10px;
+		}
+
+		.selected-product-image {
+			width: 76px;
+		}
+
+		.inquiry-section {
+			padding: 18px;
+		}
+
+		.form-grid {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 15px;
+		}
+
+		.form-field-wide {
+			grid-column: auto;
+		}
+
+		.submit-inquiry {
+			width: 100%;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.submit-inquiry {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	import '../../scripts/quote-page';
+</script>

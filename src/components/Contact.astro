@@ -36,21 +36,21 @@ const countryOptions = [
 			</p>
 		</div>
 
-		<form class="contact-form" novalidate>
+		<form class="contact-form" data-contact-form novalidate>
 			<div class="contact-fields">
 				<label class="contact-field">
 					<span>Name <span aria-hidden="true">*</span></span>
-					<input name="name" type="text" autocomplete="name" placeholder="Your name" required />
+					<input name="name" type="text" autocomplete="name" placeholder="Your name" maxlength="100" required />
 				</label>
 
 				<label class="contact-field">
 					<span>E-mail <span aria-hidden="true">*</span></span>
-					<input name="email" type="email" autocomplete="email" placeholder="Your e-mail address" required />
+					<input name="email" type="email" autocomplete="email" placeholder="Your e-mail address" maxlength="254" required />
 				</label>
 
 				<label class="contact-field contact-field-full">
 					<span>Phone / WhatsApp</span>
-					<input name="phone" type="tel" autocomplete="tel" placeholder="Your phone number" />
+					<input name="phone" type="tel" autocomplete="tel" placeholder="Your phone number" maxlength="30" />
 				</label>
 
 				<label class="contact-field contact-field-full">
@@ -63,10 +63,14 @@ const countryOptions = [
 
 				<label class="contact-field contact-field-full">
 					<span>Message <span aria-hidden="true">*</span></span>
-					<textarea name="message" placeholder="Tell us about your requirements" required></textarea>
+					<textarea name="message" placeholder="Tell us about your requirements" maxlength="2000" required></textarea>
 				</label>
 			</div>
 
+			<label class="contact-honeypot" aria-hidden="true">
+				Leave this field empty
+				<input name="website" type="text" tabindex="-1" autocomplete="off" />
+			</label>
 			<button class="contact-submit" type="submit">
 				<span>Request a Quote</span>
 				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg>
@@ -276,6 +280,19 @@ const countryOptions = [
 		display: none;
 	}
 
+	.contact-status.is-success {
+		color: #246b45;
+	}
+
+	.contact-honeypot {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+	}
+
 	@media (max-width: 1100px) {
 		.contact-section {
 			min-height: 660px;
@@ -375,16 +392,17 @@ const countryOptions = [
 
 <script>
 	function initializeContactForm() {
-		const form = document.querySelector('.contact-form');
+		const form = document.querySelector<HTMLFormElement>('.contact-form');
 		if (!(form instanceof HTMLFormElement) || form.dataset.ready === 'true') return;
 		form.dataset.ready = 'true';
 
-		const button = form.querySelector('.contact-submit');
-		const buttonText = button.querySelector('span');
-		const status = form.querySelector('.contact-status');
+		const button = form.querySelector<HTMLButtonElement>('.contact-submit');
+		const buttonText = button?.querySelector<HTMLSpanElement>('span');
+		const status = form.querySelector<HTMLElement>('.contact-status');
+		if (!button || !buttonText || !status) return;
 		let submitting = false;
 
-		form.addEventListener('submit', (event) => {
+		form.addEventListener('submit', async (event) => {
 			event.preventDefault();
 			if (submitting) return;
 
@@ -393,16 +411,40 @@ const countryOptions = [
 			submitting = true;
 			button.disabled = true;
 			button.setAttribute('aria-busy', 'true');
-			buttonText.textContent = 'Checking details…';
+			buttonText.textContent = 'Sending…';
 			status.textContent = '';
+			status.classList.remove('is-success');
 
-			window.setTimeout(() => {
-				status.textContent = 'Your details are valid, but inquiry delivery is not configured on this website yet. Your request was not sent.';
+			try {
+				const formData = new FormData(form);
+				const response = await fetch('/api/inquiry', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+					body: JSON.stringify({
+						name: String(formData.get('name') ?? '').trim(),
+						email: String(formData.get('email') ?? '').trim(),
+						phone: String(formData.get('phone') ?? '').trim(),
+						country: String(formData.get('country') ?? '').trim(),
+						message: String(formData.get('message') ?? '').trim(),
+						website: String(formData.get('website') ?? '').trim(),
+						source: 'contact',
+					}),
+				});
+				const result: { success?: boolean } = await response.json();
+				if (!response.ok || result.success !== true) throw new Error('Inquiry delivery failed.');
+
+				form.reset();
+				status.textContent = 'Thank you. Your inquiry has been sent to our team.';
+				status.classList.add('is-success');
+			} catch (error) {
+				console.error('Unable to submit the Contact Us inquiry.', error);
+				status.textContent = 'We couldn’t send your inquiry. Please try again.';
+			} finally {
 				buttonText.textContent = 'Request a Quote';
 				button.disabled = false;
 				button.removeAttribute('aria-busy');
 				submitting = false;
-			}, 250);
+			}
 		});
 
 		form.addEventListener('input', () => {
