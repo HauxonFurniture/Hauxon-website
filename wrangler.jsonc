@@ -6,9 +6,6 @@
     "INQUIRY_TO_EMAIL": "Jojo@hxchairs.com",
     "INQUIRY_FROM_EMAIL": "Hauxon Website <inquiry@hauxon.cn>"
   },
-  "secrets": {
-    "required": ["RESEND_API_KEY"]
-  },
   "ratelimits": [
     {
       "name": "INQUIRY_LIMITER",
