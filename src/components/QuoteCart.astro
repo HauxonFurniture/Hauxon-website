@@ -3,12 +3,13 @@
 	id="quote-cart-dialog"
 	aria-labelledby="quote-cart-title"
 	aria-describedby="quote-cart-subtitle"
+	aria-modal="false"
 >
 	<div class="quote-cart-panel">
 		<header class="quote-cart-header">
 			<div>
-				<h2 id="quote-cart-title">Your Quote Cart</h2>
-				<p id="quote-cart-subtitle">Review the products you are interested in.</p>
+				<h2 id="quote-cart-title">Your Quote</h2>
+				<p id="quote-cart-subtitle">Review your selected models or send a custom inquiry.</p>
 			</div>
 			<button class="quote-cart-close" type="button" data-quote-close aria-label="Close quote cart">
 				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
@@ -20,7 +21,9 @@
 				<p class="quote-cart-empty-title">Have a custom project in mind?</p>
 				<p id="quote-cart-empty-description">You can send us an inquiry without selecting any products.</p>
 			</div>
-			<ul class="quote-cart-list" data-quote-list aria-label="Selected products"></ul>
+			<div class="quote-cart-list-shell" data-quote-list-shell hidden>
+				<ul class="quote-cart-list" data-quote-list aria-label="Selected products"></ul>
+			</div>
 		</div>
 
 		<p class="quote-cart-status" data-quote-status role="status" aria-live="polite"></p>
@@ -30,7 +33,6 @@
 			<a class="quote-cart-request" href="/quote">
 				Request a Quote <span aria-hidden="true">→</span>
 			</a>
-			<button class="quote-cart-continue" type="button" data-quote-close>Continue Browsing</button>
 		</footer>
 	</div>
 </dialog>
@@ -38,84 +40,89 @@
 <style>
 	.quote-cart-dialog {
 		position: fixed;
-		inset: 0 0 0 auto;
-		width: min(440px, 100vw);
+		z-index: 1000;
+		inset: auto;
+		top: var(--quote-cart-top, 72px);
+		right: var(--quote-cart-right, 20px);
+		box-sizing: border-box;
+		--quote-cart-max-height: min(650px, calc(100dvh - var(--quote-cart-top, 72px) - 16px));
+		width: min(480px, calc(100vw - 32px));
 		max-width: none;
-		height: 100vh;
-		height: 100dvh;
-		max-height: none;
+		max-height: var(--quote-cart-max-height);
 		margin: 0;
 		padding: 0;
-		overflow: visible;
-		border: 0;
-		background: transparent;
+		overflow: hidden;
+		border: 1px solid #e1e7ef;
+		border-radius: 12px;
+		background: #fff;
 		color: #111827;
 		font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+		box-shadow: 0 14px 36px rgb(15 23 42 / 16%);
+	}
+
+	.quote-cart-dialog[open] {
+		display: flex;
 	}
 
 	.quote-cart-dialog::backdrop {
-		background: rgb(15 23 42 / 42%);
+		background: transparent;
 	}
 
 	.quote-cart-panel {
 		box-sizing: border-box;
 		width: 100%;
-		height: 100%;
+		height: fit-content;
+		max-height: calc(var(--quote-cart-max-height) - 2px);
+		min-height: 0;
 		display: flex;
 		flex-direction: column;
 		background: #fff;
-		box-shadow: -12px 0 32px rgb(15 23 42 / 10%);
-		transform: translateX(100%);
-		transition: transform 220ms ease;
-	}
-
-	.quote-cart-dialog.is-open .quote-cart-panel {
-		transform: translateX(0);
 	}
 
 	.quote-cart-header {
-		min-height: 100px;
-		padding: 24px;
+		min-height: 84px;
+		padding: 18px 28px;
 		box-sizing: border-box;
 		display: flex;
-		align-items: flex-start;
+		align-items: center;
 		justify-content: space-between;
-		gap: 18px;
+		gap: 12px;
 		border-bottom: 1px solid #e5e7eb;
 	}
 
 	.quote-cart-header h2 {
 		margin: 0;
-		color: #111827;
-		font-size: 22px;
+		color: #111e32;
+		font-size: 17px;
 		font-weight: 600;
 		line-height: 1.3;
 	}
 
 	.quote-cart-header p {
-		margin: 7px 0 0;
+		margin: 4px 0 0;
 		color: #64748b;
-		font-size: 14px;
-		line-height: 1.5;
+		font-size: 12px;
+		line-height: 1.45;
 	}
 
 	.quote-cart-close {
-		width: 38px;
-		height: 38px;
+		width: 30px;
+		height: 30px;
 		flex: 0 0 auto;
 		padding: 0;
 		display: grid;
 		place-items: center;
-		border: 1px solid #e5e7eb;
+		border: 1px solid transparent;
 		border-radius: 50%;
 		background: #fff;
-		color: #0b2d5c;
+		color: #64748b;
 		cursor: pointer;
 		transition: background-color 160ms ease;
 	}
 
 	.quote-cart-close:hover {
 		background: #f4f7fb;
+		color: #0b2d5c;
 	}
 
 	.quote-cart-close svg {
@@ -129,30 +136,65 @@
 
 	.quote-cart-body {
 		min-height: 0;
-		flex: 1;
-		overflow-y: auto;
+		flex: 1 1 auto;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
 		overscroll-behavior: contain;
 	}
 
+	.quote-cart-list-shell {
+		position: relative;
+		min-height: 0;
+		flex: 1 1 auto;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	.quote-cart-list-shell[hidden] {
+		display: none;
+	}
+
+	.quote-cart-list-shell[data-has-more='true']::after {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		height: 28px;
+		background: linear-gradient(transparent, rgb(255 255 255 / 96%));
+		content: '';
+		pointer-events: none;
+	}
+
 	.quote-cart-list {
+		box-sizing: border-box;
+		min-height: 0;
+		flex: 1 1 auto;
 		margin: 0;
-		padding: 0 24px;
+		padding: 0 28px;
+		overflow-y: auto;
+		overscroll-behavior: contain;
 		list-style: none;
+		scrollbar-gutter: stable;
 	}
 
 	:global(.quote-cart-item) {
+		box-sizing: border-box;
 		min-width: 0;
-		padding: 18px 0;
+		min-height: 96px;
+		padding: 14px 0;
 		display: grid;
-		grid-template-columns: 76px minmax(0, 1fr) auto;
+		grid-template-columns: 90px minmax(0, 1fr) auto;
 		align-items: center;
-		gap: 14px;
+		gap: 16px;
 		border-bottom: 1px solid #e5e7eb;
 	}
 
 	:global(.quote-cart-image) {
-		width: 76px;
-		aspect-ratio: 4 / 3;
+		width: 90px;
+		height: 68px;
+		box-sizing: border-box;
 		overflow: hidden;
 		border-radius: 6px;
 		background: #f2f3f5;
@@ -172,7 +214,7 @@
 	:global(.quote-cart-item-copy h3) {
 		margin: 0;
 		color: #111827;
-		font-size: 15px;
+		font-size: 14px;
 		font-weight: 600;
 		line-height: 1.4;
 	}
@@ -180,12 +222,12 @@
 	:global(.quote-cart-item-copy p) {
 		margin: 5px 0 0;
 		color: #64748b;
-		font-size: 13px;
+		font-size: 12px;
 		line-height: 1.4;
 	}
 
 	:global(.quote-cart-remove) {
-		padding: 8px 0 8px 8px;
+		padding: 8px 0 8px 4px;
 		border: 0;
 		background: transparent;
 		color: #64748b;
@@ -201,7 +243,7 @@
 	}
 
 	.quote-cart-empty {
-		padding: 56px 28px;
+		padding: 32px 28px;
 		color: #64748b;
 		text-align: center;
 	}
@@ -212,21 +254,21 @@
 
 	.quote-cart-empty p {
 		margin: 0 auto 10px;
-		max-width: 300px;
-		font-size: 14px;
+		max-width: 310px;
+		font-size: 13px;
 		line-height: 1.6;
 	}
 
 	.quote-cart-empty .quote-cart-empty-title {
-		margin-bottom: 8px;
+		margin-bottom: 6px;
 		color: #111827;
-		font-size: 17px;
+		font-size: 15px;
 		font-weight: 600;
 	}
 
 	.quote-cart-status {
 		margin: 0;
-		padding: 0 24px;
+		padding: 0 28px;
 		color: #64748b;
 		font-size: 12px;
 		line-height: 1.5;
@@ -237,21 +279,22 @@
 	}
 
 	.quote-cart-footer {
-		padding: 20px 24px 24px;
+		flex: 0 0 auto;
+		padding: 20px 28px 24px;
 		border-top: 1px solid #e5e7eb;
 		background: #fff;
 	}
 
 	.quote-cart-total {
-		margin: 0 0 14px;
+		margin: 0 0 12px;
 		color: #111827;
-		font-size: 14px;
+		font-size: 13px;
 		font-weight: 600;
 	}
 
 	.quote-cart-request {
 		width: 100%;
-		min-height: 48px;
+		min-height: 46px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -271,27 +314,8 @@
 		background: #164774;
 	}
 
-	.quote-cart-continue {
-		width: 100%;
-		min-height: 42px;
-		margin-top: 12px;
-		border: 1px solid #d9dee5;
-		border-radius: 5px;
-		background: #fff;
-		color: #0b2d5c;
-		font: inherit;
-		font-size: 13px;
-		font-weight: 500;
-		cursor: pointer;
-	}
-
-	.quote-cart-continue:hover {
-		background: #f4f7fb;
-	}
-
 	.quote-cart-close:focus-visible,
 	:global(.quote-cart-remove:focus-visible),
-	.quote-cart-continue:focus-visible,
 	.quote-cart-request:focus-visible {
 		outline: 2px solid #0b2d5c;
 		outline-offset: 3px;
@@ -299,11 +323,11 @@
 
 	@media (max-width: 480px) {
 		.quote-cart-dialog {
-			width: 100vw;
+			width: calc(100vw - 32px);
 		}
 
 		.quote-cart-header {
-			padding: 20px;
+			padding-inline: 20px;
 		}
 
 		.quote-cart-list {
@@ -320,9 +344,7 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.quote-cart-panel,
-		.quote-cart-close,
-		.quote-cart-continue {
+		.quote-cart-close {
 			transition: none;
 		}
 	}
