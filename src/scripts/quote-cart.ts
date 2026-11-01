@@ -35,6 +35,8 @@ function initializeQuoteCart() {
 	dialog.dataset.ready = 'true';
 	let selectedModels: string[] = [];
 	let lastTrigger: HTMLButtonElement | null = null;
+	let closeTimer: number | undefined;
+	let bodyOverflowBeforeOpen = '';
 
 	function readStoredModels(value: string | null): string[] {
 		if (!value) return [];
@@ -64,12 +66,6 @@ function initializeQuoteCart() {
 			status.textContent = 'Quote selections are only available until you leave this page because browser storage is unavailable.';
 		}
 		window.dispatchEvent(new CustomEvent<string[]>(cartChangeEvent, { detail: [...selectedModels] }));
-	}
-
-	function updateScrollHint() {
-		const hasMore = list.scrollHeight > list.clientHeight + 1
-			&& list.scrollTop + list.clientHeight < list.scrollHeight - 1;
-		listShell.dataset.hasMore = String(hasMore);
 	}
 
 	function render() {
@@ -130,29 +126,27 @@ function initializeQuoteCart() {
 		listShell.hidden = count === 0;
 		total.hidden = count === 0;
 		total.textContent = `${count} ${count === 1 ? 'product model' : 'product models'} selected`;
-		window.requestAnimationFrame(updateScrollHint);
-	}
-
-	function positionCart(trigger: HTMLButtonElement) {
-		const rect = trigger.getBoundingClientRect();
-		const panelWidth = Math.min(480, window.innerWidth - 32);
-		const right = Math.max(16, Math.min(window.innerWidth - rect.right, window.innerWidth - panelWidth - 16));
-		const top = rect.bottom + 8;
-		dialog.style.setProperty('--quote-cart-right', `${Math.round(right)}px`);
-		dialog.style.setProperty('--quote-cart-top', `${Math.round(top)}px`);
 	}
 
 	function closeCart(restoreFocus = false) {
 		if (!dialog.open) return;
-		dialog.close();
-		const triggerToRestore = lastTrigger;
-		lastTrigger = null;
+		dialog.classList.remove('is-open');
+		if (closeTimer !== undefined) window.clearTimeout(closeTimer);
 		document.querySelectorAll<HTMLButtonElement>('.quote-cart-trigger').forEach((trigger) => {
 			trigger.setAttribute('aria-expanded', 'false');
 		});
-		if (restoreFocus && triggerToRestore?.isConnected) {
-			triggerToRestore.focus({ preventScroll: true });
-		}
+		closeTimer = window.setTimeout(() => {
+			if (!dialog.open) return;
+			const triggerToRestore = lastTrigger;
+			dialog.close();
+			document.body.style.overflow = bodyOverflowBeforeOpen;
+			bodyOverflowBeforeOpen = '';
+			lastTrigger = null;
+			closeTimer = undefined;
+			if (restoreFocus && triggerToRestore?.isConnected) {
+				triggerToRestore.focus({ preventScroll: true });
+			}
+		}, 220);
 	}
 
 	function openCart(trigger: HTMLButtonElement) {
@@ -160,11 +154,18 @@ function initializeQuoteCart() {
 			closeCart();
 			return;
 		}
+		if (closeTimer !== undefined) {
+			window.clearTimeout(closeTimer);
+			closeTimer = undefined;
+		}
 		lastTrigger = trigger;
-		positionCart(trigger);
-		if (!dialog.open) dialog.show();
+		if (!dialog.open) {
+			bodyOverflowBeforeOpen = document.body.style.overflow;
+			document.body.style.overflow = 'hidden';
+			dialog.showModal();
+		}
 		trigger.setAttribute('aria-expanded', 'true');
-		window.requestAnimationFrame(updateScrollHint);
+		window.requestAnimationFrame(() => dialog.classList.add('is-open'));
 		dialog.querySelector<HTMLButtonElement>('[data-quote-close]')?.focus();
 	}
 
@@ -172,8 +173,6 @@ function initializeQuoteCart() {
 		event.preventDefault();
 		closeCart(true);
 	});
-
-	list.addEventListener('scroll', updateScrollHint, { passive: true });
 
 	document.addEventListener('keydown', (event) => {
 		if (event.key === 'Escape' && dialog.open) {
@@ -185,6 +184,10 @@ function initializeQuoteCart() {
 	dialog.addEventListener('click', (event) => {
 		const target = event.target;
 		if (!(target instanceof Element)) return;
+		if (target === dialog) {
+			closeCart(true);
+			return;
+		}
 		const removeButton = target.closest<HTMLButtonElement>('[data-quote-remove]');
 		if (removeButton?.dataset.quoteRemove) {
 			selectedModels = selectedModels.filter((model) => model !== removeButton.dataset.quoteRemove);
@@ -204,8 +207,6 @@ function initializeQuoteCart() {
 			openCart(trigger);
 			return;
 		}
-		const clickPath = event.composedPath();
-		if (dialog.open && !dialog.contains(target) && !clickPath.includes(dialog)) closeCart();
 
 		const addButton = target.closest<HTMLButtonElement>('[data-quote-add]');
 		const model = addButton?.dataset.quoteAdd;
@@ -217,12 +218,6 @@ function initializeQuoteCart() {
 		addButton.classList.add('just-added');
 		window.setTimeout(() => addButton.classList.remove('just-added'), 500);
 	});
-
-	const repositionOpenCart = () => {
-		if (dialog.open && lastTrigger?.isConnected) positionCart(lastTrigger);
-	};
-	window.addEventListener('resize', repositionOpenCart);
-	window.addEventListener('scroll', repositionOpenCart, { capture: true, passive: true });
 
 	window.addEventListener('storage', (event) => {
 		if (event.key !== storageKey && event.key !== null) return;
