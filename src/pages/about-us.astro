@@ -113,35 +113,33 @@ const journey = [
 
 				<ol class="journey-list">
 					{journey.map((milestone, index) => (
-						<li class="journey-item">
+						<li class:list={['journey-item', { 'is-reversed': index % 2 === 1 }]}>
 							<div class="journey-marker" aria-hidden="true">
 								<span>{String(index + 1).padStart(2, '0')}</span>
 							</div>
-							<div class="journey-content">
-								<div class="journey-copy">
-									<p class="journey-eyebrow">{milestone.eyebrow}</p>
-									<p class="journey-date">{milestone.date}</p>
-									<h3>{milestone.title}</h3>
-									<p class="journey-description">{milestone.description}</p>
-								</div>
-								{milestone.image && (
-									<figure class="image-frame journey-image" data-about-image>
-										<img
-											src={milestone.image}
-											alt=""
-											width="960"
-											height="640"
-											loading="lazy"
-											decoding="async"
-										/>
-										<div class="image-placeholder" aria-hidden="true">
-											<span class="placeholder-label">{milestone.imageLabel}</span>
-											<span class="placeholder-note">Photograph to be added</span>
-										</div>
-										<figcaption>{milestone.imageAlt}</figcaption>
-									</figure>
-								)}
+							<div class="journey-copy">
+								<p class="journey-eyebrow">{milestone.eyebrow}</p>
+								<p class="journey-date">{milestone.date}</p>
+								<h3>{milestone.title}</h3>
+								<p class="journey-description">{milestone.description}</p>
 							</div>
+							<figure class="image-frame journey-image" data-about-image={milestone.image ? '' : undefined}>
+								{milestone.image && (
+									<img
+										src={milestone.image}
+										alt=""
+										width="960"
+										height="720"
+										loading="lazy"
+										decoding="async"
+									/>
+								)}
+								<div class="image-placeholder" aria-hidden="true">
+									<span class="placeholder-label">{milestone.imageLabel ?? milestone.title}</span>
+									<span class="placeholder-note">Photograph to be added</span>
+								</div>
+								{milestone.imageAlt && <figcaption>{milestone.imageAlt}</figcaption>}
+							</figure>
 						</li>
 					))}
 				</ol>
@@ -456,27 +454,30 @@ const journey = [
 
 	.journey-list {
 		position: relative;
-		margin: 0;
+		width: min(100%, 1200px);
+		margin: 0 auto;
 		padding: 0;
 		list-style: none;
 	}
 
 	.journey-list::before {
 		position: absolute;
-		top: 26px;
-		bottom: 26px;
-		left: 190px;
+		top: 8px;
+		bottom: 8px;
+		left: 50%;
 		width: 1px;
 		background: var(--about-line);
 		content: '';
+		transform: translateX(-50%);
 	}
 
 	.journey-item {
 		position: relative;
 		display: grid;
-		grid-template-columns: 160px 1fr;
-		gap: 62px;
-		padding: 0 0 44px;
+		grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
+		align-items: center;
+		gap: 0;
+		padding: 0 0 48px;
 	}
 
 	.journey-item:last-child {
@@ -484,9 +485,9 @@ const journey = [
 	}
 
 	.journey-marker {
-		position: absolute;
-		top: 26px;
-		left: 182px;
+		grid-column: 2;
+		grid-row: 1;
+		justify-self: center;
 		z-index: 1;
 		width: 17px;
 		height: 17px;
@@ -505,18 +506,21 @@ const journey = [
 		font-size: 0;
 	}
 
-	.journey-content {
+	.journey-copy,
+	.journey-image {
 		min-width: 0;
-		padding: 0 0 0 4px;
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(240px, 0.72fr);
-		align-items: center;
-		gap: 36px;
 	}
 
 	.journey-copy {
 		grid-column: 1;
 		grid-row: 1;
+		padding-right: 28px;
+	}
+
+	.journey-item.is-reversed .journey-copy {
+		grid-column: 3;
+		padding-right: 0;
+		padding-left: 28px;
 	}
 
 	.journey-eyebrow {
@@ -556,18 +560,14 @@ const journey = [
 	}
 
 	.journey-image {
-		grid-column: 2;
+		grid-column: 3;
 		grid-row: 1;
 		width: 100%;
-		aspect-ratio: 3 / 2;
+		aspect-ratio: 4 / 3;
 	}
 
-	.journey-image:not([data-about-image]) {
-		display: none;
-	}
-
-	.journey-content:not(:has(.journey-image)) {
-		grid-template-columns: minmax(0, 1fr);
+	.journey-item.is-reversed .journey-image {
+		grid-column: 1;
 	}
 
 	.belief-section {
@@ -729,22 +729,6 @@ const journey = [
 			font-size: 21px;
 		}
 
-		.journey-list::before {
-			left: 158px;
-		}
-
-		.journey-item {
-			grid-template-columns: 128px 1fr;
-			gap: 62px;
-		}
-
-		.journey-marker {
-			left: 150px;
-		}
-
-		.journey-content {
-			gap: 24px;
-		}
 	}
 
 	@media (max-width: 700px) {
@@ -814,29 +798,39 @@ const journey = [
 			font-size: 14px;
 		}
 
-		.journey-list::before {
-			top: 10px;
-			bottom: 10px;
-			left: 8px;
+		.journey-item {
+			grid-template-columns: 24px minmax(0, 1fr);
+			column-gap: 16px;
+			row-gap: 16px;
+			padding: 0 0 32px;
 		}
 
-		.journey-item {
-			grid-template-columns: minmax(0, 1fr);
-			gap: 0;
-			padding: 0 0 32px 32px;
+		.journey-list::before {
+			top: 8px;
+			bottom: 8px;
+			left: 12px;
 		}
 
 		.journey-marker {
-			top: 10px;
-			left: 0;
+			grid-column: 1;
+			grid-row: 1;
+			align-self: start;
+			justify-self: center;
 			width: 17px;
 			height: 17px;
 		}
 
-		.journey-content {
-			grid-template-columns: minmax(0, 1fr);
-			gap: 18px;
-			padding-left: 0;
+		.journey-copy,
+		.journey-item.is-reversed .journey-copy {
+			grid-column: 2;
+			grid-row: 1;
+			padding: 0;
+		}
+
+		.journey-image,
+		.journey-item.is-reversed .journey-image {
+			grid-column: 2;
+			grid-row: 2;
 		}
 
 		.journey-date {
@@ -845,11 +839,6 @@ const journey = [
 
 		.journey-copy h3 {
 			font-size: 19px;
-		}
-
-		.journey-image {
-			grid-column: 1;
-			grid-row: 2;
 		}
 
 		.belief-section {
