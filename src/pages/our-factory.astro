@@ -1,71 +1,816 @@
 ---
+import { existsSync } from 'node:fs';
 import Header from '../components/Header.astro';
 import Layout from '../layouts/Layout.astro';
+
+const factoryImageExists = (image: string) =>
+	existsSync(new URL(`../../public${image}`, import.meta.url));
+
+const capabilities = [
+	{
+		number: '01',
+		title: 'Injection Molding',
+		description: 'Plastic components and customized molded parts.',
+		image: '/images/factory/injection-molding.jpg',
+		imageLabel: 'Injection molding',
+	},
+	{
+		number: '02',
+		title: 'Metal Fabrication & Robotic Welding',
+		description: 'Metal structures and precision welding processes.',
+		image: '/images/factory/metal-fabrication-robotic-welding.jpg',
+		imageLabel: 'Metal fabrication and robotic welding',
+	},
+	{
+		number: '03',
+		title: 'Foam Production',
+		description: 'Molded foam components for seating comfort and support.',
+		image: '/images/factory/foam-production.jpg',
+		imageLabel: 'Foam production',
+	},
+	{
+		number: '04',
+		title: 'Assembly & Production',
+		description: 'Complete seating assembly and production operations.',
+		image: '/images/factory/assembly-production.jpg',
+		imageLabel: 'Assembly and production',
+	},
+];
+
+const developmentSteps = ['Requirements', 'Development', 'Sampling', 'Production'];
+
+const qualityAreas = [
+	'Material Inspection',
+	'In-Process Quality Checks',
+	'Final Product Inspection',
+];
 ---
 
-<Layout title="Our Factory | Hauxon Furniture">
+<Layout
+	title="Our Factory | Hauxon Furniture"
+	description="Explore Hauxon's seating manufacturing capabilities, product development process, and quality control in Anji, China."
+>
 	<Header />
-	<main class="route-placeholder">
-		<div>
-			<p>Hauxon Manufacturing</p>
-			<h1>Our Factory</h1>
-			<p>Factory information is being prepared. Please contact our team to arrange a visit.</p>
-			<a href="/contact">Contact Us <span aria-hidden="true">→</span></a>
-		</div>
+	<main class="factory-page">
+		<section class="factory-overview" aria-labelledby="factory-overview-title">
+			<div class="factory-container">
+				<div class="overview-intro">
+					<div>
+						<p class="factory-eyebrow">Our Factory</p>
+						<h1 id="factory-overview-title">Manufacturing Capabilities Behind Every Chair</h1>
+					</div>
+					<p class="overview-description">
+						Based in Anji, China, Hauxon combines component manufacturing expertise with complete seating production to support global OEM and ODM partners.
+					</p>
+				</div>
+				<dl class="factory-statistics" aria-label="Factory facts">
+					<div class="factory-stat">
+						<dt>15,000㎡</dt>
+						<dd>Manufacturing Facility</dd>
+					</div>
+					<div class="factory-stat">
+						<dt>300+</dt>
+						<dd>Molds</dd>
+					</div>
+					<div class="factory-stat">
+						<dt>2009</dt>
+						<dd>Manufacturing Roots</dd>
+					</div>
+				</dl>
+			</div>
+		</section>
+
+		<section class="capabilities-section" aria-labelledby="capabilities-title">
+			<div class="factory-container">
+				<header class="section-heading capabilities-heading">
+					<p class="factory-eyebrow">Manufacturing Capabilities</p>
+					<h2 id="capabilities-title">From Components to Complete Seating</h2>
+					<p>
+						Our manufacturing capabilities cover key components and production processes, allowing us to maintain greater flexibility throughout product development and manufacturing.
+					</p>
+				</header>
+
+				<div class="capabilities-list">
+					{capabilities.map((capability) => (
+						<article class="capability-row">
+							<figure class="factory-image" data-factory-image>
+								{factoryImageExists(capability.image) && (
+									<img
+										src={capability.image}
+										alt=""
+										aria-hidden="true"
+										width="1280"
+										height="800"
+										loading="lazy"
+										decoding="async"
+									/>
+								)}
+								<figcaption class="image-placeholder">
+									<span class="placeholder-mark" aria-hidden="true">
+										<svg viewBox="0 0 32 32"><rect x="4" y="5" width="24" height="22" rx="1" /><circle cx="11" cy="12" r="2" /><path d="m5 23 7-7 5 5 4-4 6 6" /></svg>
+									</span>
+									<span class="placeholder-title">{capability.imageLabel}</span>
+									<span class="placeholder-note">Factory image placeholder</span>
+								</figcaption>
+							</figure>
+							<div class="capability-copy">
+								<p class="capability-number">{capability.number}</p>
+								<h3>{capability.title}</h3>
+								<p>{capability.description}</p>
+							</div>
+						</article>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="development-section" aria-labelledby="development-title">
+			<div class="factory-container">
+				<header class="section-heading development-heading">
+					<p class="factory-eyebrow">Product Development</p>
+					<h2 id="development-title">Supporting Your Product Development</h2>
+					<p>
+						From initial requirements to sampling and production, we work with our partners to develop seating products that meet their market needs.
+					</p>
+				</header>
+				<ol class="development-process" aria-label="Product development process">
+					{developmentSteps.map((step, index) => (
+						<li class="process-step">
+							<span class="process-number">{String(index + 1).padStart(2, '0')}</span>
+							<span class="process-label">{step}</span>
+						</li>
+					))}
+				</ol>
+			</div>
+		</section>
+
+		<section class="quality-section" aria-labelledby="quality-title">
+			<div class="factory-container quality-layout">
+				<figure class="factory-image quality-image" data-factory-image>
+					{factoryImageExists('/images/factory/quality-control.jpg') && (
+						<img
+							src="/images/factory/quality-control.jpg"
+							alt=""
+							aria-hidden="true"
+							width="1280"
+							height="800"
+							loading="lazy"
+							decoding="async"
+						/>
+					)}
+					<figcaption class="image-placeholder">
+						<span class="placeholder-mark" aria-hidden="true">
+							<svg viewBox="0 0 32 32"><rect x="4" y="5" width="24" height="22" rx="1" /><circle cx="11" cy="12" r="2" /><path d="m5 23 7-7 5 5 4-4 6 6" /></svg>
+						</span>
+						<span class="placeholder-title">Quality control</span>
+						<span class="placeholder-note">Factory image placeholder</span>
+					</figcaption>
+				</figure>
+				<div class="quality-copy">
+					<header class="section-heading">
+						<p class="factory-eyebrow">Quality Control</p>
+						<h2 id="quality-title">Consistency at Every Stage</h2>
+						<p>
+							Quality control is an important part of our manufacturing process. We focus on material inspection, production consistency, and finished product checks to support reliable deliveries.
+						</p>
+					</header>
+					<ul class="quality-list">
+						{qualityAreas.map((area, index) => (
+							<li>
+								<span>{String(index + 1).padStart(2, '0')}</span>
+								<h3>{area}</h3>
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<section class="factory-visit" aria-labelledby="factory-visit-title">
+			<div class="factory-container factory-visit-inner">
+				<div>
+					<p class="factory-eyebrow">Visit Hauxon</p>
+					<h2 id="factory-visit-title">See Our Manufacturing Capabilities in Person</h2>
+					<p>
+						We welcome international partners to visit our facility in Anji, China, explore our production capabilities, and discuss potential cooperation.
+					</p>
+				</div>
+				<a class="factory-visit-button" href="/contact">
+					Arrange a Factory Visit
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg>
+				</a>
+			</div>
+		</section>
 	</main>
 </Layout>
 
+<script>
+	document.querySelectorAll<HTMLImageElement>('.factory-image img').forEach((image) => {
+		const markImageLoaded = () => {
+			image.closest('.factory-image')?.classList.add('is-loaded');
+		};
+
+		if (image.complete && image.naturalWidth > 0) {
+			markImageLoaded();
+		} else {
+			image.addEventListener('load', markImageLoaded, { once: true });
+		}
+	});
+</script>
+
 <style>
-	.route-placeholder {
-		min-height: 52vh;
-		padding: 72px 24px;
-		display: grid;
-		place-items: center;
-		background: #f4f7fb;
+	.factory-page {
 		color: #111827;
 		font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
-		text-align: center;
 	}
 
-	.route-placeholder > div {
-		max-width: 640px;
+	.factory-container {
+		width: min(calc(100% - 64px), 1280px);
+		margin-inline: auto;
 	}
 
-	.route-placeholder p:first-child {
+	.factory-overview {
+		padding: 58px 0 52px;
+		background: #f4f7fb;
+	}
+
+	.overview-intro {
+		display: grid;
+		grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+		align-items: end;
+		gap: 72px;
+	}
+
+	.factory-eyebrow {
 		margin: 0 0 12px;
 		color: #0b2d5c;
 		font-size: 12px;
 		font-weight: 600;
 		letter-spacing: 1.4px;
+		line-height: 1.4;
 		text-transform: uppercase;
 	}
 
-	h1 {
+	.overview-intro h1 {
+		max-width: 720px;
 		margin: 0;
+		color: #111827;
 		font-size: clamp(36px, 4vw, 52px);
 		font-weight: 600;
 		letter-spacing: -0.035em;
+		line-height: 1.12;
 	}
 
-	h1 + p {
-		margin: 16px 0 0;
+	.overview-description {
+		max-width: 500px;
+		margin: 0 0 4px;
 		color: #64748b;
 		font-size: 16px;
+		line-height: 1.7;
+	}
+
+	.factory-statistics {
+		margin: 42px 0 0;
+		padding: 22px 0 0;
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		border-top: 1px solid #dce4ed;
+	}
+
+	.factory-stat {
+		min-width: 0;
+		padding: 0 28px;
+		border-left: 1px solid #dce4ed;
+	}
+
+	.factory-stat:first-child {
+		padding-left: 0;
+		border-left: 0;
+	}
+
+	.factory-stat dt {
+		color: #0b2d5c;
+		font-size: clamp(25px, 2.8vw, 34px);
+		font-weight: 600;
+		letter-spacing: -0.035em;
+		line-height: 1.2;
+	}
+
+	.factory-stat dd {
+		margin: 7px 0 0;
+		color: #64748b;
+		font-size: 13px;
+		line-height: 1.5;
+	}
+
+	.capabilities-section {
+		padding: 82px 0 88px;
+		background: #fff;
+	}
+
+	.section-heading h2 {
+		margin: 0;
+		color: #111e32;
+		font-size: clamp(30px, 3.2vw, 42px);
+		font-weight: 600;
+		letter-spacing: -0.03em;
+		line-height: 1.16;
+	}
+
+	.section-heading > p:last-child {
+		max-width: 720px;
+		margin: 14px 0 0;
+		color: #64748b;
+		font-size: 15px;
+		line-height: 1.7;
+	}
+
+	.capabilities-heading {
+		max-width: 790px;
+		margin-bottom: 42px;
+	}
+
+	.capabilities-list {
+		display: grid;
+		gap: 30px;
+	}
+
+	.capability-row {
+		min-width: 0;
+		display: grid;
+		grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+		align-items: center;
+		gap: clamp(36px, 6vw, 88px);
+	}
+
+	.capability-row:nth-child(even) {
+		grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+	}
+
+	.capability-row:nth-child(even) .factory-image {
+		order: 2;
+	}
+
+	.capability-row:nth-child(even) .capability-copy {
+		order: 1;
+	}
+
+	.factory-image {
+		position: relative;
+		overflow: hidden;
+		aspect-ratio: 8 / 5;
+		margin: 0;
+		border: 1px solid #e1e8f0;
+		border-radius: 6px;
+		background: #eaf0f6;
+	}
+
+	.factory-image > img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		display: block;
+		object-fit: cover;
+		opacity: 0;
+		transition: opacity 180ms ease;
+	}
+
+	.factory-image.is-loaded > img {
+		opacity: 1;
+	}
+
+	.image-placeholder {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 7px;
+		color: #56708b;
+		text-align: center;
+		transition: opacity 180ms ease;
+	}
+
+	.factory-image.is-loaded .image-placeholder {
+		opacity: 0;
+	}
+
+	.placeholder-mark {
+		width: 34px;
+		height: 34px;
+		margin-bottom: 3px;
+		color: #8095aa;
+	}
+
+	.placeholder-mark svg {
+		width: 100%;
+		height: 100%;
+		fill: none;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 1.3;
+	}
+
+	.placeholder-title {
+		color: #405a74;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.4;
+	}
+
+	.placeholder-note {
+		color: #73869a;
+		font-size: 11px;
+		line-height: 1.4;
+	}
+
+	.capability-copy {
+		max-width: 440px;
+	}
+
+	.capability-number {
+		margin: 0 0 14px;
+		color: #8092a7;
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 0.1em;
+	}
+
+	.capability-copy h3 {
+		margin: 0;
+		color: #111e32;
+		font-size: clamp(24px, 2.4vw, 32px);
+		font-weight: 600;
+		letter-spacing: -0.025em;
+		line-height: 1.25;
+	}
+
+	.capability-copy > p:last-child {
+		margin: 13px 0 0;
+		color: #64748b;
+		font-size: 15px;
+		line-height: 1.7;
+	}
+
+	.development-section {
+		padding: 70px 0 76px;
+		background: #f4f7fb;
+	}
+
+	.development-heading {
+		max-width: 800px;
+	}
+
+	.development-process {
+		position: relative;
+		margin: 42px 0 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		list-style: none;
+	}
+
+	.development-process::before {
+		position: absolute;
+		top: 17px;
+		right: 12.5%;
+		left: 12.5%;
+		height: 1px;
+		background: #cbd6e2;
+		content: '';
+	}
+
+	.process-step {
+		position: relative;
+		display: grid;
+		justify-items: center;
+		gap: 12px;
+		text-align: center;
+	}
+
+	.process-number {
+		width: 35px;
+		height: 35px;
+		box-sizing: border-box;
+		display: grid;
+		place-items: center;
+		border: 1px solid #9aacc0;
+		border-radius: 50%;
+		background: #f4f7fb;
+		color: #0b2d5c;
+		font-size: 11px;
+		font-weight: 600;
+	}
+
+	.process-label {
+		color: #24364b;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.5;
+	}
+
+	.quality-section {
+		padding: 82px 0;
+		background: #fff;
+	}
+
+	.quality-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+		align-items: center;
+		gap: clamp(40px, 7vw, 96px);
+	}
+
+	.quality-image {
+		aspect-ratio: 8 / 6;
+	}
+
+	.quality-copy {
+		min-width: 0;
+	}
+
+	.quality-list {
+		margin: 26px 0 0;
+		padding: 0;
+		border-top: 1px solid #e1e8f0;
+		list-style: none;
+	}
+
+	.quality-list li {
+		min-height: 59px;
+		display: grid;
+		grid-template-columns: 34px minmax(0, 1fr);
+		align-items: center;
+		gap: 12px;
+		border-bottom: 1px solid #e1e8f0;
+	}
+
+	.quality-list li > span {
+		color: #8092a7;
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+	}
+
+	.quality-list h3 {
+		margin: 0;
+		color: #24364b;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.5;
+	}
+
+	.factory-visit {
+		padding: 48px 0;
+		background: #0b2d5c;
+		color: #fff;
+	}
+
+	.factory-visit-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 40px;
+	}
+
+	.factory-visit .factory-eyebrow {
+		margin-bottom: 9px;
+		color: #bdcce0;
+	}
+
+	.factory-visit h2 {
+		max-width: 680px;
+		margin: 0;
+		color: #fff;
+		font-size: clamp(25px, 2.8vw, 34px);
+		font-weight: 600;
+		letter-spacing: -0.025em;
+		line-height: 1.22;
+	}
+
+	.factory-visit-inner > div > p:last-child {
+		max-width: 700px;
+		margin: 11px 0 0;
+		color: #d3deeb;
+		font-size: 14px;
 		line-height: 1.65;
 	}
 
-	a {
-		min-height: 44px;
-		margin-top: 24px;
+	.factory-visit-button {
+		min-height: 48px;
 		padding: 0 18px;
 		display: inline-flex;
+		flex: 0 0 auto;
 		align-items: center;
-		gap: 8px;
+		justify-content: center;
+		gap: 10px;
+		border: 1px solid rgb(255 255 255 / 55%);
 		border-radius: 5px;
-		background: #0b2d5c;
-		color: #fff;
+		background: #fff;
+		color: #0b2d5c;
 		font-size: 14px;
 		font-weight: 600;
 		text-decoration: none;
+		transition: background-color 160ms ease, border-color 160ms ease;
+	}
+
+	.factory-visit-button:hover {
+		border-color: #e8eef5;
+		background: #e8eef5;
+	}
+
+	.factory-visit-button:focus-visible {
+		outline: 2px solid #fff;
+		outline-offset: 3px;
+	}
+
+	.factory-visit-button svg {
+		width: 17px;
+		height: 17px;
+		fill: none;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 1.6;
+		transition: transform 160ms ease;
+	}
+
+	.factory-visit-button:hover svg {
+		transform: translateX(3px);
+	}
+
+	@media (max-width: 900px) {
+		.overview-intro {
+			grid-template-columns: minmax(0, 1fr) minmax(240px, 0.85fr);
+			gap: 36px;
+		}
+
+		.capability-row,
+		.capability-row:nth-child(even) {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+			gap: 32px;
+		}
+
+		.quality-layout {
+			gap: 40px;
+		}
+	}
+
+	@media (max-width: 700px) {
+		.factory-container {
+			width: calc(100% - 40px);
+		}
+
+		.factory-overview {
+			padding: 46px 0 38px;
+		}
+
+		.overview-intro {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 16px;
+		}
+
+		.overview-intro h1 {
+			font-size: clamp(34px, 9vw, 44px);
+		}
+
+		.overview-description {
+			font-size: 15px;
+		}
+
+		.factory-statistics {
+			margin-top: 30px;
+			padding-top: 18px;
+		}
+
+		.factory-stat {
+			padding: 0 12px;
+		}
+
+		.factory-stat dt {
+			font-size: clamp(21px, 6vw, 28px);
+		}
+
+		.factory-stat dd {
+			margin-top: 5px;
+			font-size: 11px;
+		}
+
+		.capabilities-section,
+		.quality-section {
+			padding: 58px 0;
+		}
+
+		.section-heading h2 {
+			font-size: clamp(28px, 7.5vw, 36px);
+		}
+
+		.section-heading > p:last-child {
+			font-size: 14px;
+		}
+
+		.capabilities-heading {
+			margin-bottom: 28px;
+		}
+
+		.capabilities-list {
+			gap: 30px;
+		}
+
+		.capability-row,
+		.capability-row:nth-child(even) {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 17px;
+		}
+
+		.capability-row:nth-child(even) .factory-image,
+		.capability-row:nth-child(even) .capability-copy {
+			order: initial;
+		}
+
+		.factory-image {
+			aspect-ratio: 4 / 3;
+		}
+
+		.capability-number {
+			margin-bottom: 8px;
+		}
+
+		.capability-copy h3 {
+			font-size: 24px;
+		}
+
+		.capability-copy > p:last-child {
+			margin-top: 8px;
+			font-size: 14px;
+		}
+
+		.development-section {
+			padding: 56px 0 60px;
+		}
+
+		.development-process {
+			margin-top: 30px;
+			grid-template-columns: minmax(0, 1fr);
+			gap: 0;
+		}
+
+		.development-process::before {
+			top: 17px;
+			right: auto;
+			bottom: 17px;
+			left: 17px;
+			width: 1px;
+			height: auto;
+		}
+
+		.process-step {
+			min-height: 54px;
+			grid-template-columns: 35px minmax(0, 1fr);
+			align-items: center;
+			justify-items: start;
+			gap: 14px;
+			text-align: left;
+		}
+
+		.process-number {
+			position: relative;
+			z-index: 1;
+		}
+
+		.quality-layout {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 26px;
+		}
+
+		.quality-image {
+			aspect-ratio: 4 / 3;
+		}
+
+		.factory-visit {
+			padding: 38px 0;
+		}
+
+		.factory-visit-inner {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 22px;
+		}
+
+		.factory-visit h2 {
+			font-size: 28px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.factory-image > img,
+		.image-placeholder,
+		.factory-visit-button,
+		.factory-visit-button svg {
+			transition: none;
+		}
 	}
 </style>
