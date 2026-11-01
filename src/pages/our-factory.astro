@@ -1,10 +1,6 @@
 ---
-import { existsSync } from 'node:fs';
 import Header from '../components/Header.astro';
 import Layout from '../layouts/Layout.astro';
-
-const factoryImageExists = (image: string) =>
-	existsSync(new URL(`../../public${image}`, import.meta.url));
 
 const capabilities = [
 	{
@@ -94,17 +90,15 @@ const qualityAreas = [
 					{capabilities.map((capability) => (
 						<article class="capability-row">
 							<figure class="factory-image" data-factory-image>
-								{factoryImageExists(capability.image) && (
-									<img
-										src={capability.image}
-										alt=""
-										aria-hidden="true"
-										width="1280"
-										height="800"
-										loading="lazy"
-										decoding="async"
-									/>
-								)}
+								<img
+									src={capability.image}
+									alt=""
+									aria-hidden="true"
+									width="1280"
+									height="800"
+									loading="lazy"
+									decoding="async"
+								/>
 								<figcaption class="image-placeholder">
 									<span class="placeholder-mark" aria-hidden="true">
 										<svg viewBox="0 0 32 32"><rect x="4" y="5" width="24" height="22" rx="1" /><circle cx="11" cy="12" r="2" /><path d="m5 23 7-7 5 5 4-4 6 6" /></svg>
@@ -147,17 +141,15 @@ const qualityAreas = [
 		<section class="quality-section" aria-labelledby="quality-title">
 			<div class="factory-container quality-layout">
 				<figure class="factory-image quality-image" data-factory-image>
-					{factoryImageExists('/images/factory/quality-control.jpg') && (
-						<img
-							src="/images/factory/quality-control.jpg"
-							alt=""
-							aria-hidden="true"
-							width="1280"
-							height="800"
-							loading="lazy"
-							decoding="async"
-						/>
-					)}
+					<img
+						src="/images/factory/quality-control.jpg"
+						alt=""
+						aria-hidden="true"
+						width="1280"
+						height="800"
+						loading="lazy"
+						decoding="async"
+					/>
 					<figcaption class="image-placeholder">
 						<span class="placeholder-mark" aria-hidden="true">
 							<svg viewBox="0 0 32 32"><rect x="4" y="5" width="24" height="22" rx="1" /><circle cx="11" cy="12" r="2" /><path d="m5 23 7-7 5 5 4-4 6 6" /></svg>
