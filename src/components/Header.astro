@@ -2,10 +2,9 @@
 const links = [
 	{ label: 'Home', href: '/' },
 	{ label: 'Products', href: '/products' },
-	{ label: 'OEM & ODM', href: '#oem-odm' },
-	{ label: 'Manufacturing', href: '#manufacturing' },
-	{ label: 'About Us', href: '#about' },
-	{ label: 'Contact', href: '#contact' },
+	{ label: 'Our Factory', href: '/our-factory' },
+	{ label: 'About Us', href: '/about-us' },
+	{ label: 'Contact Us', href: '/contact' },
 ];
 ---
 
@@ -46,23 +45,27 @@ const links = [
 					</button>
 				</div>
 			</details>
-			<button class="quote-cart-trigger" type="button" data-quote-open aria-haspopup="dialog" aria-controls="quote-cart-dialog" aria-label="Open quote cart, 0 products">
+			<button
+				class="quote-cart-trigger"
+				type="button"
+				data-quote-open
+				aria-haspopup="dialog"
+				aria-expanded="false"
+				aria-controls="quote-cart-dialog"
+				aria-label="Open quote cart, 0 products"
+			>
 				<svg viewBox="0 0 24 24" aria-hidden="true">
 					<path d="M7 4h13v16H7zM4 7H3v16h13v-3" />
 					<path d="M10 9h7M10 13h7M10 17h4" />
 				</svg>
 				<span data-quote-count aria-live="polite">Quote (0)</span>
 			</button>
-			<a class="hauxon-button" href="/quote">Get a Quote</a>
 			<details class="mobile-menu">
 				<summary aria-label="Open navigation menu">
 					<span></span><span></span>
 				</summary>
 				<nav aria-label="Mobile navigation">
 					{links.map((link) => <a href={link.href}>{link.label}</a>)}
-					<button class="mobile-quote-trigger" type="button" data-quote-open aria-haspopup="dialog" aria-controls="quote-cart-dialog" aria-label="Open quote cart, 0 products">
-						<span data-quote-count aria-live="polite">Quote (0)</span>
-					</button>
 				</nav>
 			</details>
 		</div>
@@ -178,13 +181,13 @@ const links = [
 		transition: background-color 180ms ease, border-color 180ms ease;
 	}
 
-	.quote-cart-trigger:hover {
+	.quote-cart-trigger:hover,
+	.quote-cart-trigger[aria-expanded='true'] {
 		border-color: #b7c5d6;
 		background: #f4f7fb;
 	}
 
-	.quote-cart-trigger:focus-visible,
-	.mobile-quote-trigger:focus-visible {
+	.quote-cart-trigger:focus-visible {
 		outline: 2px solid #0b2d5c;
 		outline-offset: 3px;
 	}
@@ -197,10 +200,6 @@ const links = [
 		stroke-linecap: round;
 		stroke-linejoin: round;
 		stroke-width: 1.6;
-	}
-
-	.mobile-quote-trigger {
-		display: none;
 	}
 
 	.search-button {
@@ -330,29 +329,6 @@ const links = [
 		white-space: nowrap;
 	}
 
-	.quote-button {
-		min-height: 40px;
-		padding: 0 18px;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		border-radius: 6px;
-		background: #003366;
-		color: #fff;
-		font-family: Helvetica, Arial, sans-serif;
-		font-size: 13px;
-		font-weight: 600;
-		text-decoration: none;
-		transition: background 200ms ease, min-height 250ms ease;
-	}
-
-	.site-header.is-scrolled .quote-button {
-		min-height: 34px;
-	}
-
-	.quote-button:hover {
-		background: #164774;
-	}
 	.mobile-menu {
 		display: none;
 		position: relative;
@@ -409,21 +385,6 @@ const links = [
 		border-bottom: 0;
 	}
 
-	.mobile-quote-trigger {
-		min-height: 44px;
-		padding: 0;
-		display: block;
-		border: 0;
-		border-top: 1px solid #efefec;
-		background: #fff;
-		color: #0b2d5c;
-		font: inherit;
-		font-size: 14px;
-		font-weight: 600;
-		text-align: left;
-		cursor: pointer;
-	}
-
 	@media (max-width: 1080px) {
 		.header-inner {
 			width: min(100% - 40px, 1440px);
@@ -470,26 +431,19 @@ const links = [
 	@media (max-width: 480px) {
 		.header-inner {
 			width: calc(100% - 32px);
+			gap: 8px;
 		}
 
 		.wordmark img {
-			width: 132px;
+			width: 100px;
 		}
 
 		.site-header.is-scrolled .wordmark img {
-			width: 120px;
+			width: 92px;
 		}
 
 		.header-actions {
 			gap: 4px;
-		}
-
-		.quote-cart-trigger {
-			display: none;
-		}
-
-		.mobile-quote-trigger {
-			display: block;
 		}
 
 		.search-button {
@@ -514,33 +468,66 @@ const links = [
 			height: 16px;
 		}
 
-		.quote-button {
+		.quote-cart-trigger {
 			min-height: 40px;
-			padding-inline: 12px;
-			gap: 7px;
-			font-size: 12px;
+			padding-inline: 6px;
+			gap: 4px;
+			font-size: 11px;
+		}
+
+		.quote-cart-trigger svg {
+			width: 16px;
+			height: 16px;
 		}
 
 		.mobile-menu summary {
-			width: 38px;
+			width: 36px;
+			box-sizing: border-box;
+		}
+
+		.language-menu {
+			right: 0;
+			width: min(250px, calc(100vw - 32px));
+			box-sizing: border-box;
 		}
 	}
 
 	@media (max-width: 360px) {
 		.header-inner {
-			gap: 8px;
+			gap: 2px;
 		}
 
 		.wordmark img {
-			width: 108px;
+			width: 84px;
 		}
 
 		.site-header.is-scrolled .wordmark img {
-			width: 100px;
+			width: 76px;
 		}
 
-		.search-button {
-			display: none;
+		.search-button,
+		.language-selector summary {
+			width: 28px;
+		}
+
+		.header-actions {
+			gap: 2px;
+		}
+
+		.quote-cart-trigger {
+			padding-inline: 5px;
+			gap: 3px;
+			font-size: 10px;
+		}
+
+		.quote-cart-trigger svg {
+			width: 14px;
+			height: 14px;
+		}
+
+		.mobile-menu summary {
+			width: 32px;
+			box-sizing: border-box;
 		}
 	}
 </style>

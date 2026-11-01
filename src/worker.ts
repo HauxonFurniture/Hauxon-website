@@ -25,7 +25,7 @@ type InquiryData = {
 	message: string;
 	productModels: string[];
 	website: string;
-	source: 'quote' | 'contact';
+	source: 'quote' | 'contact' | 'general-contact';
 };
 
 const maximumRequestBytes = 16_384;
@@ -105,13 +105,13 @@ function parseInquiry(value: unknown): InquiryData | null {
 	const input = value as Record<string, unknown>;
 	const name = getString(input, 'name', 100, true);
 	const source = input.source;
-	if (source !== 'quote' && source !== 'contact') return null;
-	const company = getString(input, 'company', 150, source === 'quote');
+	if (source !== 'quote' && source !== 'contact' && source !== 'general-contact') return null;
+	const company = getString(input, 'company', 150, source !== 'contact');
 	const email = getString(input, 'email', 254, true);
-	const country = getString(input, 'country', 100, true);
+	const country = getString(input, 'country', 100);
 	const phoneInput = input.phone ?? input.whatsapp;
 	const phone = getString({ phone: phoneInput }, 'phone', 30);
-	const message = getString(input, 'message', 2000, source === 'contact');
+	const message = getString(input, 'message', 2000, true);
 	const website = getString(input, 'website', 500);
 	if (name === null || company === null || email === null || country === null || phone === null || message === null || website === null) return null;
 	if (!emailPattern.test(email)) return null;
@@ -142,32 +142,32 @@ function renderInquiryEmail(inquiry: InquiryData): { html: string; text: string;
 		['Phone / WhatsApp', inquiry.phone],
 	].filter(([, value]) => value);
 	const selectedProducts = inquiry.productModels.map((model) => `${model} — ${productCatalog.get(model)}`);
+	const inquiryType = inquiry.source === 'quote' ? 'Quotation Request' : 'General Contact Inquiry';
 	const subjectLabel = (inquiry.company || inquiry.name).replace(/[\r\n\t]+/g, ' ');
-	const subject = `New Website Inquiry | ${subjectLabel}`;
+	const subject = `New ${inquiryType} | ${subjectLabel}`;
 	const html = [
-		'<h2>Website Inquiry</h2>',
+		`<h2>${inquiryType}</h2>`,
+		`<p><strong>Inquiry type:</strong> ${inquiryType}</p>`,
 		'<h3>Customer Information</h3>',
 		'<dl>',
 		...details.map(([label, value]) => `<dt><strong>${escapeHtml(label)}</strong></dt><dd>${escapeHtml(value)}</dd>`),
 		'</dl>',
-		'<h3>Selected Products</h3>',
-		selectedProducts.length
-			? `<ul>${selectedProducts.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
-			: '<p>General Inquiry</p>',
+		...(selectedProducts.length
+			? ['<h3>Selected Products</h3>', `<ul>${selectedProducts.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`]
+			: []),
 		'<h3>Customer Message</h3>',
-		`<p>${escapeHtml(inquiry.message || 'No message provided.').replace(/\n/g, '<br>')}</p>`,
+		`<p>${escapeHtml(inquiry.message).replace(/\n/g, '<br>')}</p>`,
 	].join('');
 	const text = [
-		'Website Inquiry',
+		inquiryType,
+		`Inquiry type: ${inquiryType}`,
 		'',
 		'Customer Information:',
 		...details.map(([label, value]) => `${label}: ${value}`),
-		'',
-		'Selected Products:',
-		...(selectedProducts.length ? selectedProducts.map((item) => `- ${item}`) : ['General Inquiry']),
+		...(selectedProducts.length ? ['', 'Selected Products:', ...selectedProducts.map((item) => `- ${item}`)] : []),
 		'',
 		'Customer Message:',
-		inquiry.message || 'No message provided.',
+		inquiry.message,
 	].join('\n');
 	return { html, text, subject };
 }

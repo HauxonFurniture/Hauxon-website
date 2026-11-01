@@ -1,0 +1,655 @@
+---
+import Header from '../components/Header.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+	title="Contact Us | Hauxon Furniture"
+	description="Contact Hauxon about office seating products, OEM and ODM manufacturing, or a factory visit."
+>
+	<Header />
+	<main class="contact-page">
+		<section class="contact-intro" aria-labelledby="contact-page-title">
+			<div class="contact-page-inner">
+				<p class="contact-eyebrow">Contact Hauxon</p>
+				<h1 id="contact-page-title">Let’s Talk About Your Next Project</h1>
+				<p>
+					Whether you’re looking for a manufacturing partner, exploring our products, or planning a factory visit, we’d be happy to hear from you.
+				</p>
+			</div>
+		</section>
+
+		<section class="contact-main" id="contact-form" aria-label="Contact information and message form">
+			<div class="contact-page-inner contact-layout">
+				<aside class="contact-information" aria-labelledby="get-in-touch-title">
+					<p class="contact-eyebrow">Contact Information</p>
+					<h2 id="get-in-touch-title">Get in Touch</h2>
+					<div class="contact-information-list">
+						<div class="contact-information-item">
+							<span class="contact-information-icon" aria-hidden="true">
+								<svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z" /><path d="m4 7 8 6 8-6" /></svg>
+							</span>
+							<div>
+								<h3>Email</h3>
+								<a href="mailto:jojo@hxchairs.com">jojo@hxchairs.com</a>
+							</div>
+						</div>
+						<div class="contact-information-item">
+							<span class="contact-information-icon" aria-hidden="true">
+								<svg viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2.5" /></svg>
+							</span>
+							<div>
+								<h3>Location</h3>
+								<p>Anji, Zhejiang, China</p>
+							</div>
+						</div>
+						<div class="contact-information-item">
+							<span class="contact-information-icon" aria-hidden="true">
+								<svg viewBox="0 0 24 24"><path d="M4 20V8l8-5 8 5v12M2 20h20M9 20v-6h6v6M7 10h.01M17 10h.01" /></svg>
+							</span>
+							<div>
+								<h3>Company</h3>
+								<p>Anji Huaxuan Furniture Co., Ltd.</p>
+							</div>
+						</div>
+					</div>
+				</aside>
+
+				<section class="contact-form-card" aria-labelledby="send-message-title">
+					<div class="contact-form-heading">
+						<h2 id="send-message-title">Send Us a Message</h2>
+						<p>Share a few details and our team will be in touch.</p>
+					</div>
+					<form class="contact-page-form" data-contact-page-form>
+						<div class="contact-fields">
+							<label class="contact-field">
+								<span>Name <span aria-hidden="true">*</span></span>
+								<input name="name" type="text" autocomplete="name" maxlength="100" required />
+							</label>
+							<label class="contact-field">
+								<span>Company <span aria-hidden="true">*</span></span>
+								<input name="company" type="text" autocomplete="organization" maxlength="150" required />
+							</label>
+							<label class="contact-field">
+								<span>Email <span aria-hidden="true">*</span></span>
+								<input name="email" type="email" autocomplete="email" maxlength="254" required />
+							</label>
+							<label class="contact-field">
+								<span>Country / Region</span>
+								<input name="country" type="text" autocomplete="country-name" maxlength="100" />
+							</label>
+							<label class="contact-field contact-field-wide">
+								<span>Message <span aria-hidden="true">*</span></span>
+								<textarea id="contact-form-message" name="message" rows="5" maxlength="2000" required></textarea>
+							</label>
+						</div>
+						<label class="contact-honeypot" aria-hidden="true">
+							Leave this field empty
+							<input name="website" type="text" tabindex="-1" autocomplete="off" />
+						</label>
+						<button class="contact-submit" type="submit">
+							<span data-contact-submit-label>Send Message</span>
+							<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg>
+						</button>
+						<p class="contact-status" data-contact-page-status role="status" aria-live="polite"></p>
+					</form>
+				</section>
+			</div>
+		</section>
+
+		<section class="contact-map" aria-labelledby="contact-map-title">
+			<div class="contact-page-inner contact-map-layout">
+				<div class="contact-map-copy">
+					<p class="contact-eyebrow">Our Location</p>
+					<h2 id="contact-map-title">Find Us in China</h2>
+					<p>
+						Our manufacturing facility is located in Anji, Zhejiang Province, China, within the Yangtze River Delta region.
+					</p>
+				</div>
+				<div class="contact-map-visual">
+					<img
+						class="china-location-map"
+						src="/images/maps/china-location-map.svg"
+						alt="Map of mainland China showing Anji, the Hauxon factory location, and the cities of Beijing, Shanghai, Hangzhou, and Guangzhou."
+						loading="lazy"
+						width="960"
+						height="620"
+					/>
+					<ul class="map-city-list" aria-label="Cities shown on the map">
+						<li class="map-city-anji">Anji — Hauxon Factory</li>
+						<li>Hangzhou</li>
+						<li>Shanghai</li>
+						<li>Beijing</li>
+						<li>Guangzhou</li>
+					</ul>
+					<p class="map-caption">Anji, Zhejiang Province, China</p>
+					<p class="map-attribution">
+						Map boundaries:
+						<a href="https://www.naturalearthdata.com/" target="_blank" rel="noreferrer">Natural Earth (public domain)</a>;
+						city locations: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors (ODbL)</a>.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="factory-visit" aria-labelledby="factory-visit-title">
+			<div class="contact-page-inner factory-visit-inner">
+				<div>
+					<h2 id="factory-visit-title">Visit Our Factory</h2>
+					<p>We welcome customers and business partners to visit our manufacturing facility in Anji, China.</p>
+				</div>
+				<a class="factory-visit-link" href="#contact-form-message" data-factory-visit>
+					Arrange a Visit
+					<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" /></svg>
+				</a>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	.contact-page {
+		color: #111827;
+		font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+	}
+
+	.contact-page-inner {
+		width: min(calc(100% - 64px), 1280px);
+		margin-inline: auto;
+	}
+
+	.contact-intro {
+		padding: 56px 0 60px;
+		background: #f4f7fb;
+	}
+
+	.contact-eyebrow {
+		margin: 0 0 12px;
+		color: #0b2d5c;
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 1.4px;
+		line-height: 1.4;
+		text-transform: uppercase;
+	}
+
+	.contact-intro h1 {
+		max-width: 760px;
+		margin: 0;
+		color: #111827;
+		font-size: clamp(36px, 4vw, 52px);
+		font-weight: 600;
+		letter-spacing: -0.035em;
+		line-height: 1.12;
+	}
+
+	.contact-intro > .contact-page-inner > p:last-child {
+		max-width: 760px;
+		margin: 16px 0 0;
+		color: #64748b;
+		font-size: 17px;
+		line-height: 1.7;
+	}
+
+	.contact-main {
+		padding: 64px 0 72px;
+	}
+
+	.contact-map {
+		padding: 64px 0;
+		background: #f4f7fb;
+	}
+
+	.contact-map-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
+		align-items: center;
+		gap: 48px;
+	}
+
+	.contact-map-copy h2 {
+		margin: 0;
+		color: #111e32;
+		font-size: clamp(26px, 2.4vw, 32px);
+		font-weight: 600;
+		letter-spacing: -0.025em;
+		line-height: 1.25;
+	}
+
+	.contact-map-copy > p:last-child {
+		margin: 14px 0 0;
+		color: #64748b;
+		font-size: 15px;
+		line-height: 1.7;
+	}
+
+	.contact-map-visual {
+		min-width: 0;
+	}
+
+	.china-location-map {
+		box-sizing: border-box;
+		width: 100%;
+		height: auto;
+		display: block;
+		border: 1px solid #e1e8f0;
+		border-radius: 14px;
+	}
+
+	.map-city-list {
+		display: none;
+	}
+
+	.map-caption {
+		margin: 12px 0 0;
+		color: #334155;
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1.5;
+	}
+
+	.map-attribution {
+		margin: 5px 0 0;
+		color: #78879a;
+		font-size: 10px;
+		line-height: 1.5;
+	}
+
+	.map-attribution a {
+		color: inherit;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
+	.contact-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 40fr) minmax(0, 60fr);
+		align-items: start;
+		gap: 56px;
+	}
+
+	.contact-information {
+		padding: 28px;
+		border: 1px solid #e5eaf1;
+		border-radius: 8px;
+		background: #f4f7fb;
+	}
+
+	.contact-information .contact-eyebrow {
+		margin-bottom: 10px;
+	}
+
+	.contact-information h2,
+	.contact-form-heading h2,
+	.factory-visit h2 {
+		margin: 0;
+		color: #111e32;
+		font-size: 26px;
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		line-height: 1.25;
+	}
+
+	.contact-information-list {
+		margin-top: 30px;
+		display: grid;
+		gap: 24px;
+	}
+
+	.contact-information-item {
+		display: grid;
+		grid-template-columns: 40px minmax(0, 1fr);
+		align-items: start;
+		gap: 13px;
+	}
+
+	.contact-information-icon {
+		width: 40px;
+		height: 40px;
+		display: grid;
+		place-items: center;
+		border-radius: 50%;
+		background: #e8eef6;
+		color: #0b2d5c;
+	}
+
+	.contact-information-icon svg {
+		width: 19px;
+		height: 19px;
+		fill: none;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 1.5;
+	}
+
+	.contact-information-item h3 {
+		margin: 1px 0 5px;
+		color: #334155;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.4;
+	}
+
+	.contact-information-item p,
+	.contact-information-item a {
+		margin: 0;
+		color: #64748b;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	.contact-information-item a {
+		color: #0b2d5c;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.contact-form-card {
+		min-width: 0;
+		padding: 30px;
+		border: 1px solid #e5e7eb;
+		border-radius: 8px;
+		background: #fff;
+	}
+
+	.contact-form-heading {
+		margin-bottom: 24px;
+	}
+
+	.contact-form-heading p {
+		margin: 7px 0 0;
+		color: #64748b;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	.contact-fields {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 18px 16px;
+	}
+
+	.contact-field {
+		min-width: 0;
+		display: grid;
+		gap: 7px;
+		color: #334155;
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 1.4;
+	}
+
+	.contact-field > span > span {
+		color: #0b2d5c;
+	}
+
+	.contact-field-wide {
+		grid-column: 1 / -1;
+	}
+
+	.contact-field input,
+	.contact-field textarea {
+		box-sizing: border-box;
+		width: 100%;
+		min-width: 0;
+		min-height: 46px;
+		padding: 0 12px;
+		border: 1px solid #d9dee5;
+		border-radius: 5px;
+		background: #fff;
+		color: #111827;
+		font: inherit;
+		font-size: 14px;
+		font-weight: 400;
+	}
+
+	.contact-field textarea {
+		min-height: 132px;
+		padding: 12px;
+		resize: vertical;
+		line-height: 1.5;
+	}
+
+	.contact-field input:focus,
+	.contact-field textarea:focus {
+		border-color: #0b2d5c;
+		outline: 2px solid rgb(11 45 92 / 12%);
+		outline-offset: 1px;
+	}
+
+	.contact-submit {
+		min-width: 180px;
+		min-height: 48px;
+		margin-top: 22px;
+		padding: 0 18px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 9px;
+		border: 0;
+		border-radius: 5px;
+		background: #0b2d5c;
+		color: #fff;
+		font: inherit;
+		font-size: 14px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 180ms ease;
+	}
+
+	.contact-submit:hover:not(:disabled) {
+		background: #164774;
+	}
+
+	.contact-submit:focus-visible,
+	.factory-visit-link:focus-visible {
+		outline: 2px solid #0b2d5c;
+		outline-offset: 3px;
+	}
+
+	.contact-submit:disabled {
+		opacity: 0.75;
+		cursor: wait;
+	}
+
+	.contact-submit svg,
+	.factory-visit-link svg {
+		width: 17px;
+		height: 17px;
+		fill: none;
+		stroke: currentColor;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		stroke-width: 1.6;
+		transition: transform 180ms ease;
+	}
+
+	.contact-submit:hover svg,
+	.factory-visit-link:hover svg {
+		transform: translateX(3px);
+	}
+
+	.contact-status {
+		margin: 12px 0 0;
+		color: #9b2c2c;
+		font-size: 13px;
+		line-height: 1.5;
+	}
+
+	.contact-status:empty {
+		display: none;
+	}
+
+	.contact-status.is-success {
+		color: #246b45;
+	}
+
+	.contact-honeypot {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+	}
+
+	.factory-visit {
+		padding: 30px 0;
+		background: #f4f7fb;
+	}
+
+	.factory-visit-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 28px;
+	}
+
+	.factory-visit h2 {
+		font-size: 22px;
+	}
+
+	.factory-visit p {
+		margin: 8px 0 0;
+		color: #64748b;
+		font-size: 15px;
+		line-height: 1.6;
+	}
+
+	.factory-visit-link {
+		flex: 0 0 auto;
+		min-height: 46px;
+		padding: 0 18px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		border-radius: 5px;
+		background: #0b2d5c;
+		color: #fff;
+		font-size: 14px;
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.factory-visit-link:hover {
+		background: #164774;
+	}
+
+	@media (max-width: 900px) {
+		.contact-page-inner {
+			width: min(calc(100% - 48px), 720px);
+		}
+
+		.contact-layout {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 28px;
+		}
+
+		.contact-map-layout {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 24px;
+		}
+
+		.contact-map-copy {
+			max-width: 560px;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.contact-page-inner {
+			width: calc(100% - 40px);
+		}
+
+		.contact-intro {
+			padding: 42px 0 46px;
+		}
+
+		.contact-intro h1 {
+			font-size: 36px;
+		}
+
+		.contact-intro > .contact-page-inner > p:last-child {
+			font-size: 15px;
+		}
+
+		.contact-main {
+			padding: 40px 0 48px;
+		}
+
+		.contact-map {
+			padding: 40px 0;
+		}
+
+		.contact-information,
+		.contact-form-card {
+			padding: 22px;
+		}
+
+		.contact-map-layout {
+			gap: 20px;
+		}
+
+		.map-city-list {
+			margin: 12px 0 0;
+			padding: 0;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 7px;
+			list-style: none;
+		}
+
+		.map-city-list li {
+			padding: 6px 9px;
+			border: 1px solid #dce4ed;
+			border-radius: 999px;
+			background: #fff;
+			color: #475569;
+			font-size: 11px;
+			line-height: 1.2;
+		}
+
+		.map-city-list .map-city-anji {
+			border-color: #0b2d5c;
+			background: #0b2d5c;
+			color: #fff;
+			font-weight: 600;
+		}
+
+		.contact-fields {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 15px;
+		}
+
+		.contact-field-wide {
+			grid-column: auto;
+		}
+
+		.contact-submit {
+			width: 100%;
+		}
+
+		.factory-visit-inner {
+			align-items: stretch;
+			flex-direction: column;
+			gap: 18px;
+		}
+
+		.factory-visit-link {
+			width: fit-content;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.contact-submit,
+		.contact-submit svg,
+		.factory-visit-link svg {
+			transition: none;
+		}
+	}
+</style>
+
+<script>
+	import '../scripts/contact-page';
+</script>

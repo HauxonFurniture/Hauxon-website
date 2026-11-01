@@ -8,10 +8,7 @@
 					Hauxon is a professional office seating manufacturer based in Anji, China, with over 10 years of manufacturing experience.
 				</p>
 				<p>
-					Operating from a 15,000 sqm facility, we specialize in office chairs, ergonomic seating, leisure chairs, bar stools, and specialty seating.
-				</p>
-				<p>
-					With flexible OEM &amp; ODM capabilities, we help global brands, wholesalers, and distributors bring their seating products to market.
+					Our 15,000 sqm facility produces office chairs, ergonomic seating, leisure chairs, bar stools, and specialty seating. Flexible OEM &amp; ODM capabilities support global brands, wholesalers, and distributors.
 				</p>
 			</div>
 			<a class="learn-more" href="#about">Learn More <span aria-hidden="true">→</span></a>
@@ -22,9 +19,8 @@
 <style>
 	.who-we-are {
 		box-sizing: border-box;
-		min-height: calc(100vh - 64px);
-		min-height: calc(100svh - 64px);
-		padding: clamp(72px, 9vh, 120px) 0;
+		min-height: clamp(520px, calc((100svh - 64px) * 0.72), 760px);
+		padding: clamp(60px, 6vw, 84px) 0;
 		display: flex;
 		align-items: center;
 		background:
@@ -39,7 +35,7 @@
 				transparent 82%,
 				transparent 100%
 			),
-			url('/images/company/hauxon-factory.jpg') center center / cover no-repeat;
+			url('/images/company/hauxon-factory.jpg') center 44% / cover no-repeat;
 		color: #fff;
 		font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
 	}
@@ -50,11 +46,11 @@
 	}
 
 	.who-we-are-copy {
-		max-width: 480px;
+		max-width: 540px;
 	}
 
 	.section-label {
-		margin: 0 0 20px;
+		margin: 0 0 15px;
 		color: rgb(255 255 255 / 72%);
 		font-size: 12px;
 		font-weight: 600;
@@ -63,19 +59,19 @@
 	}
 
 	h2 {
-		max-width: 520px;
+		max-width: 540px;
 		margin: 0;
 		color: #fff;
-		font-size: clamp(36px, 4vw, 54px);
+		font-size: clamp(34px, 3.6vw, 48px);
 		font-weight: 600;
-		line-height: 1.12;
+		line-height: 1.1;
 	}
 
 	.body-copy {
-		margin-top: 26px;
+		margin-top: 20px;
 		color: rgb(255 255 255 / 84%);
-		font-size: 16px;
-		line-height: 1.75;
+		font-size: 15px;
+		line-height: 1.65;
 	}
 
 	.body-copy p {
@@ -83,12 +79,12 @@
 	}
 
 	.body-copy p + p {
-		margin-top: 16px;
+		margin-top: 11px;
 	}
 
 	.learn-more {
 		width: fit-content;
-		margin-top: 30px;
+		margin-top: 22px;
 		display: inline-flex;
 		align-items: center;
 		gap: 10px;
@@ -109,7 +105,7 @@
 
 	@media (max-width: 900px) {
 		.who-we-are {
-			background-position: 0% 0%, 20% center;
+			background-position: 0% 0%, 28% center;
 		}
 
 		.who-we-are-inner {
@@ -117,18 +113,18 @@
 		}
 
 		h2 {
-			font-size: clamp(34px, 4.5vw, 44px);
+			font-size: clamp(32px, 4.5vw, 42px);
 		}
 
 		.body-copy {
-			font-size: 15px;
+			font-size: 14px;
 		}
 	}
 
 	@media (max-width: 700px) {
 		.who-we-are {
 			min-height: 0;
-			padding: 76px 0 80px;
+			padding: 60px 0 64px;
 			background:
 				linear-gradient(
 					90deg,
@@ -139,7 +135,7 @@
 					rgb(3 35 69 / 38%) 82%,
 					rgb(3 35 69 / 22%) 100%
 				),
-				url('/images/company/hauxon-factory.jpg') 45% center / cover no-repeat;
+				url('/images/company/hauxon-factory.jpg') 44% center / cover no-repeat;
 		}
 
 		.who-we-are-inner {

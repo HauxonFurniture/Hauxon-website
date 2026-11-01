@@ -17,8 +17,9 @@ function initializeQuotePage() {
 	const list = document.querySelector<HTMLElement>('[data-quote-page-list]');
 	const emptyState = document.querySelector<HTMLElement>('[data-quote-page-empty]');
 	const count = document.querySelector<HTMLElement>('[data-quote-page-count]');
+	const title = document.querySelector<HTMLElement>('[data-quote-page-title]');
 	const form = document.querySelector<HTMLFormElement>('[data-inquiry-form]');
-	if (!list || !emptyState || !count || !form || list.dataset.ready === 'true') return;
+	if (!list || !emptyState || !count || !title || !form || list.dataset.ready === 'true') return;
 
 	list.dataset.ready = 'true';
 	const submitButton = form.querySelector<HTMLButtonElement>('.submit-inquiry');
@@ -73,6 +74,9 @@ function initializeQuotePage() {
 
 		const total = selectedModels.length;
 		count.textContent = `${total} ${total === 1 ? 'product' : 'products'} selected`;
+		count.hidden = total === 0;
+		title.textContent = total ? 'Your Selected Products' : 'Tell Us About Your Requirements';
+		list.hidden = total === 0;
 		emptyState.hidden = total > 0;
 	}
 
