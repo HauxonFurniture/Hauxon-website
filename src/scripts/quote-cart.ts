@@ -72,8 +72,8 @@ function initializeQuoteCart() {
 		document.querySelectorAll<HTMLElement>('[data-quote-count]').forEach((counter) => {
 			counter.textContent = `Quote (${count})`;
 		});
-		document.querySelectorAll<HTMLButtonElement>('[data-quote-open]').forEach((trigger) => {
-			trigger.setAttribute('aria-label', `Open quote cart, ${count} ${count === 1 ? 'product' : 'products'}`);
+		document.querySelectorAll<HTMLButtonElement>('.quote-cart-trigger').forEach((trigger) => {
+			trigger.setAttribute('aria-label', `Open quote cart, ${count} selected ${count === 1 ? 'product model' : 'product models'}`);
 		});
 		document.querySelectorAll<HTMLButtonElement>('[data-quote-add]').forEach((button) => {
 			const model = button.dataset.quoteAdd ?? '';
@@ -122,20 +122,7 @@ function initializeQuoteCart() {
 		});
 
 		emptyState.hidden = count > 0;
-		footer.hidden = count === 0;
 		total.textContent = `${count} ${count === 1 ? 'Product' : 'Products'} Selected`;
-	}
-
-	function openCart(trigger: HTMLElement) {
-		if (closeTimer !== undefined) window.clearTimeout(closeTimer);
-		lastTrigger = trigger;
-		if (!dialog.open) {
-			bodyOverflowBeforeOpen = document.body.style.overflow;
-			document.body.style.overflow = 'hidden';
-			dialog.showModal();
-		}
-		window.requestAnimationFrame(() => dialog.classList.add('is-open'));
-		dialog.querySelector<HTMLButtonElement>('[data-quote-close]')?.focus();
 	}
 
 	function closeCart() {
@@ -149,10 +136,26 @@ function initializeQuoteCart() {
 			document.body.style.overflow = bodyOverflowBeforeOpen;
 			bodyOverflowBeforeOpen = '';
 			lastTrigger = null;
+			document.querySelectorAll<HTMLButtonElement>('.quote-cart-trigger').forEach((trigger) => {
+				trigger.setAttribute('aria-expanded', 'false');
+			});
 			window.setTimeout(() => {
 				if (!dialog.open && triggerToRestore?.isConnected) triggerToRestore.focus({ preventScroll: true });
 			}, 0);
 		}, 220);
+	}
+
+	function openCart(trigger: HTMLElement) {
+		if (closeTimer !== undefined) window.clearTimeout(closeTimer);
+		lastTrigger = trigger;
+		if (!dialog.open) {
+			bodyOverflowBeforeOpen = document.body.style.overflow;
+			document.body.style.overflow = 'hidden';
+			dialog.showModal();
+		}
+		window.requestAnimationFrame(() => dialog.classList.add('is-open'));
+		if (trigger instanceof HTMLButtonElement) trigger.setAttribute('aria-expanded', 'true');
+		dialog.querySelector<HTMLButtonElement>('[data-quote-close]')?.focus();
 	}
 
 	dialog.addEventListener('cancel', (event) => {

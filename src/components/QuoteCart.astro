@@ -17,23 +17,19 @@
 
 		<div class="quote-cart-body">
 			<div class="quote-cart-empty" data-quote-empty hidden>
-				<p class="quote-cart-empty-title">Your quote cart is empty.</p>
-				<p>Browse our products and add the models you are interested in.</p>
-				<a class="quote-cart-browse" href="/products" data-quote-close>
-					Browse Products <span aria-hidden="true">→</span>
-				</a>
+				<p class="quote-cart-empty-title">Have a custom project in mind?</p>
+				<p id="quote-cart-empty-description">You can send us an inquiry without selecting any products.</p>
 			</div>
 			<ul class="quote-cart-list" data-quote-list aria-label="Selected products"></ul>
 		</div>
 
 		<p class="quote-cart-status" data-quote-status role="status" aria-live="polite"></p>
 
-		<footer class="quote-cart-footer" data-quote-footer hidden>
+		<footer class="quote-cart-footer" data-quote-footer>
 			<p class="quote-cart-total" data-quote-total>0 Products Selected</p>
 			<a class="quote-cart-request" href="/quote">
 				Request a Quote <span aria-hidden="true">→</span>
 			</a>
-			<p class="quote-cart-coming-soon">Coming soon</p>
 			<button class="quote-cart-continue" type="button" data-quote-close>Continue Browsing</button>
 		</footer>
 	</div>
@@ -210,8 +206,7 @@
 		text-align: center;
 	}
 
-	.quote-cart-empty[hidden],
-	.quote-cart-footer[hidden] {
+	.quote-cart-empty[hidden] {
 		display: none;
 	}
 
@@ -227,26 +222,6 @@
 		color: #111827;
 		font-size: 17px;
 		font-weight: 600;
-	}
-
-	.quote-cart-browse {
-		min-height: 44px;
-		margin-top: 16px;
-		padding: 0 20px;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		gap: 8px;
-		border-radius: 5px;
-		background: #0b2d5c;
-		color: #fff;
-		font-size: 14px;
-		font-weight: 600;
-		text-decoration: none;
-	}
-
-	.quote-cart-browse:hover {
-		background: #164774;
 	}
 
 	.quote-cart-status {
@@ -296,13 +271,6 @@
 		background: #164774;
 	}
 
-	.quote-cart-coming-soon {
-		margin: 7px 0 0;
-		color: #64748b;
-		font-size: 12px;
-		text-align: center;
-	}
-
 	.quote-cart-continue {
 		width: 100%;
 		min-height: 42px;
@@ -323,9 +291,8 @@
 
 	.quote-cart-close:focus-visible,
 	:global(.quote-cart-remove:focus-visible),
-	.quote-cart-browse:focus-visible,
-	.quote-cart-request:focus-visible,
-	.quote-cart-continue:focus-visible {
+	.quote-cart-continue:focus-visible,
+	.quote-cart-request:focus-visible {
 		outline: 2px solid #0b2d5c;
 		outline-offset: 3px;
 	}
@@ -355,7 +322,6 @@
 	@media (prefers-reduced-motion: reduce) {
 		.quote-cart-panel,
 		.quote-cart-close,
-		.quote-cart-browse,
 		.quote-cart-continue {
 			transition: none;
 		}
