@@ -4,7 +4,7 @@ const processSteps = [
 		label: 'Requirement',
 		title: 'Requirement Discussion',
 		description: 'Share your project requirements and product specifications with our team. We respond to inquiries within 24 hours.',
-		image: '/images/how-we-work/oem-requirement.png',
+		image: '/images/how-we-work/oem-requirement-opt.webp',
 		alt: 'Team reviewing product requirements and specifications',
 		features: [
 			['Product Requirements', 'Design, dimensions & materials.'],
@@ -16,7 +16,7 @@ const processSteps = [
 		label: 'Quotation',
 		title: 'Quotation',
 		description: 'Receive a detailed quotation based on your product requirements, customization options, and order quantity.',
-		image: '/images/how-we-work/oem-quotation.png',
+		image: '/images/how-we-work/oem-quotation-opt.webp',
 		alt: 'Quotation preparation for a custom seating product',
 		features: [
 			['Product Requirements', 'Quotation based on your selected specifications.'],
@@ -28,7 +28,7 @@ const processSteps = [
 		label: 'Sampling',
 		title: 'Sampling',
 		description: 'We prepare product samples for your evaluation and confirmation before mass production.',
-		image: '/images/how-we-work/oem-sampling.png',
+		image: '/images/how-we-work/oem-sampling-opt.webp',
 		alt: 'Product sample prepared for customer evaluation',
 		features: [
 			['Product Evaluation', 'Review the sample against your requirements.'],
@@ -40,7 +40,7 @@ const processSteps = [
 		label: 'Production',
 		title: 'Production',
 		description: 'Our manufacturing team carries out production according to the confirmed specifications and quality requirements.',
-		image: '/images/how-we-work/oem-production.png',
+		image: '/images/how-we-work/oem-production-opt.webp',
 		alt: 'Seating products being assembled during manufacturing',
 		features: [
 			['Confirmed Specifications', 'Production follows the agreed product details.'],
@@ -52,7 +52,7 @@ const processSteps = [
 		label: 'Inspection',
 		title: 'Inspection',
 		description: 'Finished products undergo quality inspections to ensure they meet the agreed standards before shipment.',
-		image: '/images/how-we-work/oem-inspection.png',
+		image: '/images/how-we-work/oem-inspection-opt.webp',
 		alt: 'Finished seating product undergoing quality inspection',
 		features: [
 			['Product Inspection', 'Finished products are checked before shipment.'],
@@ -66,7 +66,7 @@ const customOptions = [
 	{
 		title: 'Logo Customization',
 		description: 'Add your brand identity with customized logo applications, including printing, embroidery and logo plates.',
-		image: '/images/how-we-work/custom-logo.png',
+		image: '/images/how-we-work/custom-logo-opt.webp',
 		alt: 'Examples of logo customization on seating products',
 		icon: 'logo',
 		features: [
@@ -78,7 +78,7 @@ const customOptions = [
 	{
 		title: 'Armrest Options',
 		description: 'Choose from different armrest designs, materials, colors and adjustment functions to suit your market.',
-		image: '/images/how-we-work/custom-armrest.png',
+		image: '/images/how-we-work/custom-armrest-opt.webp',
 		alt: 'Different armrest customization options',
 		icon: 'armrest',
 		features: [
@@ -90,7 +90,7 @@ const customOptions = [
 	{
 		title: 'Base Options',
 		description: 'Select from different chair base designs, materials and finishes to match your product requirements.',
-		image: '/images/how-we-work/custom-base.png',
+		image: '/images/how-we-work/custom-base-opt.webp',
 		alt: 'Chair base designs and finish options',
 		icon: 'base',
 		features: [
@@ -102,7 +102,7 @@ const customOptions = [
 	{
 		title: 'Upholstery Options',
 		description: 'Customize your seating products with a range of upholstery materials, including mesh, fabric and PU leather.',
-		image: '/images/how-we-work/custom-upholstery.png',
+		image: '/images/how-we-work/custom-upholstery-opt.webp',
 		alt: 'Upholstery material options for seating products',
 		icon: 'upholstery',
 		features: [
@@ -148,7 +148,7 @@ const customOptions = [
 
 			<div class="process-detail" id="process-panel" aria-live="polite">
 				<div class="process-image-frame">
-					<img id="process-image" src={processSteps[0].image} alt={processSteps[0].alt} loading="lazy" />
+					<img id="process-image" src={processSteps[0].image} alt={processSteps[0].alt} loading="eager" />
 				</div>
 
 				<div class="process-copy">
@@ -228,7 +228,7 @@ const customOptions = [
 
 				<div class="custom-visual">
 					<div class="custom-image-frame">
-						<img id="custom-image" src={customOptions[0].image} alt={customOptions[0].alt} loading="lazy" />
+						<img id="custom-image" src={customOptions[0].image} alt={customOptions[0].alt} loading="eager" />
 					</div>
 				</div>
 
@@ -1421,6 +1421,15 @@ const customOptions = [
 
 		const processButtons = Array.from(root.querySelectorAll('[data-process-step]'));
 		const customTabs = Array.from(root.querySelectorAll('[data-custom-option]'));
+		const imagePreloads = new Map();
+		[...processButtons, ...customTabs].forEach((option) => {
+			const src = option.dataset.processImage || option.dataset.customImage;
+			if (!src || imagePreloads.has(src)) return;
+			const image = new Image();
+			image.decoding = 'async';
+			image.src = src;
+			imagePreloads.set(src, image);
+		});
 
 		function selectProcessStep(index) {
 			const activeIndex = (index + processButtons.length) % processButtons.length;

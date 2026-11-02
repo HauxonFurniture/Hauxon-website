@@ -18,7 +18,7 @@ export type ProductCategory = {
 };
 
 const productsFromModels = (models: string[]): Product[] =>
-	models.map((model) => ({ model, image: `/images/product/${model}.jpg` }));
+	models.map((model) => ({ model, image: `/images/product/${model}-opt.webp` }));
 
 export const productCategories: ProductCategory[] = [
 	{
