@@ -80,6 +80,17 @@ function localizedRoute(route, localePath) {
 	return `${localizedPath}${url.search}${url.hash}`;
 }
 
+function routeForLocale(route, locale) {
+	if (locale === 'en') return route;
+	return localizedRoute(route, localePaths[locale]);
+}
+
+function setLanguageChoiceRoutes(html, route) {
+	return html.replace(/<a\b[^>]*data-language-choice="(en|pt-BR|es)"[^>]*>/g, (tag, locale) =>
+		tag.replace(/\bhref="[^"]*"/, `href="${routeForLocale(route, locale)}"`),
+	);
+}
+
 function addSeoLinks(html, route) {
 	const canonical = `https://hauxon.cn${route}`;
 	const links = [
@@ -95,7 +106,7 @@ function addSeoLinks(html, route) {
 
 for (const page of pages) {
 	const sourcePath = path.join(dist, page.file);
-	const englishHtml = addSeoLinks(await readFile(sourcePath, 'utf8'), page.route);
+	const englishHtml = setLanguageChoiceRoutes(addSeoLinks(await readFile(sourcePath, 'utf8'), page.route), page.route);
 	await writeFile(sourcePath, englishHtml);
 
 	for (const locale of locales) {
@@ -107,6 +118,7 @@ for (const page of pages) {
 		localizedHtml = localizedHtml.replace(/<link rel="canonical" href="[^"]*">/, `<link rel="canonical" href="https://hauxon.cn${localizedRoute(page.route, localePath)}">`);
 		localizedHtml = localizedHtml.replace(`<link rel="alternate" hreflang="${locale}" href="https://hauxon.cn${page.route}">`, `<link rel="alternate" hreflang="${locale}" href="https://hauxon.cn${localizedRoute(page.route, localePath)}">`);
 		localizedHtml = localizedHtml.replace(/href="(\/[^"]*)"/g, (match, href) => `href="${localizedRoute(href, localePath)}"`);
+		localizedHtml = setLanguageChoiceRoutes(localizedHtml, page.route);
 		const { title, description } = seo[locale][page.route];
 		localizedHtml = localizedHtml.replace(/<title>[\s\S]*?<\/title>/, `<title>${encodeHtml(title)}</title>`);
 		localizedHtml = localizedHtml.replace(/<meta name="description" content="[^"]*"\s*\/?>/, `<meta name="description" content="${encodeHtml(description, true)}" />`);
