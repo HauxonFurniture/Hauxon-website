@@ -1,0 +1,62 @@
+{
+  "pt-BR": {
+    "/": {
+      "title": "Hauxon | Fabricante de Assentos OEM e ODM",
+      "description": "A Hauxon fabrica assentos de qualidade para escritórios, marcas globais, atacadistas e parceiros de projetos."
+    },
+    "/products/": {
+      "title": "Produtos | Móveis Hauxon",
+      "description": "Conheça cadeiras para escritório, assentos de lazer, banquetas, cadeiras especiais e componentes da Hauxon, fabricante OEM e ODM."
+    },
+    "/our-factory/": {
+      "title": "Nossa fábrica | Hauxon Móveis",
+      "description": "Conheça a capacidade de fabricação de assentos, o processo de desenvolvimento de produtos e o controle de qualidade da Hauxon em Anji, China."
+    },
+    "/about-us/": {
+      "title": "Sobre nós | Hauxon Móveis",
+      "description": "Saiba como a Anji Huaxuan Furniture Co., Ltd. evoluiu da fabricação de componentes para cadeiras até se tornar parceira de assentos OEM e ODM."
+    },
+    "/contact/": {
+      "title": "Fale conosco | Hauxon Móveis",
+      "description": "Entre em contato com a Hauxon sobre assentos para escritório, fabricação OEM e ODM ou uma visita à fábrica."
+    },
+    "/faq/": {
+      "title": "Perguntas frequentes | Hauxon",
+      "description": "Encontre respostas sobre os produtos, a fabricação OEM e ODM, os pedidos e os serviços da Hauxon."
+    },
+    "/quote/": {
+      "title": "Solicite uma cotação | Hauxon Móveis",
+      "description": "Solicite uma cotação de cadeiras e assentos para escritório da Hauxon. Selecione vários modelos e envie sua consulta à nossa equipe."
+    }
+  },
+  "es": {
+    "/": {
+      "title": "Hauxon | Fabricante de Asientos OEM y ODM",
+      "description": "Hauxon fabrica asientos de calidad para oficinas, marcas globales, distribuidores y proyectos comerciales."
+    },
+    "/products/": {
+      "title": "Productos | Muebles Hauxon",
+      "description": "Conozca sillas de oficina, asientos para espacios de descanso, bancos, sillas especiales y componentes de Hauxon, fabricante OEM y ODM."
+    },
+    "/our-factory/": {
+      "title": "Nuestra fábrica | Hauxon Muebles",
+      "description": "Conozca la capacidad de fabricación de asientos, el proceso de desarrollo de productos y el control de calidad de Hauxon en Anji, China."
+    },
+    "/about-us/": {
+      "title": "Quiénes somos | Hauxon Muebles",
+      "description": "Descubra cómo Anji Huaxuan Furniture Co., Ltd. pasó de fabricar componentes para sillas a convertirse en socio de fabricación OEM y ODM de asientos."
+    },
+    "/contact/": {
+      "title": "Contacto | Hauxon Muebles",
+      "description": "Comuníquese con Hauxon sobre asientos para oficina, fabricación OEM y ODM o una visita a la fábrica."
+    },
+    "/faq/": {
+      "title": "Preguntas frecuentes | Hauxon",
+      "description": "Encuentre respuestas sobre los productos, la fabricación OEM y ODM, los pedidos y los servicios de Hauxon."
+    },
+    "/quote/": {
+      "title": "Solicite una cotización | Hauxon Muebles",
+      "description": "Solicite una cotización de sillas y asientos para oficina de Hauxon. Seleccione varios modelos y envíe su consulta a nuestro equipo."
+    }
+  }
+}

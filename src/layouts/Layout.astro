@@ -2,6 +2,7 @@
 import '../styles/buttons.css';
 import Footer from '../components/Footer.astro';
 import QuoteCart from '../components/QuoteCart.astro';
+import seo from '../i18n/seo.json';
 
 type Props = {
 	title?: string;
@@ -12,22 +13,46 @@ const {
 	title = 'Hauxon | OEM & ODM Seating Manufacturer',
 	description = 'Hauxon manufactures quality office seating for global brands, wholesalers and project partners.',
 } = Astro.props;
+
+const pathname = Astro.url.pathname;
+const locale = pathname.startsWith('/pt-br/') || pathname === '/pt-br'
+	? 'pt-BR'
+	: pathname.startsWith('/es/') || pathname === '/es' ? 'es' : 'en';
+const unlocalizedPath = pathname.replace(/^\/(?:pt-br|es)(?=\/|$)/, '') || '/';
+const route = unlocalizedPath.endsWith('/') ? unlocalizedPath : `${unlocalizedPath}/`;
+const localizedSeo = locale === 'en' ? undefined : seo[locale][route as keyof (typeof seo)['pt-BR']];
+const pageTitle = localizedSeo?.title ?? title;
+const pageDescription = localizedSeo?.description ?? description;
+const siteUrl = 'https://hauxon.cn';
+const routeForLocale = (target: 'en' | 'pt-BR' | 'es') => {
+	if (target === 'en') return route;
+	const prefix = target === 'pt-BR' ? 'pt-br' : 'es';
+	return `/${prefix}${route === '/' ? '/' : route}`;
+};
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/png" href="/images/hauxon-favicon.png?v=2" />
 		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content={description} />
-		<title>{title}</title>
+		<meta name="description" content={pageDescription} />
+		<title>{pageTitle}</title>
+		<link rel="canonical" href={`${siteUrl}${routeForLocale(locale)}`} />
+		<link rel="alternate" hreflang="en" href={`${siteUrl}${routeForLocale('en')}`} />
+		<link rel="alternate" hreflang="pt-BR" href={`${siteUrl}${routeForLocale('pt-BR')}`} />
+		<link rel="alternate" hreflang="es" href={`${siteUrl}${routeForLocale('es')}`} />
+		<link rel="alternate" hreflang="x-default" href={`${siteUrl}${routeForLocale('en')}`} />
 	</head>
 	<body>
 		<slot />
 		<Footer />
 		<QuoteCart />
+		<script>
+			import '../scripts/i18n';
+		</script>
 	</body>
 </html>
 

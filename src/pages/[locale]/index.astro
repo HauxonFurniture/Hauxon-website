@@ -1,0 +1,9 @@
+---
+import HomePage from '../index.astro';
+
+export function getStaticPaths() {
+	return ['pt-br', 'es'].map((locale) => ({ params: { locale } }));
+}
+---
+
+<HomePage />

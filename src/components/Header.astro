@@ -31,18 +31,18 @@ const links = [
 						<circle cx="12" cy="12" r="9" />
 						<path d="M3.5 12h17M12 3c2.3 2.5 3.4 5.5 3.4 9s-1.1 6.5-3.4 9c-2.3-2.5-3.4-5.5-3.4-9S9.7 5.5 12 3Z" />
 					</svg>
-					<span>EN</span>
+					<span data-current-language>EN</span>
 				</summary>
 				<div class="language-menu" aria-label="Choose a language">
-					<div class="language-option is-selected" aria-current="true">
-						<span>English</span><span class="language-status">Selected</span>
-					</div>
-					<button class="language-option" type="button" disabled>
-						<span>Português</span><span class="language-status">Coming soon</span>
-					</button>
-					<button class="language-option" type="button" disabled>
-						<span>Español</span><span class="language-status">Coming soon</span>
-					</button>
+					<a class="language-option" data-language-choice="en" href="/">
+						<span class="language-name" data-i18n-preserve>English — EN</span><span class="language-status"></span>
+					</a>
+					<a class="language-option" data-language-choice="pt-BR" href="/pt-br/">
+						<span class="language-name" data-i18n-preserve>Português (Brasil) — PT</span><span class="language-status"></span>
+					</a>
+					<a class="language-option" data-language-choice="es" href="/es/">
+						<span class="language-name" data-i18n-preserve>Español — ES</span><span class="language-status"></span>
+					</a>
 				</div>
 			</details>
 			<button
@@ -306,6 +306,12 @@ const links = [
 		font: inherit;
 		font-size: 13px;
 		text-align: left;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.language-option:hover {
+		color: #003366;
 	}
 
 	.language-option:last-child {
@@ -315,11 +321,6 @@ const links = [
 	.language-option.is-selected {
 		color: #003366;
 		font-weight: 600;
-	}
-
-	.language-option:disabled {
-		color: #707570;
-		cursor: not-allowed;
 	}
 
 	.language-status {

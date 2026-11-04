@@ -1,3 +1,5 @@
+import { translateText } from './i18n';
+
 function initializeContactPage() {
 	const form = document.querySelector<HTMLFormElement>('[data-contact-page-form]');
 	const status = document.querySelector<HTMLElement>('[data-contact-page-status]');
@@ -12,9 +14,9 @@ function initializeContactPage() {
 
 	factoryVisit?.addEventListener('click', () => {
 		if (!messageField) return;
-		if (messageField.value.trim() && !window.confirm('Replace your current message with the factory visit request?')) return;
+		if (messageField.value.trim() && !window.confirm(translateText('Replace your current message with the factory visit request?'))) return;
 
-		messageField.value = 'I would like to arrange a factory visit.';
+		messageField.value = translateText('I would like to arrange a factory visit.');
 		window.requestAnimationFrame(() => {
 			messageField.focus({ preventScroll: true });
 			messageField.scrollIntoView({

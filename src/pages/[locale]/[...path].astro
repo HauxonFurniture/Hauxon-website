@@ -1,0 +1,29 @@
+---
+import AboutPage from '../about-us.astro';
+import ContactPage from '../contact.astro';
+import FactoryPage from '../our-factory.astro';
+import FAQPage from '../faq/index.astro';
+import ProductsPage from '../products/index.astro';
+import QuotePage from '../quote/index.astro';
+
+const localizedPages = [
+	{ path: 'products', component: ProductsPage },
+	{ path: 'our-factory', component: FactoryPage },
+	{ path: 'about-us', component: AboutPage },
+	{ path: 'contact', component: ContactPage },
+	{ path: 'faq', component: FAQPage },
+	{ path: 'quote', component: QuotePage },
+];
+
+export function getStaticPaths() {
+	const paths = ['products', 'our-factory', 'about-us', 'contact', 'faq', 'quote'];
+	return ['pt-br', 'es'].flatMap((locale) =>
+		paths.map((path) => ({ params: { locale, path } })),
+	);
+}
+
+const Page = localizedPages.find(({ path }) => path === Astro.params.path)?.component;
+if (!Page) throw new Error(`Unknown localized page: ${Astro.params.path}`);
+---
+
+<Page />
